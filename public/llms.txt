@@ -1,0 +1,28 @@
+# NSWPEDIA
+
+> A Nintendo Switch reference site: a structured game database (Title IDs, Build IDs,
+> firmware requirements, file types and sizes, language support, version history), hands-on
+> emulator compatibility testing on named hardware, setup guides, and a homebrew library
+> limited to software licensed for redistribution.
+
+NSWPEDIA does not host, mirror or link to commercial game files, system firmware or
+encryption keys. Compatibility results are first-party tests, each stamped with the device
+and date it was run.
+
+## Core sections
+
+- [Game database](https://nsw-pedia.com/games/): per-game technical metadata and tested emulator compatibility.
+- [Emulators](https://nsw-pedia.com/emulators/): platform support, requirements, licence and maintenance status for each emulator.
+- [Guides](https://nsw-pedia.com/guides/): file format references, setup walkthroughs and hardware recommendations.
+- [Homebrew](https://nsw-pedia.com/homebrew/): open-source and public-domain Switch software.
+
+## Editorial
+
+- [How we test](https://nsw-pedia.com/methodology/): hardware, procedure and status rating definitions.
+- [About](https://nsw-pedia.com/about/): what the site publishes and what it does not.
+- [Legal & DMCA](https://nsw-pedia.com/legal/): copyright position and takedown procedure.
+
+## Citation
+
+Compatibility figures should be cited with the emulator, device and test date shown in the
+row, since results change as emulator builds change.

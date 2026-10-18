@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  game: CollectionEntry<'games'>['data'];
+  publisherSlug: string;
+  publisherName: string;
+}
+const { game, publisherSlug, publisherName } = Astro.props;
+
+const ratings = [
+  game.ageRatings.esrb && `ESRB ${game.ageRatings.esrb}`,
+  game.ageRatings.pegi && `PEGI ${game.ageRatings.pegi}`,
+  game.ageRatings.cero && `CERO ${game.ageRatings.cero}`,
+].filter(Boolean).join(' · ');
+
+const playerSummary = [
+  `${game.players.offline} offline`,
+  game.players.localCoop > 0 && `${game.players.localCoop} local co-op`,
+  game.players.online > 0 && `${game.players.online} online`,
+  game.players.nsoRequired && 'Nintendo Switch Online required',
+].filter(Boolean).join(' · ');
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
+---
+<section aria-labelledby="game-details" class="surface overflow-hidden">
+  <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+    Game details
+  </h2>
+  <dl class="divide-y divide-[var(--border)] text-sm">
+    {[
+      ['Game name', game.title],
+      game.alternateTitles.length > 0 && ['Also known as', game.alternateTitles.join(' · ')],
+      ['Genre', game.genres.join(', ')],
+      ['Developer', game.developer],
+      ['Published by', null],
+      ['Release date', dateFmt.format(game.releaseDate)],
+      game.series && ['Series', game.series],
+      ['Version', game.version],
+      ['Title ID', null],
+      game.buildId && ['Build ID', null],
+      ['Size', game.fileSize],
+      ['File type', game.trimmed ? `${game.fileType} (trimmed)` : game.fileType],
+      ['Required firmware', `${game.requiredFirmware} or later`],
+      ['Region', game.region],
+      ['Content type', game.includedUpdate ? `${game.contentType} · includes update ${game.includedUpdate}` : game.contentType],
+      game.dlcCount > 0 && ['DLC available', `${game.dlcCount} item${game.dlcCount === 1 ? '' : 's'}`],
+      ['Language (audio)', game.languages.audio.length ? game.languages.audio.join(', ') : '—'],
+      ['Language (subtitles)', game.languages.subtitles.join(', ')],
+      ['Players', playerSummary],
+      ['Play modes', game.playModes.join(' · ')],
+      game.features.length > 0 && ['Features', game.features.join(', ')],
+      ratings && ['Age rating', ratings],
+      game.checksums.sha256 && ['SHA-256', null],
+      game.checksums.crc32 && ['CRC32', null],
+    ].filter(Boolean).map((row) => {
+      const [label, value] = row as [string, string | null];
+      return (
+        <div class="grid grid-cols-1 gap-1 px-5 py-3 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-4">
+          <dt class="font-medium text-[var(--text-muted)]">{label}</dt>
+          <dd class="text-[var(--text)]">
+            {label === 'Published by' ? (
+              <a href={`/publishers/${publisherSlug}/`} class="link-accent">{publisherName}</a>
+            ) : label === 'Title ID' ? (
+              <code class="font-mono text-[var(--color-blue-glow)]">{game.titleId}</code>
+            ) : label === 'Build ID' ? (
+              <code class="font-mono text-[var(--color-blue-glow)]">{game.buildId}</code>
+            ) : label === 'SHA-256' ? (
+              <code class="font-mono text-xs break-all text-[var(--text-muted)]">{game.checksums.sha256}</code>
+            ) : label === 'CRC32' ? (
+              <code class="font-mono text-xs text-[var(--text-muted)]">{game.checksums.crc32}</code>
+            ) : (
+              value
+            )}
+          </dd>
+        </div>
+      );
+    })}
+  </dl>
+</section>

@@ -1,0 +1,174 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import GameInfoTable from '@components/GameInfoTable.astro';
+import CompatMatrix from '@components/CompatMatrix.astro';
+import VersionHistory from '@components/VersionHistory.astro';
+import FaqBlock from '@components/FaqBlock.astro';
+import RelatedGames from '@components/RelatedGames.astro';
+import Prose from '@components/Prose.astro';
+import { abs } from '@lib/site';
+import { assertQualityFloor } from '@lib/quality';
+import { relatedGames } from '@lib/related';
+import { breadcrumbSchema, faqSchema, graph, organizationSchema, personSchema, videoGameSchema, websiteSchema } from '@lib/schema';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games', ({ data }) => !data.draft);
+  return games.map((game) => ({ params: { slug: game.id }, props: { game, all: games } }));
+}
+
+const { game, all } = Astro.props;
+const d = game.data;
+
+// Fails the build rather than shipping a thin page.
+assertQualityFloor(game.id, game.body, d.draft);
+
+const [publisher, author] = await Promise.all([getEntry(d.publisher), getEntry(d.author)]);
+if (!publisher || !author) throw new Error(`[${game.id}] missing publisher or author reference`);
+
+const compatRows = await Promise.all(
+  d.emulatorCompat.map(async (row) => {
+    const emu = await getEntry(row.emulator);
+    const tester = await getEntry(row.testedBy);
+    return {
+      emulatorName: emu?.data.title ?? row.emulator.id,
+      emulatorSlug: row.emulator.id,
+      platform: row.platform,
+      device: row.device,
+      fps: row.fps,
+      status: row.status,
+      notes: row.notes,
+      testedOn: row.testedOn,
+      testedByName: tester?.data.name ?? 'NSWPEDIA',
+    };
+  }),
+);
+
+const related = relatedGames(game, all);
+const path = `/games/${game.id}/`;
+const url = abs(path);
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Games', href: '/games/' },
+  { name: d.title, href: path },
+];
+
+const { Content } = await render(game);
+
+const jsonLd = graph(
+  organizationSchema(),
+  websiteSchema(),
+  personSchema(author),
+  breadcrumbSchema(crumbs),
+  videoGameSchema(game, { url, publisherName: publisher.data.title, author, coverUrl: abs(d.cover.src) }),
+  faqSchema(d.faq),
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
+---
+<BaseLayout
+  title={`${d.title} — Title ID, Firmware & Emulator Compatibility`}
+  description={`${d.summary} Title ID ${d.titleId}, ${d.fileType} ${d.fileSize}, firmware ${d.requiredFirmware}+. Tested emulator compatibility across PC, Steam Deck and Android.`}
+  path={path}
+  type="article"
+  publishedAt={d.publishedAt}
+  updatedAt={d.updatedAt}
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-6xl px-4 py-6">
+    <Breadcrumbs crumbs={crumbs} />
+
+    <article class="mt-6">
+      <header class="grid gap-6 sm:grid-cols-[200px_1fr]">
+        <div class="w-full max-w-[200px]">
+          <Image
+            src={d.cover}
+            alt={`${d.title} cover art`}
+            width={400}
+            height={600}
+            loading="eager"
+            class="surface aspect-[2/3] w-full object-cover"
+          />
+        </div>
+        <div>
+          <h1 class="font-display text-3xl leading-tight font-extrabold text-white sm:text-4xl">{d.title}</h1>
+          {d.alternateTitles.length > 0 && (
+            <p class="mt-1 text-sm text-[var(--text-muted)]">{d.alternateTitles.join(' · ')}</p>
+          )}
+          <p class="mt-3 max-w-prose leading-relaxed text-[var(--text-muted)]">{d.summary}</p>
+
+          <ul class="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
+            {[d.region, `${d.fileType} · ${d.fileSize}`, `v${d.version}`, `FW ${d.requiredFirmware}+`].map((b) => (
+              <li class="rounded-full bg-[var(--bg-raised)] px-3 py-1 text-[var(--color-chrome-300)] ring-1 ring-[var(--border)] ring-inset">{b}</li>
+            ))}
+          </ul>
+
+          {d.eshopUrl && (
+            <p class="mt-4">
+              <a href={d.eshopUrl} rel="nofollow noopener" class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-red-action)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">
+                Buy on Nintendo eShop
+              </a>
+            </p>
+          )}
+          <p class="mt-3 text-xs text-[var(--text-muted)]">
+            Updated <time datetime={d.updatedAt.toISOString()}>{dateFmt.format(d.updatedAt)}</time>
+            · by <a href={`/authors/${author.id}/`} class="link-accent">{author.data.name}</a>
+          </p>
+        </div>
+      </header>
+
+      <div class="mt-10 space-y-10">
+        <GameInfoTable game={d} publisherSlug={publisher.id} publisherName={publisher.data.title} />
+        <CompatMatrix rows={compatRows} gameTitle={d.title} />
+
+        {d.deviceTiers.length > 0 && (
+          <section aria-labelledby="tiers" class="surface overflow-hidden">
+            <h2 id="tiers" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+              What hardware you need
+            </h2>
+            <ul class="divide-y divide-[var(--border)] text-sm">
+              {d.deviceTiers.map((t) => (
+                <li class="grid gap-1 px-5 py-3 sm:grid-cols-[minmax(0,9rem)_minmax(0,16rem)_1fr] sm:gap-4">
+                  <span class="font-semibold text-white">{t.tier}</span>
+                  <span class="text-[var(--text-muted)]">{t.device}</span>
+                  <span>{t.result}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {d.knownIssues.length > 0 && (
+          <section aria-labelledby="issues" class="surface overflow-hidden">
+            <h2 id="issues" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+              Known issues
+            </h2>
+            <ul class="list-disc space-y-2 px-5 py-4 pl-9 text-sm text-[var(--text-muted)]">
+              {d.knownIssues.map((i) => <li>{i}</li>)}
+            </ul>
+          </section>
+        )}
+
+        {d.versionHistory.length > 0 && <VersionHistory rows={d.versionHistory} gameTitle={d.title} />}
+
+        {d.screenshots.length > 0 && (
+          <section aria-labelledby="shots">
+            <h2 id="shots" class="font-display text-base font-bold tracking-wide text-white uppercase">Screenshots</h2>
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+              {d.screenshots.map((s) => (
+                <Image src={s.src} alt={s.alt} width={1280} height={720} class="surface w-full" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        <Prose><Content /></Prose>
+
+        <FaqBlock items={d.faq} heading={`${d.title} — frequently asked questions`} />
+        <RelatedGames games={related} />
+      </div>
+    </article>
+  </div>
+</BaseLayout>

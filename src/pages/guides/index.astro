@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib/schema';
+
+const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime(),
+);
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }];
+const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
+const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
+---
+<BaseLayout
+  title="Nintendo Switch Guides — Emulation, File Formats & Setup"
+  description="Practical Nintendo Switch guides: file formats explained, emulator setup, firmware requirements, device recommendations and troubleshooting."
+  path="/guides/"
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-4xl px-4 py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="font-display mt-6 text-3xl font-extrabold text-white sm:text-4xl">Guides</h1>
+    <p class="mt-3 max-w-2xl leading-relaxed text-[var(--text-muted)]">
+      Reference material and step-by-step walkthroughs, each dated so you can see how current it is.
+    </p>
+    <ul class="mt-8 space-y-4">
+      {guides.map((g) => (
+        <li class="surface p-5">
+          <h2 class="font-display text-lg font-bold text-white">
+            <a href={`/guides/${g.id}/`} class="hover:text-[var(--color-blue-glow)]">{g.data.title}</a>
+          </h2>
+          <p class="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{g.data.summary}</p>
+          <p class="mt-2 text-xs text-[var(--color-chrome-500)]">
+            {g.data.difficulty}{g.data.timeRequired && ` · ${g.data.timeRequired}`} · Updated{' '}
+            <time datetime={g.data.updatedAt.toISOString()}>{dateFmt.format(g.data.updatedAt)}</time>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

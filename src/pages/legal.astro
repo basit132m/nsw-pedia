@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import Prose from '@components/Prose.astro';
+import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib/schema';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Legal, copyright and DMCA', href: '/legal/' }];
+const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
+---
+<BaseLayout title="Legal, Copyright & DMCA — NSWPEDIA" description="NSWPEDIA copyright position, trademark attribution and DMCA takedown procedure." path="/legal/" jsonLd={jsonLd}>
+  <div class="mx-auto max-w-3xl px-4 py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="font-display mt-6 text-3xl font-extrabold text-white sm:text-4xl">Legal, copyright and DMCA</h1>
+    <div class="mt-8">
+      <Prose>
+        <h2>Trademarks</h2>
+        <p>NSWPEDIA is an independent reference site. It is not affiliated with, endorsed by, sponsored by or otherwise associated with Nintendo Co., Ltd. Nintendo, Nintendo Switch and all related marks are trademarks of Nintendo. Game titles, box art, logos and trademarks appearing on this site belong to their respective owners and are used for identification and commentary.</p>
+        <h2>Game files</h2>
+        <p>NSWPEDIA does not host, mirror, link to or otherwise distribute copyrighted game files, Nintendo system firmware, encryption keys or any tool whose purpose is to circumvent technical protection measures. Our database records factual metadata about games — identifiers, file characteristics, release dates and compatibility results. It does not supply the software itself.</p>
+        <h2>Downloads</h2>
+        <p>The homebrew section is limited to software whose copyright holder has released it under a licence permitting redistribution, or which has passed into the public domain. Every entry states its licence and links to the project own release page. If you are a rights holder and believe something in that section is listed in error, contact us and we will remove it.</p>
+        <h2>Fair use and commentary</h2>
+        <p>Cover art and screenshots are reproduced at reduced resolution for the purpose of identification, review and commentary.</p>
+        <h2>DMCA takedown procedure</h2>
+        <p>If you believe material on this site infringes your copyright, send a notice to the contact address on our <a href="/contact/">contact page</a> including: identification of the copyrighted work; the exact URL of the material; your contact details; a statement that you have a good-faith belief the use is not authorised; a statement under penalty of perjury that the information is accurate and that you are authorised to act for the rights holder; and your physical or electronic signature.</p>
+        <p>We respond to valid notices promptly. Because we do not host game files, most notices relating to this site can be resolved by removing a page or a reference rather than a file.</p>
+        <h2>Privacy</h2>
+        <p>We use privacy-preserving analytics that set no cookies and collect no personally identifiable information. We do not sell data.</p>
+      </Prose>
+    </div>
+  </div>
+</BaseLayout>

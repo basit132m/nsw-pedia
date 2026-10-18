@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import Prose from '@components/Prose.astro';
+import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib/schema';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Contact', href: '/contact/' }];
+const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
+---
+<BaseLayout title="Contact NSWPEDIA" description="How to reach the NSWPEDIA editorial team for corrections, takedown notices and testing requests." path="/contact/" jsonLd={jsonLd}>
+  <div class="mx-auto max-w-3xl px-4 py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="font-display mt-6 text-3xl font-extrabold text-white sm:text-4xl">Contact</h1>
+    <div class="mt-8">
+      <Prose>
+        <p>Replace the placeholders below with real addresses before launch.</p>
+        <h2>Corrections and test requests</h2>
+        <p>Found a wrong Title ID, a stale compatibility result or a broken link? Send the page URL and what is wrong to <code>editorial@nsw-pedia.com</code>. If you are reporting a compatibility result, include your hardware and the exact emulator build.</p>
+        <h2>Copyright and DMCA</h2>
+        <p>Takedown notices go to <code>legal@nsw-pedia.com</code>. See the <a href="/legal/">legal page</a> for what a valid notice must contain.</p>
+        <h2>Everything else</h2>
+        <p>General enquiries: <code>hello@nsw-pedia.com</code>.</p>
+      </Prose>
+    </div>
+  </div>
+</BaseLayout>

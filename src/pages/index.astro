@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import GameCard from '@components/GameCard.astro';
+import { SITE } from '@lib/site';
+import { graph, organizationSchema, websiteSchema } from '@lib/schema';
+
+const [games, emulators, guides] = await Promise.all([
+  getCollection('games', ({ data }) => !data.draft),
+  getCollection('emulators', ({ data }) => !data.draft),
+  getCollection('guides', ({ data }) => !data.draft),
+]);
+
+const latestGames = games.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime()).slice(0, 12);
+const latestGuides = guides.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime()).slice(0, 4);
+const jsonLd = graph(organizationSchema(), websiteSchema());
+---
+<BaseLayout title={SITE.title} description={SITE.description} path="/" jsonLd={jsonLd}>
+  <section class="border-b border-[var(--border)] bg-[radial-gradient(60%_80%_at_18%_20%,rgba(248,0,0,0.16),transparent),radial-gradient(60%_80%_at_85%_75%,rgba(46,155,255,0.18),transparent)]">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+      <h1 class="font-display max-w-3xl text-4xl leading-[1.1] font-extrabold text-white sm:text-5xl">
+        The Nintendo Switch database, <span class="text-brand-red">tested</span>.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
+        Title IDs, firmware requirements, file details and version history for every game — plus
+        hands-on emulator compatibility results from real hardware, and a homebrew library you
+        can download legally.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/games/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the game database</a>
+        <a href="/emulators/" class="rounded-lg px-5 py-2.5 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset hover:bg-[var(--bg-surface)]">Compare emulators</a>
+      </div>
+      <dl class="mt-12 grid max-w-xl grid-cols-3 gap-6">
+        {[
+          ['Games', games.length],
+          ['Emulators', emulators.length],
+          ['Guides', guides.length],
+        ].map(([label, n]) => (
+          <div>
+            <dt class="text-xs tracking-wide text-[var(--text-muted)] uppercase">{label}</dt>
+            <dd class="font-display text-2xl font-extrabold text-white tabular-nums">{n}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 py-14">
+    <section>
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 class="font-display text-base font-bold tracking-wide text-white uppercase">Recently updated games</h2>
+        <a href="/games/" class="link-accent text-sm">All games</a>
+      </div>
+      <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        {latestGames.map((g, i) => <GameCard game={g} loading={i < 6 ? 'eager' : 'lazy'} />)}
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 class="font-display text-base font-bold tracking-wide text-white uppercase">Latest guides</h2>
+        <a href="/guides/" class="link-accent text-sm">All guides</a>
+      </div>
+      <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+        {latestGuides.map((g) => (
+          <li class="surface p-5">
+            <h3 class="font-display font-bold text-white">
+              <a href={`/guides/${g.id}/`} class="hover:text-[var(--color-blue-glow)]">{g.data.title}</a>
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{g.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

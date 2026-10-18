@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import Prose from '@components/Prose.astro';
+import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib/schema';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'How we test', href: '/methodology/' }];
+const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
+---
+<BaseLayout title="How We Test — NSWPEDIA Methodology" description="The hardware, emulator builds and procedure behind every compatibility result published on NSWPEDIA, and how we rate status." path="/methodology/" jsonLd={jsonLd}>
+  <div class="mx-auto max-w-3xl px-4 py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="font-display mt-6 text-3xl font-extrabold text-white sm:text-4xl">How we test</h1>
+    <div class="mt-8">
+      <Prose>
+        <p>Every compatibility row on a game page is the output of a run we performed ourselves. This page explains how those runs work so you can judge the results.</p>
+        <h2>Test hardware</h2>
+        <p>We maintain four reference configurations covering the tiers most readers actually own: a desktop PC, a handheld gaming PC, an Android flagship and a budget retro handheld. Each contributor profile lists the exact machines they test on.</p>
+        <h2>Procedure</h2>
+        <ol>
+          <li>Install the emulator build from the project official release channel and record its version.</li>
+          <li>Clear any existing shader cache so first-run stutter is measured, not hidden.</li>
+          <li>Run a fixed route through the title covering its most demanding scenes.</li>
+          <li>Record sustained frame rate across that route, not a peak figure.</li>
+          <li>Note every visual or audio defect observed, however minor.</li>
+          <li>Stamp the result with the device and the date.</li>
+        </ol>
+        <h2>Status ratings</h2>
+        <ul>
+          <li><strong>Perfect</strong> — completable with no observed defects at the target frame rate.</li>
+          <li><strong>Playable</strong> — completable, with minor defects or occasional frame rate dips.</li>
+          <li><strong>Ingame</strong> — gameplay runs but with significant defects or unstable performance.</li>
+          <li><strong>Menus</strong> — boots to menus but gameplay does not run usably.</li>
+          <li><strong>Boots</strong> — launches but does not reach a menu.</li>
+          <li><strong>Nothing</strong> — does not launch.</li>
+        </ul>
+        <h2>Re-testing and corrections</h2>
+        <p>Emulator forks move quickly, so results age. We re-test the titles in our core suite when a significant build lands, and every row shows its own test date rather than inheriting a page-level timestamp. If you believe a result is wrong, <a href="/contact/">tell us</a> with your hardware and build details and we will re-run it.</p>
+      </Prose>
+    </div>
+  </div>
+</BaseLayout>

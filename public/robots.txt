@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# No crawlable value, and they generate infinite URL space.
+Disallow: /search/
+Disallow: /*?*
+
+Sitemap: https://nsw-pedia.com/sitemap-index.xml
