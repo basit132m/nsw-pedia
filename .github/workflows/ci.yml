@@ -1,9 +1,12 @@
 name: CI
 
+# Cloudflare Pages deploys from its own Git integration; this workflow only
+# checks. Running it on main too means a bad content edit shows up as a failed
+# check here, next to the commit that caused it.
 on:
   pull_request:
   push:
-    branches-ignore: [main]
+    branches: [main]
 
 jobs:
   verify:
