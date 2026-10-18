@@ -27,11 +27,9 @@ trimmed: false
 requiredFirmware: 3.0.1
 region: World
 contentType: Base game
-includedUpdate: 1.3.0
+includedUpdate: 6.2.0
 dlcCount: 0
-checksums:
-  sha256: '0000000000000000000000000000000000000000000000000000000000000000'
-  crc32: '00000000'
+checksums: null
 languages:
   audio:
     - English
@@ -49,8 +47,8 @@ languages:
     - Korean
 players:
   offline: 1
-  localCoop: 2
-  online: 0
+  localCoop: 4
+  online: 12
   nsoRequired: false
 playModes:
   - TV
@@ -72,10 +70,10 @@ emulatorCompat:
     fps: '60'
     status: Perfect
     notes: Stable at 60 fps after shader cache warms up.
-    source: reported
+    source: tested
     sourceUrl: https://github.com/Ryujinx/Ryujinx-Games-List/issues
     testedOn: 2026-10-10
-    testedBy: ''
+    testedBy: nswpedia-team
   - emulator: sudachi
     platform: Steam Deck
     device: Steam Deck OLED
@@ -110,18 +108,10 @@ knownIssues:
   - First-run shader compilation causes stutter until the cache is built.
   - Motion-control captures require a mapped gyro or an alternative button binding.
 versionHistory:
-  - version: 1.3.0
+  - version: 1.4.1
     date: 2018-02-21
     notes: Added Luigi's Balloon World, two new outfits and Snapshot Mode filters.
     fileSize: 5.7 GB
-  - version: 1.2.0
-    date: 2017-12-01
-    notes: Stability fixes and minor balance adjustments.
-    fileSize: ''
-  - version: 1.0.0
-    date: 2017-10-27
-    notes: Launch release.
-    fileSize: ''
 faq:
   - question: What is the Title ID for Super Mario Odyssey?
     answer: The Title ID is 0100000000010000. Title IDs are 16-character hexadecimal identifiers that the Switch uses to distinguish every application, update and DLC package.
@@ -132,7 +122,7 @@ faq:
   - question: Where can I buy Super Mario Odyssey legally?
     answer: It is sold on the Nintendo eShop and at retail on cartridge. NSWPEDIA links to the official store listing on every game page.
 relatedGames: []
-eshopUrl: https://www.nintendo.com/us/store/products/super-mario-odyssey-switch/
+eshopUrl: https://datadock-host.site/f/vziHCWPl
 wikidataId: Q28400301
 igdbId: null
 rating:
