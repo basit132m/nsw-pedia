@@ -11,8 +11,9 @@ backend:
   name: github
   repo: basit132m/nsw-pedia
   branch: main
-  # Replace with your deployed OAuth worker URL (see SETUP.md, "Admin panel").
-  base_url: https://REPLACE-WITH-YOUR-AUTH-WORKER.workers.dev
+  # Sign-in is handled by this site itself, through the Pages Functions in
+  # /functions (routes /auth and /callback). There is no separate worker.
+  base_url: https://nsw-pedia.com
 
 site_url: https://nsw-pedia.com
 display_url: https://nsw-pedia.com

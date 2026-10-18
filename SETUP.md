@@ -109,23 +109,13 @@ in `.env` (already gitignored) and as Cloudflare Pages environment variables.
 ## Admin panel — write pages without touching code
 
 The site has a visual editor at **https://nsw-pedia.com/admin/**. It gives you a form for
-every field (game details, compatibility rows, version history, FAQ) and commits your changes
-straight to GitHub, which triggers a Cloudflare rebuild. Pages are live about two minutes
-after you hit Publish.
+every field and commits your changes straight to GitHub, which triggers a Cloudflare rebuild.
+Pages are live about two minutes after you hit Publish.
 
-It needs a one-time login setup, because GitHub will not let a browser page commit to your
-repo without an OAuth handshake. That handshake runs in a tiny free Cloudflare Worker.
+Sign-in runs inside this project as Cloudflare Pages Functions (`functions/auth.js` and
+`functions/callback.js`), so there is no separate worker to deploy. Two steps:
 
-### 1. Deploy the auth worker
-
-Go to [github.com/sveltia/sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) and
-click the **Deploy to Cloudflare Workers** button. It deploys into the same Cloudflare account
-you already use for Pages.
-
-Note the worker URL it gives you — it looks like
-`https://sveltia-cms-auth.<your-subdomain>.workers.dev`.
-
-### 2. Register a GitHub OAuth app
+### 1. Register a GitHub OAuth app
 
 Go to [github.com/settings/applications/new](https://github.com/settings/applications/new):
 
@@ -133,38 +123,28 @@ Go to [github.com/settings/applications/new](https://github.com/settings/applica
 |---|---|
 | Application name | `NSWPEDIA CMS` |
 | Homepage URL | `https://nsw-pedia.com` |
-| Authorization callback URL | `<YOUR_WORKER_URL>/callback` |
+| Authorization callback URL | `https://nsw-pedia.com/callback` |
 
-The callback URL must be your worker URL with `/callback` on the end, exactly.
+Register it, then click **Generate a new client secret**. Copy the **Client ID** and the
+**Client Secret** — the secret is shown only once.
 
-Click **Register application**, then **Generate a new client secret**. Copy both the **Client
-ID** and the **Client Secret** — the secret is only shown once.
+### 2. Add the credentials to the Pages project
 
-### 3. Give the worker its credentials
+Cloudflare → **Workers & Pages** → `nswpedia` → **Settings** → **Variables and Secrets**.
+Add three, for the **Production** environment:
 
-Cloudflare dashboard → **Workers & Pages** → `sveltia-cms-auth` → **Settings** → **Variables**:
+| Name | Type | Value |
+|---|---|---|
+| `GITHUB_CLIENT_ID` | Text | the Client ID |
+| `GITHUB_CLIENT_SECRET` | **Secret** | the Client Secret |
+| `ALLOWED_DOMAINS` | Text | `nsw-pedia.com` |
 
-| Variable | Value |
-|---|---|
-| `GITHUB_CLIENT_ID` | the Client ID from step 2 |
-| `GITHUB_CLIENT_SECRET` | the Client Secret — click **Encrypt** |
-| `ALLOWED_DOMAINS` | `nsw-pedia.com` |
+Set `GITHUB_CLIENT_SECRET` as a **Secret**, not plain text, so it is encrypted and never
+shown again. `ALLOWED_DOMAINS` restricts which site may receive an access token — without it
+any page that can reach `/auth` could start a login flow.
 
-`ALLOWED_DOMAINS` is optional but set it anyway: without it, anyone who finds your worker URL
-can use it to start a login flow.
-
-Save and deploy.
-
-### 4. Point the admin panel at the worker
-
-Edit `public/admin/config.yml`, line 15, and replace the placeholder:
-
-```yaml
-    base_url: https://REPLACE-WITH-YOUR-AUTH-WORKER.workers.dev
-```
-
-with your real worker URL. Commit. Once Cloudflare rebuilds, go to
-`https://nsw-pedia.com/admin/`, sign in with GitHub, and you have the editor.
+Redeploy (Deployments → **Retry deployment**) so the functions pick up the variables. Then go
+to `https://nsw-pedia.com/admin/` and sign in with GitHub.
 
 ### What the admin panel will and will not let you do
 
@@ -172,10 +152,18 @@ It enforces the schema as you type: Title ID must be 16 uppercase hex characters
 must be 50–300 characters, a game needs at least three compatibility rows. Publishers,
 authors and emulators are dropdowns rather than free text, so references cannot break.
 
-It does **not** let you bypass the quality floor. If you publish a game page with fewer than
-250 words of body copy, the Cloudflare build fails and the page does not go live. You will see
-the failure in the Cloudflare dashboard under the deployment log. Fix the page and it deploys.
-That is the system working, not a bug.
+It does **not** let you bypass the quality floor. Publish a game page with fewer than 250
+words of body copy and the Cloudflare build fails, so the page does not go live. You will see
+why in the deployment log. Fix the page and it deploys. That is the system working.
 
-Images you upload inside a collection go to that collection's `images/` folder and are
+Images uploaded inside a collection go to that collection's `images/` folder and are
 optimised to WebP at build time.
+
+### If sign-in fails
+
+| Symptom | Cause |
+|---|---|
+| "GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET are not set" | Variables missing, or you added them but have not redeployed |
+| "Could not verify the sign-in request" | Cookies blocked, or you opened `/callback` directly instead of via the panel |
+| GitHub shows "redirect_uri mismatch" | The callback URL on the OAuth app is not exactly `https://nsw-pedia.com/callback` |
+| Popup opens then nothing happens | `ALLOWED_DOMAINS` does not match the hostname you are browsing from |
