@@ -11,6 +11,9 @@ interface Props {
   updatedAt?: Date;
   jsonLd?: string;
   noindex?: boolean;
+  keywords?: string;
+  /** True when the title was written by hand: used verbatim, no site suffix. */
+  exactTitle?: boolean;
 }
 
 const {
@@ -23,16 +26,24 @@ const {
   updatedAt,
   jsonLd,
   noindex = false,
+  keywords,
+  exactTitle = false,
 } = Astro.props;
 
 const canonical = abs(path);
 const ogImage = abs(image);
-const fullTitle = title === SITE.title ? title : `${title} | ${SITE.name}`;
+// A hand-written title is used exactly as given — no site-name suffix — so the
+// author controls the full length of what appears in the search result.
+const fullTitle =
+  exactTitle || title === SITE.title || title.includes(SITE.name)
+    ? title
+    : `${title} | ${SITE.name}`;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 

@@ -13,13 +13,13 @@ export async function GET(context: APIContext) {
     ...games.map((g) => ({
       title: g.data.title,
       description: g.data.summary,
-      pubDate: g.data.updatedAt,
+      pubDate: g.data.updatedAt ?? g.data.publishedAt ?? new Date(),
       link: `/games/${g.id}/`,
     })),
     ...guides.map((g) => ({
       title: g.data.title,
       description: g.data.summary,
-      pubDate: g.data.updatedAt,
+      pubDate: g.data.updatedAt ?? g.data.publishedAt ?? new Date(),
       link: `/guides/${g.id}/`,
     })),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());

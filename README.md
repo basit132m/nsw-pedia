@@ -40,17 +40,33 @@ src/
 scripts/gen-assets.mjs   Brand asset generation
 ```
 
-## The quality floor
+## Required fields
 
-Thin programmatic pages are what Google's helpful-content system demotes, so the build
-enforces a minimum standard rather than trusting discipline:
+Only `title` is required, on every collection. Everything else is optional, so a page can be
+published with whatever is known and completed later. The templates omit any row or section
+with no data, so a sparse page renders cleanly rather than showing blank fields.
 
-- **In `content.config.ts`** — a game needs a cover image, at least three tested compatibility
-  rows, a valid 16-character hex Title ID, a summary between 50 and 300 characters, and a
-  publisher and author that resolve to real entities.
-- **In `lib/quality.ts`** — a page needs at least 250 words of original prose in its body.
+`lib/quality.ts` still warns in the build log for pages under 250 words of original prose,
+because thin pages are what Google's helpful-content system demotes — but it is a warning,
+not an error, and the page publishes either way.
 
-A page that fails either check **fails the build**. Set `draft: true` to park it instead.
+## Page metadata
+
+Each content type has an optional `seo` block:
+
+| Field | Behaviour when blank |
+|---|---|
+| `metaTitle` | Derived from the title plus whichever fields are filled in |
+| `metaDescription` | Falls back to `summary`, else a generated line from the technical fields; trimmed to 155 characters |
+| `keywords` | Derived from title, alternate titles, genres, publisher and developer |
+| `noindex` | `false` |
+
+A hand-written `metaTitle` is used **verbatim** — no ` | NSWPEDIA` suffix — so the author
+controls the exact length shown in a search result. A hand-written `metaDescription` is also
+used verbatim; only generated descriptions are truncated.
+
+Meta keywords are supported because they were asked for. Google has ignored them since 2009
+and they are not a ranking factor there; a few smaller engines still read them.
 
 ## Adding a game
 

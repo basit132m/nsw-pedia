@@ -35,13 +35,15 @@ const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(cru
     <ul class="mt-8 space-y-4">
       {emulators.map((e) => (
         <li class="surface flex flex-wrap items-start gap-4 p-5">
-          <Image src={e.data.logo} alt={`${e.data.title} logo`} width={64} height={64} class="size-14 rounded-lg object-cover" />
+          {e.data.logo && <Image src={e.data.logo} alt={`${e.data.title} logo`} width={64} height={64} class="size-14 rounded-lg object-cover" />}
           <div class="min-w-0 flex-1">
             <h2 class="font-display text-lg font-bold text-white">
               <a href={`/emulators/${e.id}/`} class="hover:text-[var(--color-blue-glow)]">{e.data.title}</a>
             </h2>
-            <p class="mt-1 text-sm leading-relaxed text-[var(--text-muted)]">{e.data.summary}</p>
-            <p class="mt-2 text-xs text-[var(--color-chrome-500)]">{e.data.status} · {e.data.platforms.join(', ')}</p>
+            {e.data.summary && <p class="mt-1 text-sm leading-relaxed text-[var(--text-muted)]">{e.data.summary}</p>}
+            <p class="mt-2 text-xs text-[var(--color-chrome-500)]">
+              {[e.data.status, e.data.platforms.join(', ') || undefined].filter(Boolean).join(' · ')}
+            </p>
           </div>
         </li>
       ))}

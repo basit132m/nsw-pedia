@@ -4,9 +4,9 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib/schema';
 
-const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime(),
-);
+const when = (e: { data: { updatedAt?: Date; publishedAt?: Date } }) =>
+  (e.data.updatedAt ?? e.data.publishedAt)?.getTime() ?? 0;
+const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort((a, b) => when(b) - when(a));
 const crumbs = [{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }];
 const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
 const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
@@ -29,10 +29,14 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
           <h2 class="font-display text-lg font-bold text-white">
             <a href={`/guides/${g.id}/`} class="hover:text-[var(--color-blue-glow)]">{g.data.title}</a>
           </h2>
-          <p class="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{g.data.summary}</p>
+          {g.data.summary && <p class="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{g.data.summary}</p>}
           <p class="mt-2 text-xs text-[var(--color-chrome-500)]">
-            {g.data.difficulty}{g.data.timeRequired && ` · ${g.data.timeRequired}`} · Updated{' '}
-            <time datetime={g.data.updatedAt.toISOString()}>{dateFmt.format(g.data.updatedAt)}</time>
+            {g.data.difficulty}{g.data.timeRequired && ` · ${g.data.timeRequired}`}
+            {(g.data.updatedAt ?? g.data.publishedAt) && (
+              <> · Updated <time datetime={(g.data.updatedAt ?? g.data.publishedAt)!.toISOString()}>
+                {dateFmt.format((g.data.updatedAt ?? g.data.publishedAt)!)}
+              </time></>
+            )}
           </p>
         </li>
       ))}

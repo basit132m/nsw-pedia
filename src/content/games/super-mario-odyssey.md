@@ -129,6 +129,16 @@ wikidataId: Q28400301
 rating:
   metacritic: 97
 
+seo:
+  metaTitle: "Super Mario Odyssey — Title ID & Emulator Compatibility"
+  metaDescription: "Super Mario Odyssey: Title ID 0100000000010000, XCI 5.7 GB, firmware 3.0.1+. Emulator compatibility across PC, Steam Deck and Android."
+  keywords:
+    - Super Mario Odyssey
+    - Super Mario Odyssey Title ID
+    - Super Mario Odyssey NSP
+    - Nintendo Switch
+    - Switch emulator compatibility
+
 author: nswpedia-team
 publishedAt: 2026-10-18
 updatedAt: 2026-10-18

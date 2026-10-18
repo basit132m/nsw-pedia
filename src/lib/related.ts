@@ -16,11 +16,15 @@ export function relatedGames(current: Game, all: Game[], limit = 6): Game[] {
     let s = 0;
     if (manual.has(g.id)) s += 1000;
     if (current.data.series && g.data.series === current.data.series) s += 50;
-    if (g.data.publisher.id === current.data.publisher.id) s += 15;
+    if (g.data.publisher && current.data.publisher && g.data.publisher.id === current.data.publisher.id) {
+      s += 15;
+    }
     const shared = g.data.genres.filter((x) => current.data.genres.includes(x)).length;
     s += shared * 10;
-    const years = Math.abs(g.data.releaseDate.getFullYear() - current.data.releaseDate.getFullYear());
-    s += Math.max(0, 5 - years);
+    if (g.data.releaseDate && current.data.releaseDate) {
+      const years = Math.abs(g.data.releaseDate.getFullYear() - current.data.releaseDate.getFullYear());
+      s += Math.max(0, 5 - years);
+    }
     return s;
   };
 

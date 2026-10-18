@@ -1,6 +1,11 @@
 ---
-interface Props { items: { question: string; answer: string }[]; heading?: string }
-const { items, heading = 'Frequently asked questions' } = Astro.props;
+interface Props { items: { question?: string; answer?: string }[]; heading?: string }
+const { items: raw, heading = 'Frequently asked questions' } = Astro.props;
+
+// A question with no answer (or vice versa) is skipped rather than rendered half-empty.
+const items = raw.filter(
+  (f): f is { question: string; answer: string } => Boolean(f.question && f.answer),
+);
 ---
 {items.length > 0 && (
   <section aria-labelledby="faq" class="surface overflow-hidden">

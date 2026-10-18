@@ -31,14 +31,14 @@ const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(cru
     <ul class="mt-8 space-y-4">
       {items.map((h) => (
         <li class="surface flex flex-wrap items-start gap-4 p-5">
-          <Image src={h.data.cover} alt={`${h.data.title} icon`} width={64} height={64} class="size-14 rounded-lg object-cover" />
+          {h.data.cover && <Image src={h.data.cover} alt={`${h.data.title} icon`} width={64} height={64} class="size-14 rounded-lg object-cover" />}
           <div class="min-w-0 flex-1">
             <h2 class="font-display text-lg font-bold text-white">
               <a href={`/homebrew/${h.id}/`} class="hover:text-[var(--color-blue-glow)]">{h.data.title}</a>
             </h2>
-            <p class="mt-1 text-sm leading-relaxed text-[var(--text-muted)]">{h.data.summary}</p>
+            {h.data.summary && <p class="mt-1 text-sm leading-relaxed text-[var(--text-muted)]">{h.data.summary}</p>}
             <p class="mt-2 font-mono text-xs text-[var(--color-chrome-500)]">
-              {h.data.fileType} · {h.data.fileSize} · v{h.data.version} · {h.data.license}
+              {[h.data.fileType, h.data.fileSize, h.data.version && `v${h.data.version}`, h.data.license].filter(Boolean).join(' · ')}
             </p>
           </div>
         </li>

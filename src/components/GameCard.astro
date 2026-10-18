@@ -5,19 +5,28 @@ import type { CollectionEntry } from 'astro:content';
 interface Props { game: CollectionEntry<'games'>; loading?: 'eager' | 'lazy' }
 const { game, loading = 'lazy' } = Astro.props;
 const d = game.data;
+
+const metaLine = [d.genres[0], d.releaseDate?.getFullYear()].filter(Boolean).join(' · ');
+const fileLine = [d.fileType, d.fileSize].filter(Boolean).join(' · ');
 ---
 <a href={`/games/${game.id}/`} class="group surface block overflow-hidden transition-colors hover:border-[var(--color-blue-brand)]">
-  <Image
-    src={d.cover}
-    alt={`${d.title} cover art`}
-    width={400}
-    height={600}
-    loading={loading}
-    class="aspect-[2/3] w-full object-cover"
-  />
+  {d.cover ? (
+    <Image
+      src={d.cover}
+      alt={`${d.title} cover art`}
+      width={400}
+      height={600}
+      loading={loading}
+      class="aspect-[2/3] w-full object-cover"
+    />
+  ) : (
+    <div class="flex aspect-[2/3] w-full items-center justify-center bg-[var(--bg-raised)] p-3 text-center text-xs text-[var(--text-muted)]">
+      No cover art yet
+    </div>
+  )}
   <div class="p-3">
     <h3 class="font-display text-sm leading-snug font-bold text-white group-hover:text-[var(--color-blue-glow)]">{d.title}</h3>
-    <p class="mt-1 text-xs text-[var(--text-muted)]">{d.genres[0]} · {d.releaseDate.getFullYear()}</p>
-    <p class="mt-0.5 font-mono text-xs text-[var(--color-chrome-500)]">{d.fileType} · {d.fileSize}</p>
+    {metaLine && <p class="mt-1 text-xs text-[var(--text-muted)]">{metaLine}</p>}
+    {fileLine && <p class="mt-0.5 font-mono text-xs text-[var(--color-chrome-500)]">{fileLine}</p>}
   </div>
 </a>

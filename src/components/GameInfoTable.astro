@@ -3,10 +3,12 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   game: CollectionEntry<'games'>['data'];
-  publisherSlug: string;
-  publisherName: string;
+  publisherSlug?: string;
+  publisherName?: string;
 }
 const { game, publisherSlug, publisherName } = Astro.props;
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
 
 const ratings = [
   game.ageRatings.esrb && `ESRB ${game.ageRatings.esrb}`,
@@ -15,66 +17,70 @@ const ratings = [
 ].filter(Boolean).join(' · ');
 
 const playerSummary = [
-  `${game.players.offline} offline`,
-  game.players.localCoop > 0 && `${game.players.localCoop} local co-op`,
-  game.players.online > 0 && `${game.players.online} online`,
-  game.players.nsoRequired && 'Nintendo Switch Online required',
+  game.players.offline && `${game.players.offline} offline`,
+  game.players.localCoop ? `${game.players.localCoop} local co-op` : undefined,
+  game.players.online ? `${game.players.online} online` : undefined,
+  game.players.nsoRequired ? 'Nintendo Switch Online required' : undefined,
 ].filter(Boolean).join(' · ');
 
-const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
+const contentSummary = game.contentType
+  ? game.includedUpdate
+    ? `${game.contentType} · includes update ${game.includedUpdate}`
+    : game.contentType
+  : undefined;
+
+type Row = { label: string; value?: string; kind?: 'publisher' | 'code' | 'hash' };
+
+/** Only rows with a value are rendered, so a partly-filled page stays clean. */
+const rows: Row[] = [
+  { label: 'Game name', value: game.title },
+  { label: 'Also known as', value: game.alternateTitles.join(' · ') || undefined },
+  { label: 'Genre', value: game.genres.join(', ') || undefined },
+  { label: 'Developer', value: game.developer },
+  { label: 'Published by', value: publisherName, kind: 'publisher' },
+  { label: 'Release date', value: game.releaseDate ? dateFmt.format(game.releaseDate) : undefined },
+  { label: 'Series', value: game.series },
+  { label: 'Version', value: game.version },
+  { label: 'Title ID', value: game.titleId, kind: 'code' },
+  { label: 'Build ID', value: game.buildId, kind: 'code' },
+  { label: 'Size', value: game.fileSize },
+  { label: 'File type', value: game.fileType && (game.trimmed ? `${game.fileType} (trimmed)` : game.fileType) },
+  { label: 'Required firmware', value: game.requiredFirmware && `${game.requiredFirmware} or later` },
+  { label: 'Region', value: game.region },
+  { label: 'Content type', value: contentSummary },
+  { label: 'DLC available', value: game.dlcCount ? `${game.dlcCount} item${game.dlcCount === 1 ? '' : 's'}` : undefined },
+  { label: 'Language (audio)', value: game.languages.audio.join(', ') || undefined },
+  { label: 'Language (subtitles)', value: game.languages.subtitles.join(', ') || undefined },
+  { label: 'Players', value: playerSummary || undefined },
+  { label: 'Play modes', value: game.playModes.join(' · ') || undefined },
+  { label: 'Features', value: game.features.join(', ') || undefined },
+  { label: 'Age rating', value: ratings || undefined },
+  { label: 'SHA-256', value: game.checksums.sha256, kind: 'hash' },
+  { label: 'CRC32', value: game.checksums.crc32, kind: 'hash' },
+].filter((r): r is Row & { value: string } => Boolean(r.value));
 ---
-<section aria-labelledby="game-details" class="surface overflow-hidden">
-  <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
-    Game details
-  </h2>
-  <dl class="divide-y divide-[var(--border)] text-sm">
-    {[
-      ['Game name', game.title],
-      game.alternateTitles.length > 0 && ['Also known as', game.alternateTitles.join(' · ')],
-      ['Genre', game.genres.join(', ')],
-      ['Developer', game.developer],
-      ['Published by', null],
-      ['Release date', dateFmt.format(game.releaseDate)],
-      game.series && ['Series', game.series],
-      ['Version', game.version],
-      ['Title ID', null],
-      game.buildId && ['Build ID', null],
-      ['Size', game.fileSize],
-      ['File type', game.trimmed ? `${game.fileType} (trimmed)` : game.fileType],
-      ['Required firmware', `${game.requiredFirmware} or later`],
-      ['Region', game.region],
-      ['Content type', game.includedUpdate ? `${game.contentType} · includes update ${game.includedUpdate}` : game.contentType],
-      game.dlcCount > 0 && ['DLC available', `${game.dlcCount} item${game.dlcCount === 1 ? '' : 's'}`],
-      ['Language (audio)', game.languages.audio.length ? game.languages.audio.join(', ') : '—'],
-      ['Language (subtitles)', game.languages.subtitles.join(', ')],
-      ['Players', playerSummary],
-      ['Play modes', game.playModes.join(' · ')],
-      game.features.length > 0 && ['Features', game.features.join(', ')],
-      ratings && ['Age rating', ratings],
-      game.checksums.sha256 && ['SHA-256', null],
-      game.checksums.crc32 && ['CRC32', null],
-    ].filter(Boolean).map((row) => {
-      const [label, value] = row as [string, string | null];
-      return (
+{rows.length > 0 && (
+  <section aria-labelledby="game-details" class="surface overflow-hidden">
+    <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+      Game details
+    </h2>
+    <dl class="divide-y divide-[var(--border)] text-sm">
+      {rows.map((row) => (
         <div class="grid grid-cols-1 gap-1 px-5 py-3 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-4">
-          <dt class="font-medium text-[var(--text-muted)]">{label}</dt>
+          <dt class="font-medium text-[var(--text-muted)]">{row.label}</dt>
           <dd class="text-[var(--text)]">
-            {label === 'Published by' ? (
-              <a href={`/publishers/${publisherSlug}/`} class="link-accent">{publisherName}</a>
-            ) : label === 'Title ID' ? (
-              <code class="font-mono text-[var(--color-blue-glow)]">{game.titleId}</code>
-            ) : label === 'Build ID' ? (
-              <code class="font-mono text-[var(--color-blue-glow)]">{game.buildId}</code>
-            ) : label === 'SHA-256' ? (
-              <code class="font-mono text-xs break-all text-[var(--text-muted)]">{game.checksums.sha256}</code>
-            ) : label === 'CRC32' ? (
-              <code class="font-mono text-xs text-[var(--text-muted)]">{game.checksums.crc32}</code>
+            {row.kind === 'publisher' && publisherSlug ? (
+              <a href={`/publishers/${publisherSlug}/`} class="link-accent">{row.value}</a>
+            ) : row.kind === 'code' ? (
+              <code class="font-mono text-[var(--color-blue-glow)]">{row.value}</code>
+            ) : row.kind === 'hash' ? (
+              <code class="font-mono text-xs break-all text-[var(--text-muted)]">{row.value}</code>
             ) : (
-              value
+              row.value
             )}
           </dd>
         </div>
-      );
-    })}
-  </dl>
-</section>
+      ))}
+    </dl>
+  </section>
+)}

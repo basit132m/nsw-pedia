@@ -4,51 +4,64 @@ import { glob } from 'astro/loaders';
 const TITLE_ID = /^[0-9A-F]{16}$/;
 
 /**
- * The CMS writes an empty string when an optional field is left blank, which
- * would fail .url() validation or leave "" in the rendered output. These
- * coerce blank to undefined so a cleared field behaves as absent.
+ * The CMS writes an empty string when a field is left blank, which would fail
+ * validation or leave "" in the output. These coerce blank to undefined so an
+ * unfilled field behaves as absent.
  */
 const blankToUndefined = (v: unknown) => (v === '' || v === null ? undefined : v);
 const optStr = () => z.preprocess(blankToUndefined, z.string().optional());
 const optUrl = () => z.preprocess(blankToUndefined, z.string().url().optional());
 const optNum = () => z.preprocess(blankToUndefined, z.number().optional());
+const optDate = () => z.preprocess(blankToUndefined, z.coerce.date().optional());
+const optEnum = <T extends readonly [string, ...string[]]>(values: T) =>
+  z.preprocess(blankToUndefined, z.enum(values).optional());
 
 /**
- * A single row in a game's emulator compatibility matrix.
- *
- * `source` keeps the page honest about where a result came from:
- *   - 'tested'   we ran the game ourselves; requires a named tester.
- *   - 'reported' sourced from a community database; requires a link.
- * The refine below enforces that, so a row can never claim first-hand
- * testing without naming who did it.
+ * Per-page SEO overrides. Every field is optional: leave one blank and the
+ * template derives a sensible value. Fill one in to take manual control.
  */
-const compatRow = z
+const seoBlock = z
   .object({
-    emulator: reference('emulators'),
-    platform: z.enum(['Windows', 'Linux', 'macOS', 'Android', 'Steam Deck', 'ROG Ally']),
-    device: z.string(),
-    fps: z.string(),
-    status: z.enum(['Perfect', 'Playable', 'Ingame', 'Menus', 'Boots', 'Nothing']),
-    notes: optStr(),
-    source: z.enum(['tested', 'reported']).default('reported'),
-    sourceUrl: optUrl(),
-    testedOn: z.coerce.date(),
-    testedBy: reference('authors').optional(),
+    metaTitle: optStr(),
+    metaDescription: optStr(),
+    keywords: z.array(z.string()).default([]),
+    noindex: z.boolean().default(false),
   })
-  .refine((r) => (r.source === 'tested' ? !!r.testedBy : !!r.sourceUrl), {
-    message:
-      "A 'tested' row needs testedBy (who ran it); a 'reported' row needs sourceUrl (where it came from).",
-  });
+  .default({});
+
+/**
+ * A row in a game's emulator compatibility matrix. `source` records whether a
+ * result is first-party ('tested') or taken from a community database
+ * ('reported'); the table shows the distinction and links reported rows to
+ * their source. Every field is optional so a partial row still publishes.
+ */
+const compatRow = z.object({
+  emulator: reference('emulators').optional(),
+  platform: optEnum(['Windows', 'Linux', 'macOS', 'Android', 'Steam Deck', 'ROG Ally']),
+  device: optStr(),
+  fps: optStr(),
+  status: optEnum(['Perfect', 'Playable', 'Ingame', 'Menus', 'Boots', 'Nothing']),
+  notes: optStr(),
+  source: optEnum(['tested', 'reported']),
+  sourceUrl: optUrl(),
+  testedOn: optDate(),
+  testedBy: reference('authors').optional(),
+});
 
 const versionRow = z.object({
-  version: z.string(),
-  date: z.coerce.date(),
-  notes: z.string(),
+  version: optStr(),
+  date: optDate(),
+  notes: optStr(),
   fileSize: optStr(),
 });
 
-const faqItem = z.object({ question: z.string(), answer: z.string() });
+const faqItem = z.object({ question: optStr(), answer: optStr() });
 
+/**
+ * Games. Only `title` is required — a page can be published with whatever is
+ * known and filled in later. The template omits any row or section with no
+ * data, so a sparse page renders cleanly rather than showing empty fields.
+ */
 const games = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/games' }),
   schema: ({ image }) =>
@@ -56,70 +69,76 @@ const games = defineCollection({
       // --- identity -------------------------------------------------
       title: z.string(),
       alternateTitles: z.array(z.string()).default([]),
-      summary: z.string().min(50).max(300),
-      cover: image(),
+      summary: optStr(),
+      cover: image().optional(),
       banner: image().optional(),
-      screenshots: z.array(z.object({ src: image(), alt: z.string() })).default([]),
+      screenshots: z.array(z.object({ src: image(), alt: optStr() })).default([]),
       trailerId: optStr(),
 
       // --- catalogue ------------------------------------------------
-      genres: z.array(z.string()).min(1),
-      developer: z.string(),
-      publisher: reference('publishers'),
+      genres: z.array(z.string()).default([]),
+      developer: optStr(),
+      publisher: reference('publishers').optional(),
       series: optStr(),
-      releaseDate: z.coerce.date(),
+      releaseDate: optDate(),
 
-      // --- the technical block (NSWPEDIA's differentiator) ----------
-      titleId: z.string().regex(TITLE_ID, 'Title ID must be 16 uppercase hex characters'),
+      // --- technical block ------------------------------------------
+      titleId: z.preprocess(
+        blankToUndefined,
+        z.string().regex(TITLE_ID, 'Title ID must be 16 uppercase hex characters').optional(),
+      ),
       buildId: optStr(),
-      version: z.string(),
-      fileSize: z.string(),
-      fileType: z.enum(['NSP', 'XCI', 'NSZ', 'XCZ']),
+      version: optStr(),
+      fileSize: optStr(),
+      fileType: optEnum(['NSP', 'XCI', 'NSZ', 'XCZ']),
       trimmed: z.boolean().default(false),
-      requiredFirmware: z.string(),
-      region: z.enum(['USA', 'EUR', 'JPN', 'ASIA', 'World', 'Multi']),
-      contentType: z.enum(['Base game', 'Update', 'DLC']).default('Base game'),
+      requiredFirmware: optStr(),
+      region: optEnum(['USA', 'EUR', 'JPN', 'ASIA', 'World', 'Multi']),
+      contentType: optEnum(['Base game', 'Update', 'DLC']),
       includedUpdate: optStr(),
-      dlcCount: z.number().int().nonnegative().default(0),
+      dlcCount: optNum(),
       checksums: z.object({ sha256: optStr(), crc32: optStr() }).default({}),
 
-      languages: z.object({
-        audio: z.array(z.string()).default([]),
-        subtitles: z.array(z.string()).min(1),
-      }),
+      languages: z
+        .object({
+          audio: z.array(z.string()).default([]),
+          subtitles: z.array(z.string()).default([]),
+        })
+        .default({}),
 
       // --- play ------------------------------------------------------
-      players: z.object({
-        offline: z.number().int().positive(),
-        localCoop: z.number().int().nonnegative().default(0),
-        online: z.number().int().nonnegative().default(0),
-        nsoRequired: z.boolean().default(false),
-      }),
-      playModes: z.array(z.enum(['TV', 'Tabletop', 'Handheld'])).min(1),
+      players: z
+        .object({
+          offline: optNum(),
+          localCoop: optNum(),
+          online: optNum(),
+          nsoRequired: z.boolean().default(false),
+        })
+        .default({}),
+      playModes: z.array(z.enum(['TV', 'Tabletop', 'Handheld'])).default([]),
       features: z.array(z.string()).default([]),
-      ageRatings: z.object({
-        esrb: optStr(),
-        pegi: optStr(),
-        cero: optStr(),
-      }).default({}),
+      ageRatings: z.object({ esrb: optStr(), pegi: optStr(), cero: optStr() }).default({}),
 
-      // --- original research ----------------------------------------
-      emulatorCompat: z.array(compatRow).min(3, 'A game page needs at least 3 compatibility rows'),
-      deviceTiers: z.array(z.object({ tier: z.string(), device: z.string(), result: z.string() })).default([]),
+      // --- research ---------------------------------------------------
+      emulatorCompat: z.array(compatRow).default([]),
+      deviceTiers: z
+        .array(z.object({ tier: optStr(), device: optStr(), result: optStr() }))
+        .default([]),
       knownIssues: z.array(z.string()).default([]),
       versionHistory: z.array(versionRow).default([]),
       faq: z.array(faqItem).default([]),
 
-      // --- linking & provenance --------------------------------------
+      // --- linking & provenance ---------------------------------------
       relatedGames: z.array(reference('games')).default([]),
       eshopUrl: optUrl(),
       wikidataId: optStr(),
       igdbId: optNum(),
       rating: z.object({ metacritic: optNum(), userScore: optNum() }).default({}),
 
-      author: reference('authors'),
-      publishedAt: z.coerce.date(),
-      updatedAt: z.coerce.date(),
+      seo: seoBlock,
+      author: reference('authors').optional(),
+      publishedAt: optDate(),
+      updatedAt: optDate(),
       draft: z.boolean().default(false),
     }),
 });
@@ -129,21 +148,22 @@ const emulators = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      summary: z.string().min(50).max(300),
-      logo: image(),
-      platforms: z.array(z.string()).min(1),
+      summary: optStr(),
+      logo: image().optional(),
+      platforms: z.array(z.string()).default([]),
       latestVersion: optStr(),
       license: optStr(),
       sourceUrl: optUrl(),
       officialUrl: optUrl(),
-      status: z.enum(['Active', 'Maintenance only', 'Discontinued', 'Fork']),
-      requirements: z.object({ cpu: z.string(), gpu: z.string(), ram: z.string() }).optional(),
+      status: optEnum(['Active', 'Maintenance only', 'Discontinued', 'Fork']),
+      requirements: z.object({ cpu: optStr(), gpu: optStr(), ram: optStr() }).default({}),
       pros: z.array(z.string()).default([]),
       cons: z.array(z.string()).default([]),
       faq: z.array(faqItem).default([]),
-      author: reference('authors'),
-      publishedAt: z.coerce.date(),
-      updatedAt: z.coerce.date(),
+      seo: seoBlock,
+      author: reference('authors').optional(),
+      publishedAt: optDate(),
+      updatedAt: optDate(),
       draft: z.boolean().default(false),
     }),
 });
@@ -153,15 +173,16 @@ const guides = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      summary: z.string().min(50).max(300),
+      summary: optStr(),
       cover: image().optional(),
-      difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced']).default('Beginner'),
+      difficulty: optEnum(['Beginner', 'Intermediate', 'Advanced']),
       timeRequired: optStr(),
       tags: z.array(z.string()).default([]),
       faq: z.array(faqItem).default([]),
-      author: reference('authors'),
-      publishedAt: z.coerce.date(),
-      updatedAt: z.coerce.date(),
+      seo: seoBlock,
+      author: reference('authors').optional(),
+      publishedAt: optDate(),
+      updatedAt: optDate(),
       draft: z.boolean().default(false),
     }),
 });
@@ -172,21 +193,22 @@ const homebrew = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      summary: z.string().min(50).max(300),
-      cover: image(),
-      author_name: z.string(),
-      license: z.string(),
-      sourceUrl: z.string().url(),
-      downloadUrl: z.string().url(),
-      fileType: z.enum(['NRO', 'NSP', 'ZIP']),
-      fileSize: z.string(),
-      version: z.string(),
+      summary: optStr(),
+      cover: image().optional(),
+      author_name: optStr(),
+      license: optStr(),
+      sourceUrl: optUrl(),
+      downloadUrl: optUrl(),
+      fileType: optEnum(['NRO', 'NSP', 'ZIP']),
+      fileSize: optStr(),
+      version: optStr(),
       requiredFirmware: optStr(),
       genres: z.array(z.string()).default([]),
       faq: z.array(faqItem).default([]),
-      author: reference('authors'),
-      publishedAt: z.coerce.date(),
-      updatedAt: z.coerce.date(),
+      seo: seoBlock,
+      author: reference('authors').optional(),
+      publishedAt: optDate(),
+      updatedAt: optDate(),
       draft: z.boolean().default(false),
     }),
 });
@@ -196,12 +218,13 @@ const publishers = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      summary: z.string().min(30).max(300),
+      summary: optStr(),
       logo: image().optional(),
       founded: optStr(),
       country: optStr(),
       website: optUrl(),
       wikidataId: optStr(),
+      seo: seoBlock,
     }),
 });
 
@@ -210,11 +233,11 @@ const authors = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      role: z.string(),
-      bio: z.string().min(80),
+      role: optStr(),
+      bio: optStr(),
       avatar: image().optional(),
       testingRig: z.array(z.string()).default([]),
-      sameAs: z.array(z.string().url()).default([]),
+      sameAs: z.array(z.string()).default([]),
     }),
 });
 

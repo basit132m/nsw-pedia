@@ -1,15 +1,15 @@
 ---
 interface Row {
-  emulatorName: string;
-  emulatorSlug: string;
-  platform: string;
-  device: string;
-  fps: string;
-  status: string;
+  emulatorName?: string;
+  emulatorSlug?: string;
+  platform?: string;
+  device?: string;
+  fps?: string;
+  status?: string;
   notes?: string;
-  source: 'tested' | 'reported';
+  source?: 'tested' | 'reported';
   sourceUrl?: string;
-  testedOn: Date;
+  testedOn?: Date;
   testedByName?: string;
 }
 interface Props { rows: Row[]; gameTitle: string }
@@ -24,15 +24,17 @@ const STATUS_STYLE: Record<string, string> = {
   Nothing: 'bg-zinc-500/15 text-zinc-300 ring-zinc-500/30',
 };
 const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
-const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows[0]!.testedOn);
+const dates = rows.map((r) => r.testedOn).filter((d): d is Date => d instanceof Date);
+const lastTested = dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
 ---
+{rows.length > 0 && (
 <section aria-labelledby="compat" class="surface overflow-hidden">
   <div class="border-b border-[var(--border)] px-5 py-3">
     <h2 id="compat" class="font-display text-base font-bold tracking-wide text-white uppercase">
       Emulator compatibility
     </h2>
     <p class="mt-1 text-sm text-[var(--text-muted)]">
-      Compatibility for {gameTitle}, newest result {dateFmt.format(lastTested)}.
+      Compatibility for {gameTitle}{lastTested && <>, newest result {dateFmt.format(lastTested)}</>}.
       Rows marked <strong class="text-[var(--text)]">Tested</strong> were run by us;
       <strong class="text-[var(--text)]">Reported</strong> rows link to the community source they came
       from. See <a href="/methodology/" class="link-accent">how we test</a>.
@@ -55,29 +57,36 @@ const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows
         {rows.map((r) => (
           <tr>
             <th scope="row" class="px-5 py-3 font-medium">
-              <a href={`/emulators/${r.emulatorSlug}/`} class="link-accent">{r.emulatorName}</a>
+              {r.emulatorSlug ? (
+                <a href={`/emulators/${r.emulatorSlug}/`} class="link-accent">{r.emulatorName}</a>
+              ) : (
+                r.emulatorName ?? '—'
+              )}
             </th>
-            <td class="px-5 py-3 text-[var(--text-muted)]">{r.platform}</td>
-            <td class="px-5 py-3">{r.device}</td>
-            <td class="px-5 py-3 font-mono tabular-nums">{r.fps}</td>
+            <td class="px-5 py-3 text-[var(--text-muted)]">{r.platform ?? '—'}</td>
+            <td class="px-5 py-3">{r.device ?? '—'}</td>
+            <td class="px-5 py-3 font-mono tabular-nums">{r.fps ?? '—'}</td>
             <td class="px-5 py-3">
-              <span class={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${STATUS_STYLE[r.status] ?? STATUS_STYLE.Nothing}`}>
-                {r.status}
-              </span>
+              {r.status ? (
+                <span class={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${STATUS_STYLE[r.status] ?? STATUS_STYLE.Nothing}`}>
+                  {r.status}
+                </span>
+              ) : '—'}
             </td>
             <td class="px-5 py-3 text-[var(--text-muted)]">{r.notes ?? '—'}</td>
             <td class="px-5 py-3 whitespace-nowrap text-[var(--text-muted)]">
-              <time datetime={r.testedOn.toISOString()}>{dateFmt.format(r.testedOn)}</time>
+              {r.testedOn && <time datetime={r.testedOn.toISOString()}>{dateFmt.format(r.testedOn)}</time>}
               {r.source === 'tested' ? (
                 <span class="block text-xs">
-                  <span class="font-semibold text-emerald-300">Tested</span> by {r.testedByName}
+                  <span class="font-semibold text-emerald-300">Tested</span>
+                  {r.testedByName && <> by {r.testedByName}</>}
                 </span>
-              ) : (
+              ) : r.source === 'reported' ? (
                 <span class="block text-xs">
                   <span class="font-semibold text-sky-300">Reported</span>
                   {r.sourceUrl && <> · <a href={r.sourceUrl} rel="nofollow noopener" class="link-accent">source</a></>}
                 </span>
-              )}
+              ) : null}
             </td>
           </tr>
         ))}
@@ -85,3 +94,4 @@ const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows
     </table>
   </div>
 </section>
+)}

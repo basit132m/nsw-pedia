@@ -69,6 +69,7 @@ export function personSchema(author: CollectionEntry<'authors'>): Json {
     name: author.data.name,
     jobTitle: author.data.role,
     description: author.data.bio,
+    // role and bio are optional; clean() drops them when absent.
     url: abs(`/authors/${author.id}/`),
     sameAs: author.data.sameAs,
   });
@@ -81,13 +82,22 @@ export function personSchema(author: CollectionEntry<'authors'>): Json {
  */
 export function videoGameSchema(
   game: CollectionEntry<'games'>,
-  opts: { url: string; publisherName: string; author: CollectionEntry<'authors'>; coverUrl: string },
+  opts: {
+    url: string;
+    publisherName?: string;
+    author?: CollectionEntry<'authors'>;
+    coverUrl?: string;
+  },
 ): Json {
   const d = game.data;
-  const identifiers: Json[] = [
-    { '@type': 'PropertyValue', propertyID: 'Title ID', value: d.titleId },
-  ];
+  const identifiers: Json[] = [];
+  if (d.titleId) identifiers.push({ '@type': 'PropertyValue', propertyID: 'Title ID', value: d.titleId });
   if (d.buildId) identifiers.push({ '@type': 'PropertyValue', propertyID: 'Build ID', value: d.buildId });
+
+  // Only emit numberOfPlayers when at least one count is known.
+  const playerCounts = [d.players.offline, d.players.localCoop, d.players.online].filter(
+    (n): n is number => typeof n === 'number' && n > 0,
+  );
 
   const contentRating = [d.ageRatings.esrb && `ESRB ${d.ageRatings.esrb}`, d.ageRatings.pegi && `PEGI ${d.ageRatings.pegi}`, d.ageRatings.cero && `CERO ${d.ageRatings.cero}`]
     .filter(Boolean)
@@ -109,17 +119,19 @@ export function videoGameSchema(
     gamePlatform: 'Nintendo Switch',
     operatingSystem: 'Nintendo Switch',
     applicationCategory: 'Game',
-    datePublished: d.releaseDate.toISOString().slice(0, 10),
+    datePublished: d.releaseDate?.toISOString().slice(0, 10),
     softwareVersion: d.version,
     fileSize: d.fileSize,
     encodingFormat: d.fileType,
-    softwareRequirements: `Firmware ${d.requiredFirmware} or later`,
+    softwareRequirements: d.requiredFirmware ? `Firmware ${d.requiredFirmware} or later` : undefined,
     identifier: identifiers,
     inLanguage: Array.from(new Set([...d.languages.audio, ...d.languages.subtitles])),
     contentRating: contentRating || undefined,
-    author: { '@type': 'Organization', name: d.developer },
-    publisher: { '@type': 'Organization', name: opts.publisherName },
-    numberOfPlayers: { '@type': 'QuantitativeValue', minValue: 1, maxValue: Math.max(d.players.offline, d.players.online, d.players.localCoop) },
+    author: d.developer ? { '@type': 'Organization', name: d.developer } : undefined,
+    publisher: opts.publisherName ? { '@type': 'Organization', name: opts.publisherName } : undefined,
+    numberOfPlayers: playerCounts.length
+      ? { '@type': 'QuantitativeValue', minValue: 1, maxValue: Math.max(...playerCounts) }
+      : undefined,
     playMode: d.playModes.map((m) => (m === 'Handheld' ? 'SinglePlayer' : m)),
     sameAs,
     isPartOf: d.series ? { '@type': 'CreativeWorkSeries', name: d.series } : undefined,
@@ -127,19 +139,22 @@ export function videoGameSchema(
       d.rating.metacritic !== undefined
         ? { '@type': 'AggregateRating', ratingValue: d.rating.metacritic, bestRating: 100, ratingCount: 1 }
         : undefined,
-    review: {
-      '@type': 'Review',
-      author: { '@id': abs(`/authors/${opts.author.id}/#person`) },
-      datePublished: d.updatedAt.toISOString().slice(0, 10),
-      reviewBody: d.summary,
-    },
-    dateModified: d.updatedAt.toISOString().slice(0, 10),
+    review:
+      opts.author && d.summary
+        ? {
+            '@type': 'Review',
+            author: { '@id': abs(`/authors/${opts.author.id}/#person`) },
+            datePublished: (d.updatedAt ?? d.publishedAt)?.toISOString().slice(0, 10),
+            reviewBody: d.summary,
+          }
+        : undefined,
+    dateModified: (d.updatedAt ?? d.publishedAt)?.toISOString().slice(0, 10),
   });
 }
 
 export function softwareApplicationSchema(
   emu: CollectionEntry<'emulators'>,
-  opts: { url: string; logoUrl: string },
+  opts: { url: string; logoUrl?: string },
 ): Json {
   const d = emu.data;
   return clean({
@@ -150,20 +165,20 @@ export function softwareApplicationSchema(
     url: opts.url,
     image: opts.logoUrl,
     applicationCategory: 'GameApplication',
-    operatingSystem: d.platforms.join(', '),
+    operatingSystem: d.platforms.length ? d.platforms.join(', ') : undefined,
     softwareVersion: d.latestVersion,
     license: d.license,
-    processorRequirements: d.requirements?.cpu,
-    memoryRequirements: d.requirements?.ram,
+    processorRequirements: d.requirements.cpu,
+    memoryRequirements: d.requirements.ram,
     offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
     sameAs: [d.officialUrl, d.sourceUrl].filter(Boolean),
-    dateModified: d.updatedAt.toISOString().slice(0, 10),
+    dateModified: (d.updatedAt ?? d.publishedAt)?.toISOString().slice(0, 10),
   });
 }
 
 export function articleSchema(
   entry: CollectionEntry<'guides'>,
-  opts: { url: string; author: CollectionEntry<'authors'>; imageUrl?: string },
+  opts: { url: string; author?: CollectionEntry<'authors'>; imageUrl?: string },
 ): Json {
   return clean({
     '@type': 'Article',
@@ -172,9 +187,9 @@ export function articleSchema(
     description: entry.data.summary,
     url: opts.url,
     image: opts.imageUrl,
-    datePublished: entry.data.publishedAt.toISOString(),
-    dateModified: entry.data.updatedAt.toISOString(),
-    author: { '@id': abs(`/authors/${opts.author.id}/#person`) },
+    datePublished: entry.data.publishedAt?.toISOString(),
+    dateModified: (entry.data.updatedAt ?? entry.data.publishedAt)?.toISOString(),
+    author: opts.author ? { '@id': abs(`/authors/${opts.author.id}/#person`) } : undefined,
     publisher: { '@id': ORG_ID },
     isAccessibleForFree: true,
     inLanguage: SITE.locale,

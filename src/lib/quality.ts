@@ -1,8 +1,9 @@
 /**
- * The quality floor. Thin programmatic pages are what Google's helpful-content
- * system demotes, so a page that fails these checks fails the build instead of
- * quietly shipping. Schema-level rules (cover image, >=3 compatibility rows)
- * live in content.config.ts; this covers what Zod cannot see — the prose.
+ * Content quality reporting.
+ *
+ * Thin pages are what Google's helpful-content system demotes, so the build
+ * flags any page with little original copy. It warns rather than fails: a
+ * page can go live incomplete and be filled in later.
  */
 const MIN_WORDS = 250;
 
@@ -15,13 +16,13 @@ export function countWords(markdown: string): number {
     .filter(Boolean).length;
 }
 
-export function assertQualityFloor(id: string, body: string | undefined, draft = false): void {
+export function checkQuality(id: string, body: string | undefined, draft = false): void {
   if (draft) return;
   const words = countWords(body ?? '');
   if (words < MIN_WORDS) {
-    throw new Error(
-      `[quality floor] "${id}" has ${words} words of original copy; ${MIN_WORDS} required. ` +
-        `Expand it, or set draft: true to keep it out of the build.`,
+    console.warn(
+      `  [thin page] ${id} — ${words} words of original copy (${MIN_WORDS} recommended). ` +
+        `It will still publish.`,
     );
   }
 }
