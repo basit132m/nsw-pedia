@@ -54,6 +54,9 @@ A page that fails either check **fails the build**. Set `draft: true` to park it
 
 ## Adding a game
 
+There are two ways: the admin panel at `/admin/` (a form UI — see [SETUP.md](./SETUP.md)),
+or by hand:
+
 1. Create `src/content/games/<slug>.md`. The slug becomes the URL: `/games/<slug>/`.
 2. Fill in the frontmatter. TypeScript will tell you what is missing — run `npm run check`.
 3. Put the cover in `src/content/games/images/` and reference it relatively (`./images/x.webp`).

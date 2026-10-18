@@ -7,8 +7,10 @@ interface Row {
   fps: string;
   status: string;
   notes?: string;
+  source: 'tested' | 'reported';
+  sourceUrl?: string;
   testedOn: Date;
-  testedByName: string;
+  testedByName?: string;
 }
 interface Props { rows: Row[]; gameTitle: string }
 const { rows, gameTitle } = Astro.props;
@@ -30,8 +32,10 @@ const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows
       Emulator compatibility
     </h2>
     <p class="mt-1 text-sm text-[var(--text-muted)]">
-      Hands-on results for {gameTitle}. Last tested {dateFmt.format(lastTested)} —
-      see <a href="/methodology/" class="link-accent">how we test</a>.
+      Compatibility for {gameTitle}, newest result {dateFmt.format(lastTested)}.
+      Rows marked <strong class="text-[var(--text)]">Tested</strong> were run by us;
+      <strong class="text-[var(--text)]">Reported</strong> rows link to the community source they came
+      from. See <a href="/methodology/" class="link-accent">how we test</a>.
     </p>
   </div>
   <div class="table-scroll">
@@ -44,7 +48,7 @@ const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows
           <th scope="col" class="px-5 py-2.5 font-semibold">FPS</th>
           <th scope="col" class="px-5 py-2.5 font-semibold">Status</th>
           <th scope="col" class="px-5 py-2.5 font-semibold">Notes</th>
-          <th scope="col" class="px-5 py-2.5 font-semibold">Tested</th>
+          <th scope="col" class="px-5 py-2.5 font-semibold">Result from</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-[var(--border)]">
@@ -64,7 +68,16 @@ const lastTested = rows.reduce((a, r) => (r.testedOn > a ? r.testedOn : a), rows
             <td class="px-5 py-3 text-[var(--text-muted)]">{r.notes ?? '—'}</td>
             <td class="px-5 py-3 whitespace-nowrap text-[var(--text-muted)]">
               <time datetime={r.testedOn.toISOString()}>{dateFmt.format(r.testedOn)}</time>
-              <span class="block text-xs">by {r.testedByName}</span>
+              {r.source === 'tested' ? (
+                <span class="block text-xs">
+                  <span class="font-semibold text-emerald-300">Tested</span> by {r.testedByName}
+                </span>
+              ) : (
+                <span class="block text-xs">
+                  <span class="font-semibold text-sky-300">Reported</span>
+                  {r.sourceUrl && <> · <a href={r.sourceUrl} rel="nofollow noopener" class="link-accent">source</a></>}
+                </span>
+              )}
             </td>
           </tr>
         ))}

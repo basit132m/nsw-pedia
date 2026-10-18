@@ -57,24 +57,27 @@ emulatorCompat:
     fps: "60"
     status: Perfect
     notes: "Stable at 60 fps after shader cache warms up."
+    source: reported
+    sourceUrl: https://github.com/Ryujinx/Ryujinx-Games-List/issues
     testedOn: 2026-10-10
-    testedBy: nswpedia-team
   - emulator: sudachi
     platform: Steam Deck
     device: "Steam Deck OLED"
     fps: "45–60"
     status: Playable
     notes: "Dips in Metro Kingdom crowds; stable elsewhere."
+    source: reported
+    sourceUrl: https://github.com/Ryujinx/Ryujinx-Games-List/issues
     testedOn: 2026-10-11
-    testedBy: nswpedia-team
   - emulator: citron
     platform: Android
     device: "Snapdragon 8 Gen 3, 12 GB RAM"
     fps: "30–45"
     status: Ingame
     notes: "Occasional texture flicker in water sections."
+    source: reported
+    sourceUrl: https://github.com/Ryujinx/Ryujinx-Games-List/issues
     testedOn: 2026-10-12
-    testedBy: nswpedia-team
 
 deviceTiers:
   - tier: "High end"

@@ -31,7 +31,7 @@ if (!publisher || !author) throw new Error(`[${game.id}] missing publisher or au
 const compatRows = await Promise.all(
   d.emulatorCompat.map(async (row) => {
     const emu = await getEntry(row.emulator);
-    const tester = await getEntry(row.testedBy);
+    const tester = row.testedBy ? await getEntry(row.testedBy) : undefined;
     return {
       emulatorName: emu?.data.title ?? row.emulator.id,
       emulatorSlug: row.emulator.id,
@@ -40,8 +40,10 @@ const compatRows = await Promise.all(
       fps: row.fps,
       status: row.status,
       notes: row.notes,
+      source: row.source,
+      sourceUrl: row.sourceUrl,
       testedOn: row.testedOn,
-      testedByName: tester?.data.name ?? 'NSWPEDIA',
+      testedByName: tester?.data.name,
     };
   }),
 );
