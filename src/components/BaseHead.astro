@@ -45,6 +45,10 @@ const fullTitle =
 <meta name="description" content={description} />
 {keywords && <meta name="keywords" content={keywords} />}
 <link rel="canonical" href={canonical} />
+
+<!-- Google Search Console site verification. Google re-checks this
+     periodically, so it has to stay even after the property is verified. -->
+<meta name="google-site-verification" content="KCy7So1FLlQlLfHHuyA3c_DJvg9BnCr2_Th5i3YdNng" />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <meta name="theme-color" content={SITE.themeColor} />
