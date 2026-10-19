@@ -49,9 +49,12 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
 
   <div class="mx-auto max-w-6xl px-4 py-14">
     <section>
-      <div class="flex items-baseline justify-between gap-4">
+      <div class="flex items-center justify-between gap-4">
         <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Recently updated games</h2>
-        <a href="/roms/" class="link-accent text-sm">All games</a>
+        <a href="/roms/" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-strong)]">
+          All games
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
       </div>
       <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {latestGames.map((g, i) => <GameCard game={g} loading={i < 6 ? 'eager' : 'lazy'} />)}
@@ -59,9 +62,12 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
     </section>
 
     <section class="mt-16">
-      <div class="flex items-baseline justify-between gap-4">
+      <div class="flex items-center justify-between gap-4">
         <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Latest guides</h2>
-        <a href="/guides/" class="link-accent text-sm">All guides</a>
+        <a href="/guides/" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-strong)]">
+          All guides
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
       </div>
       <ul class="mt-5 grid gap-4 sm:grid-cols-2">
         {latestGuides.map((g) => (
