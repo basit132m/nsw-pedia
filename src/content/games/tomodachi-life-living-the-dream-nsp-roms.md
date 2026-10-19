@@ -1,11 +1,13 @@
 ---
-title: 'Tomodachi Life: Living the Dream NSP ROMs Download'
+aliases:
+  - /roms/tomodachi-life-living-the-dream-nsp-roms-download
+title: 'Tomodachi Life: Living the Dream'
 alternateTitles:
-  - 'Tomodachi Life: Living the Dream'
+  - Tomodachi Exciting Life
 summary: |-
-  The sequel to the Japan-only Nintendo DS game Tomodachi Collection, Tomodachi Life (also known as Tomodachi Collection: New Life) is a social simulation video game developed and published by Nintendo for the Nintendo 3DS. It is a game that unfolds the daily dynamics of Mii characters, known as “islanders”, developing relationships, solving problems and conversing with the player.
+  The sequel to the Japan-only Nintendo DS game Tomodachi Collection, Tomodachi Life (also known as Tomodachi Collection: New Life) is a social simulation video game developed and published by Nintendo for the Nintendo 3DS.
 
-  Tomodachi Life opens with the player naming the island and making his/her lookalike, typically a personal “Mii”. Each Miis’ character is based on the players’ selection of attributes such as how fast they walk, how they talk, and whether they are quirky or not. Their is another Pokémon Legends Z-A Popular game of this category.
+  It is a game that unfolds the daily dynamics of Mii characters, known as “islanders”, developing relationships, solving problems and conversing with the player.
 cover: ''
 banner: ''
 screenshots:
