@@ -68,15 +68,15 @@ versionHistory:
   - version: Base
     date: 2026-04-16
     notes: ''
-    fileSize: ''
+    fileSize: 6.3 GB
   - version: 1.0.1
     date: 2026-04-23
     notes: A preliminary launch-week stability patch addressing general performance
-    fileSize: ''
+    fileSize: 150 MB
   - version: 1.0.2
     date: 2026-05-14
     notes: Focused on progression blockers and island expansion stability fixes
-    fileSize: ''
+    fileSize: 320 MB
 faq:
   - question: What is the maximum Mii capacity for an island?
     answer: Unlike the original 3DS entry (which allowed 100), Living the Dream caps island capacity at 70 Miis.
