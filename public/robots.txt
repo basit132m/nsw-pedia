@@ -5,6 +5,7 @@ Allow: /
 Disallow: /search/
 Disallow: /admin/
 Disallow: /download/
+Disallow: /api/
 Disallow: /auth
 Disallow: /callback
 Disallow: /*?*

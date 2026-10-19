@@ -167,3 +167,63 @@ optimised to WebP at build time.
 | "Could not verify the sign-in request" | Cookies blocked, or you opened `/callback` directly instead of via the panel |
 | GitHub shows "redirect_uri mismatch" | The callback URL on the OAuth app is not exactly `https://nsw-pedia.com/callback` |
 | Popup opens then nothing happens | `ALLOWED_DOMAINS` does not match the hostname you are browsing from |
+
+---
+
+## Visitor ratings
+
+ROM pages carry a 1–5 star rating. The site is static, so the average cannot be
+built into the page — it is fetched when the page loads and stored in a
+Cloudflare D1 database through `functions/api/ratings/[slug].js`.
+
+Until the database exists the rating block simply stays hidden; nothing breaks.
+
+### 1. Create the database
+
+Cloudflare dashboard → **Storage & Databases** → **D1** → **Create database**.
+Name it `nswpedia`.
+
+### 2. Create the table
+
+Open the database → **Console**, paste the contents of
+`migrations/0001_ratings.sql`, and run it.
+
+### 3. Bind it to the site
+
+**Workers & Pages** → `nswpedia` → **Settings** → **Bindings** → **Add** →
+**D1 database**:
+
+| Field | Value |
+|---|---|
+| Variable name | `DB` |
+| D1 database | `nswpedia` |
+
+The variable name must be exactly `DB` — that is what the code looks for.
+
+### 4. Add a salt (recommended)
+
+**Settings** → **Variables and Secrets** → add a **Secret**:
+
+| Name | Value |
+|---|---|
+| `RATING_SALT` | any long random string |
+
+Votes are identified by a SHA-256 of the visitor's IP and browser, never the
+IP itself, so the table holds no personal data. The salt stops that hash being
+reversed by trying every possible IP. It works without one, just less safely.
+
+### 5. Redeploy
+
+**Deployments** → latest → **Retry deployment**, so the functions pick up the
+new binding. Load a ROM page and the stars should appear.
+
+### How voting behaves
+
+- One vote per visitor per ROM. Voting again replaces the previous score
+  rather than adding another, so the count cannot be inflated by re-clicking.
+- Scores outside 1–5, non-integers and malformed requests are rejected.
+- `/api/` is disallowed in robots.txt.
+
+This is deliberately light protection: it stops casual double-voting, not a
+determined person with a script. If ratings ever start getting gamed, the next
+step is a per-IP daily cap or a proof-of-work challenge.

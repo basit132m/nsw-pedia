@@ -9,6 +9,7 @@ import VersionHistory from '@components/VersionHistory.astro';
 import FaqBlock from '@components/FaqBlock.astro';
 import RelatedGames from '@components/RelatedGames.astro';
 import ScreenshotRow from '@components/ScreenshotRow.astro';
+import RatingWidget from '@components/RatingWidget.astro';
 import Prose from '@components/Prose.astro';
 import { abs } from '@lib/site';
 import { checkQuality } from '@lib/quality';
@@ -168,6 +169,8 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
               ))}
             </ul>
           )}
+
+          <RatingWidget slug={game.id} title={d.title} />
 
           {d.eshopUrl && (
             <p class="mt-4">

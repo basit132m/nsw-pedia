@@ -1,0 +1,161 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+}
+const { slug, title } = Astro.props;
+const SCORES = [1, 2, 3, 4, 5];
+---
+{/*
+  Hidden until the API answers. The site is static, so the average cannot be
+  baked in at build time — it is fetched on load. If ratings are not
+  configured, or the request fails, the block stays hidden rather than
+  showing a broken control.
+*/}
+<section class="rating" data-rating data-slug={slug} hidden aria-labelledby="rating-heading">
+  <h2 id="rating-heading" class="sr-only">Rate {title}</h2>
+
+  <form class="rating__form">
+    {/*
+      Real radio inputs: arrow keys, tab order and screen-reader semantics
+      come free. Kept in natural 1-5 order so ArrowRight raises the score;
+      the fill is done with :has() rather than a reversed layout, which
+      would invert the arrow keys.
+    */}
+    <fieldset class="stars">
+      <legend class="sr-only">Your rating, 1 to 5 stars</legend>
+      {SCORES.map((n) => (
+        <>
+          <input class="sr-only" type="radio" id={`star-${n}`} name="rating" value={n} />
+          <label for={`star-${n}`} title={`${n} out of 5`}>
+            <span class="sr-only">{n} {n === 1 ? 'star' : 'stars'}</span>
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9z"
+                    fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+            </svg>
+          </label>
+        </>
+      ))}
+    </fieldset>
+
+    <p class="rating__summary">
+      <span data-average></span>
+      <span data-count class="rating__count"></span>
+    </p>
+  </form>
+
+  <p class="rating__status" role="status" aria-live="polite" data-status></p>
+</section>
+
+<style>
+  .rating {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-top: 1rem;
+  }
+  .rating[hidden] { display: none; }
+
+  .rating__form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+
+  .stars {
+    display: flex;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--border);
+  }
+  .stars label {
+    display: grid;
+    place-items: center;
+    padding: 0 1px;
+    cursor: pointer;
+    color: inherit;
+    transition: color 0.12s, transform 0.12s;
+  }
+  /* Fill the chosen star and every one before it. :has() lets the stars stay
+     in natural order, so arrow keys behave the way they look. */
+  .stars:has(#star-1:checked) label[for='star-1'],
+  .stars:has(#star-2:checked) :is(label[for='star-1'], label[for='star-2']),
+  .stars:has(#star-3:checked) :is(label[for='star-1'], label[for='star-2'], label[for='star-3']),
+  .stars:has(#star-4:checked) :is(label[for='star-1'], label[for='star-2'], label[for='star-3'], label[for='star-4']),
+  .stars:has(#star-5:checked) label,
+  .stars:has(label[for='star-1']:hover) label[for='star-1'],
+  .stars:has(label[for='star-2']:hover) :is(label[for='star-1'], label[for='star-2']),
+  .stars:has(label[for='star-3']:hover) :is(label[for='star-1'], label[for='star-2'], label[for='star-3']),
+  .stars:has(label[for='star-4']:hover) :is(label[for='star-1'], label[for='star-2'], label[for='star-3'], label[for='star-4']),
+  .stars:has(label[for='star-5']:hover) label {
+    color: #f5b301;
+  }
+  .stars label:hover { transform: scale(1.12); }
+  .stars input:focus-visible + label {
+    outline: 2px solid var(--color-blue-glow);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .rating[data-busy] .stars label { pointer-events: none; opacity: 0.6; }
+
+  .rating__summary { margin: 0; font-size: 0.875rem; color: var(--text); }
+  .rating__summary :global(strong) { font-weight: 700; }
+  .rating__count { color: var(--text-muted); }
+  .rating__status { margin: 0; font-size: 0.8125rem; color: var(--text-muted); }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-rating]').forEach((root) => {
+    const slug = root.dataset.slug;
+    if (!slug) return;
+
+    const endpoint = `/api/ratings/${encodeURIComponent(slug)}`;
+    const averageEl = root.querySelector<HTMLElement>('[data-average]')!;
+    const countEl = root.querySelector<HTMLElement>('[data-count]')!;
+    const statusEl = root.querySelector<HTMLElement>('[data-status]')!;
+    const inputs = [...root.querySelectorAll<HTMLInputElement>('input[name="rating"]')];
+
+    type Payload = { average: number | null; count: number; yourScore: number | null };
+
+    const paint = (d: Payload) => {
+      if (d.count > 0 && d.average !== null) {
+        averageEl.innerHTML = `<strong>${d.average.toFixed(1)}</strong> out of 5`;
+        countEl.textContent = ` · ${d.count} ${d.count === 1 ? 'rating' : 'ratings'}`;
+      } else {
+        averageEl.textContent = 'Not rated yet';
+        countEl.textContent = '';
+      }
+      if (d.yourScore) {
+        const mine = inputs.find((i) => Number(i.value) === d.yourScore);
+        if (mine) mine.checked = true;
+        statusEl.textContent = `You rated this ${d.yourScore} out of 5.`;
+      }
+      root.hidden = false;
+    };
+
+    // Ratings need a configured database; without one the block stays hidden.
+    fetch(endpoint, { headers: { Accept: 'application/json' } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then(paint)
+      .catch(() => { /* leave hidden */ });
+
+    root.addEventListener('change', async (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.name !== 'rating') return;
+
+      root.dataset.busy = 'true';
+      statusEl.textContent = 'Saving your rating…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ score: Number(input.value) }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        paint(await res.json());
+      } catch {
+        statusEl.textContent = 'Could not save your rating. Please try again.';
+      } finally {
+        delete root.dataset.busy;
+      }
+    });
+  });
+</script>
