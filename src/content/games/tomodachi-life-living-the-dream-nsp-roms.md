@@ -44,8 +44,6 @@ players: null
 playModes: []
 features:
   - 'Autonomous Mii Social Dynamics: Custom avatars freely interact, build relationships, confess love, and resolve conflicts on a player-managed island.'
-  - 'Real-Time Simulation & Island Expansion: In-game time flows parallel to the real world, expanding the island footprint as new Miis arrive.'
-  - 'Absurdist Life-Sim Activities: Players solve quirky Mii problems, trigger bizarre dreams, and watch live in-universe news broadcasts.'
 ageRatings: null
 emulatorCompat:
   - emulator: ryujinx
