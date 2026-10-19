@@ -8,26 +8,29 @@ const TITLE_ID = /^[0-9A-F]{16}$/;
  * validation or leave "" in the output. These coerce blank to undefined so an
  * unfilled field behaves as absent.
  */
-const blankToUndefined = (v: unknown) => (v === '' || v === null ? undefined : v);
-const optStr = () => z.preprocess(blankToUndefined, z.string().optional());
-const optUrl = () => z.preprocess(blankToUndefined, z.string().url().optional());
-const optNum = () => z.preprocess(blankToUndefined, z.number().optional());
-const optDate = () => z.preprocess(blankToUndefined, z.coerce.date().optional());
-const optEnum = <T extends readonly [string, ...string[]]>(values: T) =>
-  z.preprocess(blankToUndefined, z.enum(values).optional());
-const optBool = (fallback = false) =>
-  z.preprocess(blankToUndefined, z.boolean().default(fallback));
-
 /**
- * Lists and groups cleared in the editor are written as `null`, not omitted,
- * so these treat null as absent and fall back to the empty default.
+ * The CMS writes "" or null for a field cleared in the editor. `.catch()`
+ * turns a value that fails to parse into the fallback, which covers both,
+ * and unlike z.preprocess it preserves Zod's inferred output types — so
+ * references still resolve through getEntry() and enums keep their literal
+ * unions.
+ *
+ * The trade-off is that a genuinely malformed value is dropped rather than
+ * failing the build. That matches the rule for this site: a page publishes
+ * with whatever is valid. The admin panel validates formats in the form.
  */
-const optArr = <T extends z.ZodTypeAny>(inner: T) =>
-  z.preprocess(blankToUndefined, z.array(inner).default([]));
+const optStr = () => z.string().min(1).optional().catch(undefined);
+const optUrl = () => z.string().url().optional().catch(undefined);
+const optNum = () => z.number().optional().catch(undefined);
+const optDate = () => z.coerce.date().optional().catch(undefined);
+const optBool = (fallback = false) => z.boolean().default(fallback).catch(fallback);
+// `const` keeps the literal union ('tested' | 'reported') instead of widening
+// it to string, so components can type their props against the real values.
+const optEnum = <const T extends readonly [string, ...string[]]>(values: T) =>
+  z.enum(values).optional().catch(undefined);
+const optArr = <T extends z.ZodTypeAny>(inner: T) => z.array(inner).default([]).catch([]);
 const optObj = <T extends z.ZodRawShape>(shape: T) =>
-  z.preprocess(blankToUndefined, z.object(shape).default({}));
-const optRef = <C extends string>(collection: C) =>
-  z.preprocess(blankToUndefined, reference(collection).optional());
+  z.object(shape).default({} as z.input<z.ZodObject<T>>).catch({} as z.output<z.ZodObject<T>>);
 
 /**
  * Per-page SEO overrides. Every field is optional: leave one blank and the
@@ -47,7 +50,7 @@ const seoBlock = optObj({
  * their source. Every field is optional so a partial row still publishes.
  */
 const compatRow = z.object({
-  emulator: optRef('emulators'),
+  emulator: reference('emulators').optional().catch(undefined),
   platform: optEnum(['Windows', 'Linux', 'macOS', 'Android', 'Steam Deck', 'ROG Ally']),
   device: optStr(),
   fps: optStr(),
@@ -56,7 +59,7 @@ const compatRow = z.object({
   source: optEnum(['tested', 'reported']),
   sourceUrl: optUrl(),
   testedOn: optDate(),
-  testedBy: optRef('authors'),
+  testedBy: reference('authors').optional().catch(undefined),
 });
 
 const versionRow = z.object({
@@ -89,15 +92,16 @@ const games = defineCollection({
       // --- catalogue ------------------------------------------------
       genres: optArr(z.string()),
       developer: optStr(),
-      publisher: optRef('publishers'),
+      publisher: reference('publishers').optional().catch(undefined),
       series: optStr(),
       releaseDate: optDate(),
 
       // --- technical block ------------------------------------------
-      titleId: z.preprocess(
-        blankToUndefined,
-        z.string().regex(TITLE_ID, 'Title ID must be 16 uppercase hex characters').optional(),
-      ),
+      titleId: z
+        .string()
+        .regex(TITLE_ID, 'Title ID must be 16 uppercase hex characters')
+        .optional()
+        .catch(undefined),
       buildId: optStr(),
       version: optStr(),
       fileSize: optStr(),
@@ -143,7 +147,7 @@ const games = defineCollection({
       rating: optObj({ metacritic: optNum(), userScore: optNum() }),
 
       seo: seoBlock,
-      author: optRef('authors'),
+      author: reference('authors').optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -168,7 +172,7 @@ const emulators = defineCollection({
       cons: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: optRef('authors'),
+      author: reference('authors').optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -187,7 +191,7 @@ const guides = defineCollection({
       tags: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: optRef('authors'),
+      author: reference('authors').optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -213,7 +217,7 @@ const homebrew = defineCollection({
       genres: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: optRef('authors'),
+      author: reference('authors').optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),

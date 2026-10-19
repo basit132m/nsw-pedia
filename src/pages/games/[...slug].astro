@@ -8,6 +8,7 @@ import CompatMatrix from '@components/CompatMatrix.astro';
 import VersionHistory from '@components/VersionHistory.astro';
 import FaqBlock from '@components/FaqBlock.astro';
 import RelatedGames from '@components/RelatedGames.astro';
+import ScreenshotRow from '@components/ScreenshotRow.astro';
 import Prose from '@components/Prose.astro';
 import { abs } from '@lib/site';
 import { checkQuality } from '@lib/quality';
@@ -235,16 +236,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
 
         <VersionHistory rows={d.versionHistory} gameTitle={d.title} />
 
-        {d.screenshots.length > 0 && (
-          <section aria-labelledby="shots">
-            <h2 id="shots" class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Screenshots</h2>
-            <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              {d.screenshots.map((s) => (
-                <Image src={s.src} alt={s.alt ?? `${d.title} screenshot`} width={1280} height={720} class="surface w-full" />
-              ))}
-            </div>
-          </section>
-        )}
+        <ScreenshotRow images={d.screenshots} title={d.title} />
 
         <Prose><Content /></Prose>
 
