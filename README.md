@@ -73,7 +73,8 @@ and they are not a ranking factor there; a few smaller engines still read them.
 There are two ways: the admin panel at `/admin/` (a form UI — see [SETUP.md](./SETUP.md)),
 or by hand:
 
-1. Create `src/content/games/<slug>.md`. The slug becomes the URL: `/games/<slug>/`.
+1. Create `src/content/games/<slug>.md`. The slug becomes the URL: `/roms/<slug>/`.
+   (The collection folder is still named `games`; only the public URL is `/roms/`.)
 2. Fill in the frontmatter. TypeScript will tell you what is missing — run `npm run check`.
 3. Put the cover in `src/content/games/images/` and reference it relatively (`./images/x.webp`).
 4. Write at least 250 words of original copy in the body.

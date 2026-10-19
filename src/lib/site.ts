@@ -11,7 +11,7 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { href: '/games/', label: 'Games' },
+  { href: '/roms/', label: 'ROMs' },
   { href: '/emulators/', label: 'Emulators' },
   { href: '/guides/', label: 'Guides' },
   { href: '/homebrew/', label: 'Homebrew' },

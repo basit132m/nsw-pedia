@@ -29,7 +29,7 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
         can download legally.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/games/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the game database</a>
+        <a href="/roms/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the game database</a>
         <a href="/emulators/" class="rounded-lg px-5 py-2.5 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset hover:bg-[var(--bg-surface)]">Compare emulators</a>
       </div>
       <dl class="mt-12 grid max-w-xl grid-cols-3 gap-6">
@@ -51,7 +51,7 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
     <section>
       <div class="flex items-baseline justify-between gap-4">
         <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Recently updated games</h2>
-        <a href="/games/" class="link-accent text-sm">All games</a>
+        <a href="/roms/" class="link-accent text-sm">All games</a>
       </div>
       <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {latestGames.map((g, i) => <GameCard game={g} loading={i < 6 ? 'eager' : 'lazy'} />)}

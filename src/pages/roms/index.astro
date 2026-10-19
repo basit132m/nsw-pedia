@@ -8,13 +8,13 @@ import { breadcrumbSchema, graph, organizationSchema, websiteSchema } from '@lib
 const games = (await getCollection('games', ({ data }) => !data.draft)).sort((a, b) =>
   a.data.title.localeCompare(b.data.title),
 );
-const crumbs = [{ name: 'Home', href: '/' }, { name: 'Games', href: '/games/' }];
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'ROMs', href: '/roms/' }];
 const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
 ---
 <BaseLayout
   title="Nintendo Switch Game Database — Title IDs, Firmware & File Details"
   description="Browse every Nintendo Switch game in the NSWPEDIA database. Title ID, Build ID, required firmware, file type and size, version history and tested emulator compatibility for each title."
-  path="/games/"
+  path="/roms/"
   jsonLd={jsonLd}
 >
   <div class="mx-auto max-w-6xl px-4 py-6">

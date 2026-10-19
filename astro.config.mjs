@@ -16,7 +16,7 @@ export default defineConfig({
       filter: (page) => !page.includes('/404'),
       serialize(item) {
         if (item.url === SITE_URL + '/') item.priority = 1.0;
-        else if (item.url.includes('/games/')) item.priority = 0.8;
+        else if (item.url.includes('/roms/')) item.priority = 0.8;
         else if (item.url.includes('/emulators/')) item.priority = 0.8;
         else if (item.url.includes('/guides/')) item.priority = 0.7;
         else item.priority = 0.5;

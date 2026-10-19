@@ -1,0 +1,5 @@
+# The game database moved from /games/ to /roms/. These 301s keep old links
+# working and pass any accumulated ranking signal to the new paths.
+/games           /roms           301
+/games/          /roms/          301
+/games/*         /roms/:splat    301

@@ -9,7 +9,7 @@ const d = game.data;
 const metaLine = [d.genres[0], d.releaseDate?.getFullYear()].filter(Boolean).join(' · ');
 const fileLine = [d.fileType, d.fileSize].filter(Boolean).join(' · ');
 ---
-<a href={`/games/${game.id}/`} class="group surface block overflow-hidden transition-colors hover:border-[var(--color-blue-brand)]">
+<a href={`/roms/${game.id}/`} class="group surface block overflow-hidden transition-colors hover:border-[var(--color-blue-brand)]">
   {d.cover ? (
     <Image
       src={d.cover}

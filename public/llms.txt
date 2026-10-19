@@ -11,7 +11,7 @@ and date it was run.
 
 ## Core sections
 
-- [Game database](https://nsw-pedia.com/games/): per-game technical metadata and tested emulator compatibility.
+- [Game database](https://nsw-pedia.com/roms/): per-game technical metadata and tested emulator compatibility.
 - [Emulators](https://nsw-pedia.com/emulators/): platform support, requirements, licence and maintenance status for each emulator.
 - [Guides](https://nsw-pedia.com/guides/): file format references, setup walkthroughs and hardware recommendations.
 - [Homebrew](https://nsw-pedia.com/homebrew/): open-source and public-domain Switch software.

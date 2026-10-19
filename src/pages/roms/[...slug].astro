@@ -51,11 +51,11 @@ const compatRows = await Promise.all(
 );
 
 const related = relatedGames(game, all);
-const path = `/games/${game.id}/`;
+const path = `/roms/${game.id}/`;
 const url = abs(path);
 const crumbs = [
   { name: 'Home', href: '/' },
-  { name: 'Games', href: '/games/' },
+  { name: 'ROMs', href: '/roms/' },
   { name: d.title, href: path },
 ];
 

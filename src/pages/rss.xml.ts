@@ -14,7 +14,7 @@ export async function GET(context: APIContext) {
       title: g.data.title,
       description: g.data.summary,
       pubDate: g.data.updatedAt ?? g.data.publishedAt ?? new Date(),
-      link: `/games/${g.id}/`,
+      link: `/roms/${g.id}/`,
     })),
     ...guides.map((g) => ({
       title: g.data.title,

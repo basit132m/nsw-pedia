@@ -26,7 +26,7 @@ collections:
   folder: src/content/games
   create: true
   slug: '{{slug}}'
-  preview_path: games/{{slug}}
+  preview_path: roms/{{slug}}
   media_folder: images
   public_folder: ./images
   summary: '{{title}} — v{{version}} ({{fileType}})'
