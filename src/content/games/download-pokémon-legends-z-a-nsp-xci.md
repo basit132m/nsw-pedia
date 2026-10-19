@@ -2,7 +2,7 @@
 title: 'Download Pokémon Legends: Z-A (NSP/XCI)'
 alternateTitles: []
 summary: 'Pokémon Legends: Z-A is an action RPG created by Game Freak and published by Nintendo for the Nintendo Switch, and will be available globally on 16th October 2025. This game takes place exclusively in Lumiose City five years after the events of Pokémon X and Y.'
-cover: ''
+cover: ./images/Pokémon Legends Z-A.png
 screenshots:
   - src: ./images/Pokémon Legends Z-A (1).png
     alt: ''
