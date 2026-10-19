@@ -7,7 +7,7 @@ const { games, heading = 'Related games' } = Astro.props;
 ---
 {games.length > 0 && (
   <section aria-labelledby="related">
-    <h2 id="related" class="font-display text-base font-bold tracking-wide text-white uppercase">{heading}</h2>
+    <h2 id="related" class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">{heading}</h2>
     <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
       {games.map((g) => <GameCard game={g} />)}
     </div>

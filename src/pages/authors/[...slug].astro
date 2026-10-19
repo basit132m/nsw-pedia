@@ -33,14 +33,14 @@ const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(cru
     <header class="mt-6 flex flex-wrap items-start gap-5">
       {d.avatar && <Image src={d.avatar} alt={d.name} width={96} height={96} loading="eager" class="surface size-20 rounded-full object-cover" />}
       <div class="min-w-0 flex-1">
-        <h1 class="font-display text-3xl font-extrabold text-white">{d.name}</h1>
+        <h1 class="font-display text-3xl font-extrabold text-[var(--text-strong)]">{d.name}</h1>
         {d.role && <p class="mt-1 text-sm text-[var(--text-muted)]">{d.role}</p>}
         {d.bio && <p class="mt-3 leading-relaxed text-[var(--text-muted)]">{d.bio}</p>}
       </div>
     </header>
     {d.testingRig.length > 0 && (
       <section class="surface mt-8 p-5">
-        <h2 class="font-display text-sm font-bold tracking-wide text-white uppercase">Test hardware</h2>
+        <h2 class="font-display text-sm font-bold tracking-wide text-[var(--text-strong)] uppercase">Test hardware</h2>
         <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-[var(--text-muted)]">{d.testingRig.map((r) => <li>{r}</li>)}</ul>
       </section>
     )}

@@ -20,7 +20,7 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
 <BaseLayout title={SITE.title} description={SITE.description} path="/" jsonLd={jsonLd}>
   <section class="border-b border-[var(--border)] bg-[radial-gradient(60%_80%_at_18%_20%,rgba(248,0,0,0.16),transparent),radial-gradient(60%_80%_at_85%_75%,rgba(46,155,255,0.18),transparent)]">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-      <h1 class="font-display max-w-3xl text-4xl leading-[1.1] font-extrabold text-white sm:text-5xl">
+      <h1 class="font-display max-w-3xl text-4xl leading-[1.1] font-extrabold text-[var(--text-strong)] sm:text-5xl">
         The Nintendo Switch database, <span class="text-brand-red">tested</span>.
       </h1>
       <p class="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
@@ -40,7 +40,7 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
         ].map(([label, n]) => (
           <div>
             <dt class="text-xs tracking-wide text-[var(--text-muted)] uppercase">{label}</dt>
-            <dd class="font-display text-2xl font-extrabold text-white tabular-nums">{n}</dd>
+            <dd class="font-display text-2xl font-extrabold text-[var(--text-strong)] tabular-nums">{n}</dd>
           </div>
         ))}
       </dl>
@@ -50,7 +50,7 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
   <div class="mx-auto max-w-6xl px-4 py-14">
     <section>
       <div class="flex items-baseline justify-between gap-4">
-        <h2 class="font-display text-base font-bold tracking-wide text-white uppercase">Recently updated games</h2>
+        <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Recently updated games</h2>
         <a href="/games/" class="link-accent text-sm">All games</a>
       </div>
       <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
@@ -60,14 +60,14 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
 
     <section class="mt-16">
       <div class="flex items-baseline justify-between gap-4">
-        <h2 class="font-display text-base font-bold tracking-wide text-white uppercase">Latest guides</h2>
+        <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Latest guides</h2>
         <a href="/guides/" class="link-accent text-sm">All guides</a>
       </div>
       <ul class="mt-5 grid gap-4 sm:grid-cols-2">
         {latestGuides.map((g) => (
           <li class="surface p-5">
-            <h3 class="font-display font-bold text-white">
-              <a href={`/guides/${g.id}/`} class="hover:text-[var(--color-blue-glow)]">{g.data.title}</a>
+            <h3 class="font-display font-bold text-[var(--text-strong)]">
+              <a href={`/guides/${g.id}/`} class="hover:text-[var(--accent)]">{g.data.title}</a>
             </h3>
             {g.data.summary && <p class="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{g.data.summary}</p>}
           </li>

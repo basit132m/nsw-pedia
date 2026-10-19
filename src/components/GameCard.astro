@@ -25,8 +25,8 @@ const fileLine = [d.fileType, d.fileSize].filter(Boolean).join(' · ');
     </div>
   )}
   <div class="p-3">
-    <h3 class="font-display text-sm leading-snug font-bold text-white group-hover:text-[var(--color-blue-glow)]">{d.title}</h3>
+    <h3 class="font-display text-sm leading-snug font-bold text-[var(--text-strong)] group-hover:text-[var(--accent)]">{d.title}</h3>
     {metaLine && <p class="mt-1 text-xs text-[var(--text-muted)]">{metaLine}</p>}
-    {fileLine && <p class="mt-0.5 font-mono text-xs text-[var(--color-chrome-500)]">{fileLine}</p>}
+    {fileLine && <p class="mt-0.5 font-mono text-xs text-[var(--text-muted)]">{fileLine}</p>}
   </div>
 </a>

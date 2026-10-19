@@ -46,6 +46,9 @@
   --border: var(--color-ink-500);
   --text: #e9eef4;
   --text-muted: #9aa7b4;
+  --text-strong: #ffffff;
+  /* Small bold text on raised surfaces (spec pills, meta lines). */
+  --badge-fg: #c3ccd6;
   --accent: var(--color-blue-brand);
   color-scheme: dark;
 }
@@ -57,6 +60,8 @@
   --border: #d8dee6;
   --text: #0b0f15;
   --text-muted: #5a6673;
+  --text-strong: #06080c;
+  --badge-fg: #46505c;
   --accent: #0b5fd0;
   color-scheme: light;
 }
@@ -80,6 +85,10 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+:root[data-theme='light'] .text-chrome {
+  background: linear-gradient(180deg, #46505c 0%, #708090 40%, #2c343d 60%, #5a6673 100%);
 }
 
 .text-brand-red {
@@ -132,3 +141,52 @@ body {
   -ms-overflow-style: none;
 }
 .nav-scroll::-webkit-scrollbar { display: none; }
+
+
+/* ---------------------------------------------------------------
+   Status chips (compatibility results, emulator maintenance state,
+   result provenance). Tones are tokens rather than fixed palette
+   classes so they stay legible in both themes — the pale text that
+   reads well on near-black would vanish on white.
+   --------------------------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  box-shadow: inset 0 0 0 1px var(--chip-ring);
+}
+
+.chip[data-tone='good']    { --chip-bg: rgb(16 185 129 / 0.15);  --chip-fg: #6ee7b7; --chip-ring: rgb(16 185 129 / 0.3); }
+.chip[data-tone='ok']      { --chip-bg: rgb(132 204 22 / 0.15);  --chip-fg: #bef264; --chip-ring: rgb(132 204 22 / 0.3); }
+.chip[data-tone='warn']    { --chip-bg: rgb(245 158 11 / 0.15);  --chip-fg: #fcd34d; --chip-ring: rgb(245 158 11 / 0.3); }
+.chip[data-tone='caution'] { --chip-bg: rgb(249 115 22 / 0.15);  --chip-fg: #fdba74; --chip-ring: rgb(249 115 22 / 0.3); }
+.chip[data-tone='bad']     { --chip-bg: rgb(239 68 68 / 0.15);   --chip-fg: #fca5a5; --chip-ring: rgb(239 68 68 / 0.3); }
+.chip[data-tone='info']    { --chip-bg: rgb(56 165 255 / 0.15);  --chip-fg: #7dd3fc; --chip-ring: rgb(56 165 255 / 0.3); }
+.chip[data-tone='neutral'] { --chip-bg: rgb(113 113 122 / 0.15); --chip-fg: #d4d4d8; --chip-ring: rgb(113 113 122 / 0.3); }
+
+:root[data-theme='light'] .chip[data-tone='good']    { --chip-bg: rgb(16 185 129 / 0.12);  --chip-fg: #046c4e; }
+:root[data-theme='light'] .chip[data-tone='ok']      { --chip-bg: rgb(132 204 22 / 0.14);  --chip-fg: #3f6212; }
+:root[data-theme='light'] .chip[data-tone='warn']    { --chip-bg: rgb(245 158 11 / 0.16);  --chip-fg: #854d0e; }
+:root[data-theme='light'] .chip[data-tone='caution'] { --chip-bg: rgb(249 115 22 / 0.14);  --chip-fg: #7c2d12; }
+:root[data-theme='light'] .chip[data-tone='bad']     { --chip-bg: rgb(239 68 68 / 0.12);   --chip-fg: #991b1b; }
+:root[data-theme='light'] .chip[data-tone='info']    { --chip-bg: rgb(14 116 233 / 0.12);  --chip-fg: #0b4fa8; }
+:root[data-theme='light'] .chip[data-tone='neutral'] { --chip-bg: rgb(113 113 122 / 0.12); --chip-fg: #3f3f46; }
+
+/* Inline provenance labels in the compatibility table. */
+.tone-good { color: #6ee7b7; }
+.tone-info { color: #7dd3fc; }
+.tone-bad  { color: #fca5a5; }
+:root[data-theme='light'] .tone-good { color: #046c4e; }
+:root[data-theme='light'] .tone-info { color: #0b4fa8; }
+:root[data-theme='light'] .tone-bad  { color: #a51d1d; }
+
+/* The logo is built for a dark field; on white it needs a little separation. */
+:root[data-theme='light'] .brand-logo {
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.25));
+}

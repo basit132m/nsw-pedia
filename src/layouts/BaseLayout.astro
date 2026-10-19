@@ -22,10 +22,24 @@ const props = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Applied before first paint so the page never flashes the wrong theme. -->
+    <script is:inline>
+      (function () {
+        // Dark is the brand default. A visitor's own choice is remembered and
+        // wins. To follow the operating system setting instead, replace the
+        // fallback with:
+        //   matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        try {
+          document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
     <BaseHead {...props} />
   </head>
   <body class="flex min-h-dvh flex-col">
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--bg-raised)] focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--bg-raised)] focus:px-4 focus:py-2 focus:text-[var(--text-strong)]">Skip to content</a>
     <Header />
     <main id="main" class="flex-1">
       <slot />

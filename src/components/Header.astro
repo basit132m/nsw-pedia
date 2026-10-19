@@ -1,11 +1,12 @@
 ---
 import { NAV, SITE } from '@lib/site';
+import ThemeToggle from './ThemeToggle.astro';
 const current = Astro.url.pathname;
 ---
 <header class="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:gap-4">
     <a href="/" class="shrink-0" aria-label={`${SITE.name} home`}>
-      <img src="/logo.webp" alt={SITE.name} width="180" height="35" class="h-7 w-auto sm:h-8" />
+      <img src="/logo.webp" alt={SITE.name} width="180" height="35" class="brand-logo h-7 w-auto sm:h-8" />
     </a>
     <nav aria-label="Main" class="nav-scroll min-w-0 flex-1 overflow-x-auto">
       <ul class="flex items-center justify-start gap-0.5 sm:justify-end text-sm font-medium whitespace-nowrap sm:gap-2">
@@ -18,8 +19,8 @@ const current = Astro.url.pathname;
                 aria-current={active ? 'page' : undefined}
                 class={`rounded-md px-2 py-1.5 transition-colors sm:px-3 ${
                   active
-                    ? 'bg-[var(--bg-raised)] text-white'
-                    : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface)] hover:text-white'
+                    ? 'bg-[var(--bg-raised)] text-[var(--text-strong)]'
+                    : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-strong)]'
                 }`}
               >
                 {item.label}
@@ -29,5 +30,6 @@ const current = Astro.url.pathname;
         })}
       </ul>
     </nav>
+    <ThemeToggle />
   </div>
 </header>

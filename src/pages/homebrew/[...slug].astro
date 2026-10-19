@@ -46,13 +46,13 @@ const pageKeywords = resolveKeywords(d.seo.keywords, [
       <header class="flex flex-wrap items-start gap-5">
         {d.cover && <Image src={d.cover} alt={`${d.title} icon`} width={96} height={96} loading="eager" class="surface size-20 object-cover" />}
         <div class="min-w-0 flex-1">
-          <h1 class="font-display text-3xl font-extrabold text-white">{d.title}</h1>
+          <h1 class="font-display text-3xl font-extrabold text-[var(--text-strong)]">{d.title}</h1>
           {d.summary && <p class="mt-2 leading-relaxed text-[var(--text-muted)]">{d.summary}</p>}
         </div>
       </header>
 
       <section aria-labelledby="details" class="surface mt-8 overflow-hidden">
-        <h2 id="details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">Details</h2>
+        <h2 id="details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Details</h2>
         <dl class="divide-y divide-[var(--border)] text-sm">
           {[
             d.author_name && ['Author', d.author_name],

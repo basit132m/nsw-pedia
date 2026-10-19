@@ -119,6 +119,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
   keywords={pageKeywords}
   exactTitle={Boolean(d.seo.metaTitle)}
   path={path}
+  image={d.banner?.src ?? d.cover?.src}
   type="article"
   publishedAt={d.publishedAt}
   updatedAt={d.updatedAt}
@@ -129,6 +130,16 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
     <Breadcrumbs crumbs={crumbs} />
 
     <article class="mt-6">
+      {d.banner && (
+        <Image
+          src={d.banner}
+          alt={`${d.title} banner`}
+          width={1200}
+          loading="eager"
+          class="surface mb-8 w-full object-cover"
+        />
+      )}
+
       <header class={d.cover ? 'grid gap-6 sm:grid-cols-[200px_1fr]' : ''}>
         {d.cover && (
           <div class="w-full max-w-[200px]">
@@ -143,7 +154,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
           </div>
         )}
         <div>
-          <h1 class="font-display text-3xl leading-tight font-extrabold text-white sm:text-4xl">{d.title}</h1>
+          <h1 class="font-display text-3xl leading-tight font-extrabold text-[var(--text-strong)] sm:text-4xl">{d.title}</h1>
           {d.alternateTitles.length > 0 && (
             <p class="mt-1 text-sm text-[var(--text-muted)]">{d.alternateTitles.join(' · ')}</p>
           )}
@@ -152,7 +163,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
           {badges.length > 0 && (
             <ul class="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
               {badges.map((b) => (
-                <li class="rounded-full bg-[var(--bg-raised)] px-3 py-1 text-[var(--color-chrome-300)] ring-1 ring-[var(--border)] ring-inset">{b}</li>
+                <li class="rounded-full bg-[var(--bg-raised)] px-3 py-1 text-[var(--badge-fg)] ring-1 ring-[var(--border)] ring-inset">{b}</li>
               ))}
             </ul>
           )}
@@ -180,13 +191,13 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
 
         {d.deviceTiers.length > 0 && (
           <section aria-labelledby="tiers" class="surface overflow-hidden">
-            <h2 id="tiers" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+            <h2 id="tiers" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">
               What hardware you need
             </h2>
             <ul class="divide-y divide-[var(--border)] text-sm">
               {d.deviceTiers.map((t) => (
                 <li class="grid gap-1 px-5 py-3 sm:grid-cols-[minmax(0,9rem)_minmax(0,16rem)_1fr] sm:gap-4">
-                  <span class="font-semibold text-white">{t.tier}</span>
+                  <span class="font-semibold text-[var(--text-strong)]">{t.tier}</span>
                   <span class="text-[var(--text-muted)]">{t.device}</span>
                   <span>{t.result}</span>
                 </li>
@@ -197,7 +208,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
 
         {d.knownIssues.length > 0 && (
           <section aria-labelledby="issues" class="surface overflow-hidden">
-            <h2 id="issues" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+            <h2 id="issues" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">
               Known issues
             </h2>
             <ul class="list-disc space-y-2 px-5 py-4 pl-9 text-sm text-[var(--text-muted)]">
@@ -210,7 +221,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
 
         {d.screenshots.length > 0 && (
           <section aria-labelledby="shots">
-            <h2 id="shots" class="font-display text-base font-bold tracking-wide text-white uppercase">Screenshots</h2>
+            <h2 id="shots" class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Screenshots</h2>
             <div class="mt-4 grid gap-4 sm:grid-cols-2">
               {d.screenshots.map((s) => (
                 <Image src={s.src} alt={s.alt ?? `${d.title} screenshot`} width={1280} height={720} class="surface w-full" />

@@ -61,7 +61,7 @@ const rows: Row[] = [
 ---
 {rows.length > 0 && (
   <section aria-labelledby="game-details" class="surface overflow-hidden">
-    <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-white uppercase">
+    <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">
       Game details
     </h2>
     <dl class="divide-y divide-[var(--border)] text-sm">
@@ -72,7 +72,7 @@ const rows: Row[] = [
             {row.kind === 'publisher' && publisherSlug ? (
               <a href={`/publishers/${publisherSlug}/`} class="link-accent">{row.value}</a>
             ) : row.kind === 'code' ? (
-              <code class="font-mono text-[var(--color-blue-glow)]">{row.value}</code>
+              <code class="font-mono text-[var(--accent)]">{row.value}</code>
             ) : row.kind === 'hash' ? (
               <code class="font-mono text-xs break-all text-[var(--text-muted)]">{row.value}</code>
             ) : (
