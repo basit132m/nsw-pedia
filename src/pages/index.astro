@@ -19,20 +19,20 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
 ---
 <BaseLayout title={SITE.title} description={SITE.description} path="/" jsonLd={jsonLd}>
   <section class="border-b border-[var(--border)] bg-[radial-gradient(60%_80%_at_18%_20%,rgba(248,0,0,0.16),transparent),radial-gradient(60%_80%_at_85%_75%,rgba(46,155,255,0.18),transparent)]">
-    <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-      <h1 class="font-display max-w-3xl text-4xl leading-[1.1] font-extrabold text-[var(--text-strong)] sm:text-5xl">
+    <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
+      <h1 class="font-display mx-auto max-w-3xl text-4xl leading-[1.1] font-extrabold text-[var(--text-strong)] sm:text-5xl">
         The Nintendo Switch database, <span class="text-brand-red">tested</span>.
       </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
         Title IDs, firmware requirements, file details and version history for every game — plus
         hands-on emulator compatibility results from real hardware, and a homebrew library you
         can download legally.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
         <a href="/roms/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the game database</a>
         <a href="/emulators/" class="rounded-lg px-5 py-2.5 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset hover:bg-[var(--bg-surface)]">Compare emulators</a>
       </div>
-      <dl class="mt-12 grid max-w-xl grid-cols-3 gap-6">
+      <dl class="mx-auto mt-12 grid max-w-xl grid-cols-3 gap-6">
         {[
           ['Games', games.length],
           ['Emulators', emulators.length],
