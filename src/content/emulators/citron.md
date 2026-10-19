@@ -1,26 +1,30 @@
 ---
 title: Citron
-summary: >-
-  Community-maintained Nintendo Switch emulator fork, continuing development from a prior
-  open-source release with ongoing fixes for rendering, audio and performance.
-logo: ./images/placeholder-logo.webp
-platforms: ["Windows", "Linux", "Android"]
+summary: Community-maintained Nintendo Switch emulator fork, continuing development from a prior open-source release with ongoing fixes for rendering, audio and performance.
+logo: ./images/citro-emulator.webp
+platforms:
+  - Windows
+  - Linux
+  - Android
+latestVersion: ''
 license: GPL-3.0
 status: Fork
+sourceUrl: ''
+officialUrl: ''
 requirements:
-  cpu: "Quad-core x86-64 with AVX2, or ARMv8 for Android"
-  gpu: "Vulkan 1.1 capable"
-  ram: "8 GB minimum"
+  cpu: Quad-core x86-64 with AVX2, or ARMv8 for Android
+  gpu: Vulkan 1.1 capable
+  ram: 8 GB minimum
 pros:
-  - "Actively maintained by the community"
-  - "Runs on Android as well as desktop"
+  - Actively maintained by the community
+  - Runs on Android as well as desktop
 cons:
-  - "Release cadence and stability vary between builds"
-  - "Requires user-supplied firmware and keys"
+  - Release cadence and stability vary between builds
+  - Requires user-supplied firmware and keys
 faq:
   - question: Does Citron include ROMs or firmware?
-    answer: >-
-      No. It is an emulator only. Firmware and keys must come from hardware the user owns.
+    answer: No. It is an emulator only. Firmware and keys must come from hardware the user owns.
+seo: null
 author: nswpedia-team
 publishedAt: 2026-10-18
 updatedAt: 2026-10-18
