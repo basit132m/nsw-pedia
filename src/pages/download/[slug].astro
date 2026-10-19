@@ -1,0 +1,145 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+/** Seconds the visitor waits before the outbound link is revealed. */
+const WAIT_SECONDS = 10;
+
+export async function getStaticPaths() {
+  const games = await getCollection('games', ({ data }) => !data.draft && Boolean(data.eshopUrl));
+  return games.map((game) => ({ params: { slug: game.id }, props: { game } }));
+}
+
+const { game } = Astro.props;
+const d = game.data;
+const publisher = d.publisher ? await getEntry(d.publisher) : undefined;
+const romPath = `/roms/${game.id}/`;
+
+/**
+ * The destination is shown by name. The field is called eshopUrl but can hold
+ * any link, so hard-coding "Nintendo eShop" here would mislabel wherever it
+ * actually points.
+ */
+let destHost = '';
+try {
+  destHost = new URL(d.eshopUrl!).hostname.replace(/^www\./, '');
+} catch {
+  destHost = 'the destination site';
+}
+const isOfficialStore = /(^|\.)nintendo\.com$/.test(destHost);
+
+const facts = [
+  d.fileType && d.fileSize ? `${d.fileType} · ${d.fileSize}` : d.fileType || d.fileSize,
+  d.version && `v${d.version}`,
+  d.region,
+].filter(Boolean) as string[];
+---
+<BaseLayout
+  title={`Preparing ${d.title} — NSWPEDIA`}
+  description={`Continue to the official listing for ${d.title}.`}
+  path={`/download/${game.id}/`}
+  noindex={true}
+>
+  <div class="mx-auto flex max-w-xl flex-col items-center px-4 py-16 text-center">
+    {d.cover && (
+      <div class="w-32">
+        <Image src={d.cover} alt={`${d.title} cover art`} width={256} height={384} loading="eager"
+               class="surface aspect-[2/3] w-full object-cover" />
+      </div>
+    )}
+
+    <h1 class="font-display mt-6 text-2xl font-extrabold text-[var(--text-strong)] sm:text-3xl">{d.title}</h1>
+    {publisher && <p class="mt-1 text-sm text-[var(--text-muted)]">{publisher.data.title}</p>}
+    {facts.length > 0 && (
+      <ul class="mt-4 flex flex-wrap justify-center gap-2 text-xs font-semibold">
+        {facts.map((f) => (
+          <li class="rounded-full bg-[var(--bg-raised)] px-3 py-1 text-[var(--badge-fg)] ring-1 ring-[var(--border)] ring-inset">{f}</li>
+        ))}
+      </ul>
+    )}
+
+    <div class="surface mt-8 w-full p-6">
+      {/*
+        The real link is in the markup from the start and simply hidden, so it
+        is never unreachable — the <noscript> rule below reveals it at once
+        when scripting is off, rather than trapping the visitor on a timer
+        that can never finish.
+      */}
+      <div id="countdown" class="js-only">
+        <p class="text-sm text-[var(--text-muted)]">Preparing your link…</p>
+        <p class="font-display mt-2 text-5xl font-extrabold tabular-nums text-[var(--text-strong)]" aria-hidden="true">
+          <span id="seconds">{WAIT_SECONDS}</span>
+        </p>
+        <div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-[var(--bg-raised)]">
+          <div id="bar" class="h-full w-0 rounded-full bg-[var(--color-red-action)]"
+               style={`transition: width ${WAIT_SECONDS}s linear`}></div>
+        </div>
+      </div>
+
+      <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+
+      <a
+        id="go"
+        href={d.eshopUrl}
+        rel="nofollow noopener"
+        hidden
+        class="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-red-action)] px-6 py-3 text-base font-bold text-white hover:bg-[var(--color-red-action-hover)]"
+      >
+        {isOfficialStore ? 'Continue to Nintendo eShop' : `Continue to ${destHost}`}
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+
+      <p class="mt-4 text-xs break-words text-[var(--text-muted)]">
+        You are leaving NSWPEDIA. This link opens <strong class="text-[var(--text)]">{destHost}</strong>,
+        which NSWPEDIA does not operate or control.
+      </p>
+    </div>
+
+    <p class="mt-6 text-sm">
+      <a href={romPath} class="link-accent">← Back to {d.title}</a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Without scripting the countdown can never finish, so skip straight to
+     the link instead of leaving it hidden forever. */
+  .js-only { display: block; }
+</style>
+<noscript>
+  <style>
+    #countdown { display: none; }
+    #go { display: inline-flex !important; }
+  </style>
+</noscript>
+
+<script define:vars={{ WAIT_SECONDS }}>
+  (function () {
+    var secondsEl = document.getElementById('seconds');
+    var bar = document.getElementById('bar');
+    var go = document.getElementById('go');
+    var countdown = document.getElementById('countdown');
+    var status = document.getElementById('status');
+    if (!go || !secondsEl) return;
+
+    var left = WAIT_SECONDS;
+    // Start the bar on the next frame so the transition actually animates.
+    requestAnimationFrame(function () { if (bar) bar.style.width = '100%'; });
+
+    var tick = setInterval(function () {
+      left -= 1;
+      if (left > 0) {
+        secondsEl.textContent = String(left);
+        return;
+      }
+      clearInterval(tick);
+      if (countdown) countdown.hidden = true;
+      go.hidden = false;
+      // Announced once, rather than reading out every second.
+      if (status) status.textContent = 'Your link is ready.';
+      go.focus({ preventScroll: true });
+    }, 1000);
+  })();
+</script>

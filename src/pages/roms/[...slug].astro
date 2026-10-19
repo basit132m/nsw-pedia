@@ -118,6 +118,15 @@ const COLUMN_WIDTH = 1120;
 const BANNER_MAX = d.banner ? Math.min(d.banner.width, COLUMN_WIDTH) : COLUMN_WIDTH;
 const BANNER_WIDTHS = [480, 768, 1120].filter((w) => w <= BANNER_MAX).concat(BANNER_MAX);
 
+// Only call it the eShop when it really is the eShop.
+let eshopHost = '';
+try {
+  eshopHost = d.eshopUrl ? new URL(d.eshopUrl).hostname.replace(/^www\./, '') : '';
+} catch {
+  eshopHost = '';
+}
+const isOfficialStore = /(^|\.)nintendo\.com$/.test(eshopHost);
+
 const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.fileSize}`, d.version && `v${d.version}`, d.requiredFirmware && `FW ${d.requiredFirmware}+`].filter(Boolean) as string[];
 ---
 <BaseLayout
@@ -187,8 +196,14 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
 
           {d.eshopUrl && (
             <p class="mt-4">
-              <a href={d.eshopUrl} rel="nofollow noopener" class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-red-action)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">
-                Buy on Nintendo eShop
+              <a
+                href={`/download/${game.id}/`}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-red-action)] px-4 py-2 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]"
+              >
+                {isOfficialStore ? 'Buy on Nintendo eShop' : `Get ${d.title}`}
+                <span class="sr-only">(opens in a new tab)</span>
               </a>
             </p>
           )}
