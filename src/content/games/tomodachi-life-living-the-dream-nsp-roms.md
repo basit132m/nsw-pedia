@@ -66,16 +66,16 @@ knownIssues:
   - 'Currency & Accounting Display Glitches: In rare instances, earning or receiving island funds caused the monetary display counter to bug out, preventing progression.'
 versionHistory:
   - version: Base
-    date: ''
+    date: 2026-04-16
     notes: ''
     fileSize: ''
   - version: 1.0.1
-    date: ''
-    notes: ''
+    date: 2026-04-23
+    notes: A preliminary launch-week stability patch addressing general performance
     fileSize: ''
   - version: 1.0.2
-    date: ''
-    notes: ''
+    date: 2026-05-14
+    notes: Focused on progression blockers and island expansion stability fixes
     fileSize: ''
 faq:
   - question: What is the maximum Mii capacity for an island?
