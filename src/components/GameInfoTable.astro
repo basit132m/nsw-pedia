@@ -33,7 +33,7 @@ type Row = { label: string; value?: string; kind?: 'publisher' | 'code' | 'hash'
 
 /** Only rows with a value are rendered, so a partly-filled page stays clean. */
 const rows: Row[] = [
-  { label: 'Game name', value: game.title },
+  { label: 'ROM name', value: game.title },
   { label: 'Also known as', value: game.alternateTitles.join(' · ') || undefined },
   { label: 'Genre', value: game.genres.join(', ') || undefined },
   { label: 'Developer', value: game.developer },
@@ -62,7 +62,7 @@ const rows: Row[] = [
 {rows.length > 0 && (
   <section aria-labelledby="game-details" class="surface overflow-hidden">
     <h2 id="game-details" class="font-display border-b border-[var(--border)] px-5 py-3 text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">
-      Game details
+      ROM details
     </h2>
     <dl class="divide-y divide-[var(--border)] text-sm">
       {rows.map((row) => (

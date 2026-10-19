@@ -33,7 +33,7 @@ and it contains no Nintendo code of any kind.
 Everything in the NSWPEDIA downloads section meets the same test: the copyright holder has
 released it under a licence that permits redistribution, or it has passed into the public
 domain. That covers homebrew games and utilities, open-source tools, and public-domain
-software. It does not cover commercial games, system firmware or encryption keys, none of
+software. It does not cover commercial ROMs, system firmware or encryption keys, none of
 which we host or link to.
 
 ## Verifying what you download

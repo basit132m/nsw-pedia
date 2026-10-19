@@ -3,7 +3,7 @@ import GameCard from './GameCard.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props { games: CollectionEntry<'games'>[]; heading?: string }
-const { games, heading = 'Related games' } = Astro.props;
+const { games, heading = 'Related ROMs' } = Astro.props;
 ---
 {games.length > 0 && (
   <section aria-labelledby="related">

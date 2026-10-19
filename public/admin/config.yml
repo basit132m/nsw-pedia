@@ -21,8 +21,8 @@ media_folder: public/uploads
 public_folder: /uploads
 collections:
 - name: games
-  label: Games
-  label_singular: Game
+  label: ROMs
+  label_singular: ROM
   folder: src/content/games
   create: true
   slug: '{{slug}}'
@@ -35,7 +35,7 @@ collections:
   - releaseDate
   - updatedAt
   fields:
-  - label: Game name
+  - label: ROM name
     name: title
     widget: string
   - label: Also known as
@@ -101,7 +101,7 @@ collections:
     name: series
     widget: string
     required: false
-    hint: e.g. Super Mario. Drives related-game linking.
+    hint: e.g. Super Mario. Drives related-ROM linking.
   - label: Release date
     name: releaseDate
     widget: datetime
@@ -417,7 +417,7 @@ collections:
       name: answer
       widget: text
       required: false
-  - label: Related games
+  - label: Related ROMs
     name: relatedGames
     widget: relation
     collection: games
@@ -428,7 +428,7 @@ collections:
     - title
     multiple: true
     required: false
-    hint: Optional. Related games are also generated automatically.
+    hint: Optional. Related ROMs are also generated automatically.
   - label: Nintendo eShop URL
     name: eshopUrl
     widget: string

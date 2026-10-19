@@ -12,19 +12,19 @@ const crumbs = [{ name: 'Home', href: '/' }, { name: 'ROMs', href: '/roms/' }];
 const jsonLd = graph(organizationSchema(), websiteSchema(), breadcrumbSchema(crumbs));
 ---
 <BaseLayout
-  title="Nintendo Switch Game Database — Title IDs, Firmware & File Details"
-  description="Browse every Nintendo Switch game in the NSWPEDIA database. Title ID, Build ID, required firmware, file type and size, version history and tested emulator compatibility for each title."
+  title="Nintendo Switch ROM Database — Title IDs, Firmware & File Details"
+  description="Browse every Nintendo Switch ROM in the NSWPEDIA database. Title ID, Build ID, required firmware, file type and size, version history and tested emulator compatibility for each title."
   path="/roms/"
   jsonLd={jsonLd}
 >
   <div class="mx-auto max-w-6xl px-4 py-6">
     <Breadcrumbs crumbs={crumbs} />
-    <h1 class="font-display mt-6 text-3xl font-extrabold text-[var(--text-strong)] sm:text-4xl">Nintendo Switch game database</h1>
+    <h1 class="font-display mt-6 text-3xl font-extrabold text-[var(--text-strong)] sm:text-4xl">Nintendo Switch ROM database</h1>
     <p class="mt-3 max-w-2xl leading-relaxed text-[var(--text-muted)]">
       Every entry carries the full technical block — Title ID, Build ID, required firmware, file
       type and size — alongside emulator compatibility we tested ourselves on named hardware.
     </p>
-    <p class="mt-4 text-sm text-[var(--text-muted)]">{games.length} games</p>
+    <p class="mt-4 text-sm text-[var(--text-muted)]">{games.length} ROMs</p>
     <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
       {games.map((g, i) => <GameCard game={g} loading={i < 12 ? 'eager' : 'lazy'} />)}
     </div>

@@ -67,12 +67,12 @@ Every Switch application carries a 16-character hexadecimal Title ID. Super Mari
 packages end in `800`, and DLC uses a related range above the base ID.
 
 That predictability is what makes Title IDs useful as identifiers. A game's name varies by
-region and by how a listing was written; its Title ID does not. Every game page on NSWPEDIA
+region and by how a listing was written; its Title ID does not. Every ROM page on NSWPEDIA
 lists the Title ID alongside the Build ID, which unlike the Title ID does change with each
 update, making the pair a precise way to identify exactly which revision you are looking at.
 
 ## A note on where files come from
 
 NSWPEDIA documents these formats as reference material. We do not host or link to copyrighted
-game files — our downloads section is limited to homebrew and public-domain software whose
+ROM files — our downloads section is limited to homebrew and public-domain software whose
 licences permit redistribution.

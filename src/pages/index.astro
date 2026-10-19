@@ -24,17 +24,17 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
         The Nintendo Switch database, <span class="text-brand-red">tested</span>.
       </h1>
       <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
-        Title IDs, firmware requirements, file details and version history for every game — plus
+        Title IDs, firmware requirements, file details and version history for every ROM — plus
         hands-on emulator compatibility results from real hardware, and a homebrew library you
         can download legally.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href="/roms/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the game database</a>
+        <a href="/roms/" class="rounded-lg bg-[var(--color-red-action)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--color-red-action-hover)]">Browse the ROM database</a>
         <a href="/emulators/" class="rounded-lg px-5 py-2.5 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset hover:bg-[var(--bg-surface)]">Compare emulators</a>
       </div>
       <dl class="mx-auto mt-12 grid max-w-xl grid-cols-3 gap-6">
         {[
-          ['Games', games.length],
+          ['ROMs', games.length],
           ['Emulators', emulators.length],
           ['Guides', guides.length],
         ].map(([label, n]) => (
@@ -50,9 +50,9 @@ const jsonLd = graph(organizationSchema(), websiteSchema());
   <div class="mx-auto max-w-6xl px-4 py-14">
     <section>
       <div class="flex items-center justify-between gap-4">
-        <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Recently updated games</h2>
+        <h2 class="font-display text-base font-bold tracking-wide text-[var(--text-strong)] uppercase">Recently updated ROMs</h2>
         <a href="/roms/" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-bold text-[var(--text)] ring-1 ring-[var(--border)] ring-inset transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-strong)]">
-          All games
+          All ROMs
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
         </a>
       </div>

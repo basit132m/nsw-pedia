@@ -1,9 +1,9 @@
 export const SITE = {
   name: 'NSWPEDIA',
   url: 'https://nsw-pedia.com',
-  title: 'NSWPEDIA — Nintendo Switch Game Database, Emulation Guides & Homebrew',
+  title: 'NSWPEDIA — Nintendo Switch ROM Database, Emulation Guides & Homebrew',
   description:
-    'The Nintendo Switch reference: a full game database with Title IDs, firmware requirements and file details, hands-on emulator compatibility testing, setup guides and legal homebrew downloads.',
+    'The Nintendo Switch reference: a full ROM database with Title IDs, firmware requirements and file details, hands-on emulator compatibility testing, setup guides and legal homebrew downloads.',
   tagline: 'The Nintendo Switch database, tested.',
   locale: 'en',
   twitter: '@nswpedia',

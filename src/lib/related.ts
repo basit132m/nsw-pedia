@@ -4,7 +4,7 @@ type Game = CollectionEntry<'games'>;
 
 /**
  * Build-time internal linking. Google reads internal links as topical signals,
- * so every game page earns contextual links instead of a generic "more games"
+ * so every ROM page earns contextual links instead of a generic "more ROMs"
  * strip. Scoring: same series > same publisher > shared genres > release
  * proximity. Hand-picked relatedGames always rank first.
  */

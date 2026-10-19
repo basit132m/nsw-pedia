@@ -2,7 +2,7 @@
 name: NSWPEDIA Team
 role: Editorial & Testing
 bio: >-
-  The NSWPEDIA editorial team researches Nintendo Switch game metadata and runs every
+  The NSWPEDIA editorial team researches Nintendo Switch ROM metadata and runs every
   emulator compatibility test published on this site on real hardware. Each entry records
   the exact device, build and date it was tested on so readers can judge how current a
   result is.

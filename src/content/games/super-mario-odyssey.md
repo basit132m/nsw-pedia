@@ -120,7 +120,7 @@ faq:
   - question: Does Super Mario Odyssey support two players?
     answer: Yes. A second player can take control of Cappy locally, sharing a single screen. There is no online multiplayer.
   - question: Where can I buy Super Mario Odyssey legally?
-    answer: It is sold on the Nintendo eShop and at retail on cartridge. NSWPEDIA links to the official store listing on every game page.
+    answer: It is sold on the Nintendo eShop and at retail on cartridge. NSWPEDIA links to the official store listing on every ROM page.
 relatedGames: []
 eshopUrl: https://datadock-host.site/f/vziHCWPl
 wikidataId: Q28400301
@@ -134,7 +134,7 @@ updatedAt: 2026-10-18
 draft: false
 ---
 
-> **Editorial note:** this is the reference implementation for the game content type. Every
+> **Editorial note:** this is the reference implementation for the ROM content type. Every
 > technical value above is illustrative and must be verified against primary sources before
 > this page goes live.
 

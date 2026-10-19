@@ -18,7 +18,7 @@ cons:
   - "Release cadence and stability vary between builds"
   - "Requires user-supplied firmware and keys"
 faq:
-  - question: Does Citron include games or firmware?
+  - question: Does Citron include ROMs or firmware?
     answer: >-
       No. It is an emulator only. Firmware and keys must come from hardware the user owns.
 author: nswpedia-team
@@ -46,7 +46,7 @@ and per device rather than publishing a single global rating per game.
 ## What this page covers
 
 This profile covers what Citron is, which platforms it targets, its hardware floor and its
-maintenance status. Per-game results live on the individual game pages, each stamped with the
+maintenance status. Per-ROM results live on the individual ROM pages, each stamped with the
 device and the date it was tested, so readers can weigh how current any given result is before
 relying on it.
 
