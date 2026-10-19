@@ -4,11 +4,8 @@ aliases:
 title: 'Tomodachi Life: Living the Dream'
 alternateTitles:
   - Tomodachi Exciting Life
-summary: |-
-  The sequel to the Japan-only Nintendo DS game Tomodachi Collection, Tomodachi Life (also known as Tomodachi Collection: New Life) is a social simulation video game developed and published by Nintendo for the Nintendo 3DS.
-
-  It is a game that unfolds the daily dynamics of Mii characters, known as “islanders”, developing relationships, solving problems and conversing with the player.
-cover: ''
+summary: 'The sequel to the Japan-only Nintendo DS game Tomodachi Collection, Tomodachi Life (also known as Tomodachi Collection: New Life) is a social simulation video game developed and published by Nintendo for the Nintendo 3DS.'
+cover: ./images/Tomodachi Life Living the Dream.png
 banner: ''
 screenshots:
   - src: ./images/Tomodachi Life Living the Dream (2).png
