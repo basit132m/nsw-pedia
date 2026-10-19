@@ -112,12 +112,6 @@ const jsonLd = graph(
 
 const dateFmt = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
 const shownDate = d.updatedAt ?? d.publishedAt;
-// Cap the banner at the column width or the file's own width, whichever is
-// smaller, and only offer srcset widths the source can actually supply.
-const COLUMN_WIDTH = 1120;
-const BANNER_MAX = d.banner ? Math.min(d.banner.width, COLUMN_WIDTH) : COLUMN_WIDTH;
-const BANNER_WIDTHS = [480, 768, 1120].filter((w) => w <= BANNER_MAX).concat(BANNER_MAX);
-
 // Only call it the eShop when it really is the eShop.
 let eshopHost = '';
 try {
@@ -135,7 +129,7 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
   keywords={pageKeywords}
   exactTitle={Boolean(d.seo.metaTitle)}
   path={path}
-  image={d.banner?.src ?? d.cover?.src}
+  image={d.cover?.src}
   type="article"
   publishedAt={d.publishedAt}
   updatedAt={d.updatedAt}
@@ -146,25 +140,6 @@ const badges = [d.region, d.fileType && d.fileSize && `${d.fileType} · ${d.file
     <Breadcrumbs crumbs={crumbs} />
 
     <article class="mt-6">
-      {d.banner && (
-        /*
-         * Never rendered wider than the file actually is — upscaling only
-         * softens it. A small banner sits centred at its native size; a large
-         * one fills the column. Height is capped so it stays a band rather
-         * than dominating the page.
-         */
-        <div class="mb-8 flex justify-center">
-          <Image
-            src={d.banner}
-            alt={`${d.title} banner`}
-            widths={BANNER_WIDTHS}
-            sizes={`(max-width: ${BANNER_MAX}px) 100vw, ${BANNER_MAX}px`}
-            loading="eager"
-            class="surface max-h-[400px] w-full object-cover"
-            style={`max-width:${BANNER_MAX}px`}
-          />
-        </div>
-      )}
 
       <header class={d.cover ? 'grid gap-6 sm:grid-cols-[200px_1fr]' : ''}>
         {d.cover && (

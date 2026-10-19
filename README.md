@@ -105,7 +105,7 @@ not by `@astrojs/sitemap`, so it can do three things the integration cannot:
 | **Honest exclusions** | Drafts and anything with `seo.noindex` are left out automatically. A section with nothing left in it disappears from the index. |
 
 `<changefreq>` is omitted and `<priority>` kept simple on purpose — Google ignores both.
-ROM entries carry `<image:image>` for the cover and banner, which feeds Google Images.
+ROM entries carry `<image:image>` for the cover, which feeds Google Images.
 
 Submit **one** URL to Search Console: `https://nsw-pedia.com/sitemap-index.xml`.
 - **Performance** — static HTML, self-hosted variable fonts, build-time image optimisation to

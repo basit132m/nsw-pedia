@@ -85,7 +85,6 @@ const games = defineCollection({
       alternateTitles: optArr(z.string()),
       summary: optStr(),
       cover: image().optional(),
-      banner: image().optional(),
       screenshots: optArr(z.object({ src: image(), alt: optStr() })),
       trailerId: optStr(),
 

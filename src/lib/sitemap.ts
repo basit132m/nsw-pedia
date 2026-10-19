@@ -38,13 +38,10 @@ const newest = (urls: SitemapUrl[]): Date | undefined => {
 
 /** Cover art, emitted at one canonical width so the URL is real. */
 async function coverUrl(entry: CollectionEntry<'games'>): Promise<string[]> {
-  const out: string[] = [];
-  for (const img of [entry.data.cover, entry.data.banner]) {
-    if (!img) continue;
-    const built = await getImage({ src: img, width: Math.min(img.width, 1200), format: 'webp' });
-    out.push(abs(built.src));
-  }
-  return out;
+  const img = entry.data.cover;
+  if (!img) return [];
+  const built = await getImage({ src: img, width: Math.min(img.width, 1200), format: 'webp' });
+  return [abs(built.src)];
 }
 
 export async function buildSections(): Promise<SitemapSection[]> {

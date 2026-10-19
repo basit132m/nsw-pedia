@@ -4,7 +4,6 @@ alternateTitles:
   - New Donk City
 summary: Odyssey’s gameplay mechanics revolve around Mario and his strange hat. You can throw the hat to attack, jump on it to use a spring cushion or throw the hat at specific enemies to take control of them, transform Mario into them, and gain their abilities.
 cover: ./images/super mario odyssey.jpg
-banner: ./images/super mario odyssey banner.webp
 screenshots:
   - src: ./images/super mario odyssey-1.webp
     alt: Mario capturing an enemy in the Sand Kingdom
