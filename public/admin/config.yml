@@ -51,12 +51,14 @@ collections:
   - label: Cover art
     name: cover
     widget: image
-    hint: Portrait box art, ideally 800×1200 or larger.
+    hint: Portrait box art. Upload at least 600 x 900 so it stays sharp on high-resolution screens.
     required: false
   - label: Banner
     name: banner
     widget: image
     required: false
+    hint: Wide image across the top of the page. Upload at least 1600px wide (about 3:1 or 4:1). Smaller
+      files are shown at their own size rather than stretched, so they stay sharp but appear smaller.
   - label: Screenshots
     name: screenshots
     widget: list
