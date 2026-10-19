@@ -15,7 +15,7 @@ to the browser — the only client-side script is Astro's ~2 KB prefetcher.
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the built site locally |
 | `npm run check` | TypeScript + Astro diagnostics |
-| `node scripts/gen-assets.mjs` | Regenerate OG card, favicons and placeholder art |
+| `node scripts/gen-assets.mjs && python3 scripts/gen-favicon-ico.py` | Regenerate OG card, favicons and placeholder art from `src/assets/` |
 
 ## Project structure
 

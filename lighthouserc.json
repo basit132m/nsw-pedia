@@ -4,7 +4,7 @@
       "staticDistDir": "./dist",
       "url": [
         "http://localhost/index.html",
-        "http://localhost/games/super-mario-odyssey/index.html",
+        "http://localhost/roms/super-mario-odyssey/index.html",
         "http://localhost/guides/switch-file-types-nsp-xci-nsz-xcz/index.html"
       ],
       "numberOfRuns": 2,
