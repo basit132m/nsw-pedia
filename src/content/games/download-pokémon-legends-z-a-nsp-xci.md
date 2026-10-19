@@ -13,8 +13,9 @@ screenshots:
   - src: ./images/Pokémon Legends Z-A (4).png
     alt: ''
 trailerId: ''
-genres: []
-developer: ''
+genres:
+  - Pokemon
+developer: Game Freak
 publisher: ''
 series: ''
 releaseDate: 2026-06-20
