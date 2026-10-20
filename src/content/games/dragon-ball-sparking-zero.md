@@ -91,7 +91,7 @@ wikidataId: ''
 igdbId: null
 rating: null
 seo:
-  metaTitle: Dragon Ball Sparking ZERO ROM Download XCI/NSP
+  metaTitle: Dragon Ball Sparking ZERO ROM Download XCI/NSP - NSWPEDIA
   metaDescription: With its immersive gameplay and impressive visuals, DRAGON BALL Sparking ZERO promises to be a game that both old and new fans will love. The rich character dynamics and competitive play are set to provide an environment for players to develop their skills.
   keywords:
     - Dragon Ball Sparking ZERO
