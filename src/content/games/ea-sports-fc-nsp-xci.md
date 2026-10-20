@@ -71,7 +71,7 @@ wikidataId: ''
 igdbId: null
 rating: null
 seo:
-  metaTitle: EA SPORTS FC 26 v1.86 Download NSP/XCI
+  metaTitle: EA SPORTS FC 26 v1.86 Download NSP/XCI - NSWPEDIA
   metaDescription: EA SPORTS FC 26 is a game where you can play football. It was made by EA Vancouver and EA Romania.
   keywords: []
   noindex: false
