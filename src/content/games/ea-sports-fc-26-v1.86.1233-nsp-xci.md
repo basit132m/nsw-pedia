@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /roms/download-ea-sports-fc-26-v1.86.1233-nsp-xci
 title: Download EA SPORTS FC 26 v1.86.1233 (NSP/XCI)
 alternateTitles:
   - FIFA 26
