@@ -1,7 +1,7 @@
 ---
 aliases:
   - /roms/download-pokémon-legends-z-a-nsp-xci
-title: 'Download Pokémon Legends: Z-A (NSP/XCI)'
+title: 'Pokémon Legends: Z-A'
 alternateTitles: []
 summary: 'Pokémon Legends: Z-A is an action RPG created by Game Freak and published by Nintendo for the Nintendo Switch, and will be available globally on 16th October 2025. This game takes place exclusively in Lumiose City five years after the events of Pokémon X and Y.'
 cover: ./images/Pokémon Legends Z-A.png
@@ -74,7 +74,11 @@ eshopUrl: https://datadock-host.site/f/S59SXM9D
 wikidataId: ''
 igdbId: null
 rating: null
-seo: null
+seo:
+  metaTitle: 'Pokémon Legends: Z-A Download (NSP/XCI) - NSWPEDIA'
+  metaDescription: 'Pokémon Legends: Z-A is an action RPG created by Game Freak and published by Nintendo for the Nintendo Switch, and will be available globall...'
+  keywords: []
+  noindex: false
 author: nswpedia-team
 publishedAt: 2026-10-19T10:46:00Z
 updatedAt: 2026-10-19T10:46:00Z
