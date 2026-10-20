@@ -227,3 +227,47 @@ new binding. Load a ROM page and the stars should appear.
 This is deliberately light protection: it stops casual double-voting, not a
 determined person with a script. If ratings ever start getting gamed, the next
 step is a per-IP daily cap or a proof-of-work challenge.
+
+---
+
+## When something you saved does not appear
+
+A failed build does not take the site down — Cloudflare keeps serving the last
+successful deploy. The site looks fine, it is just out of date, and nothing
+tells you. That is what makes it confusing.
+
+### Check what is live
+
+Open **https://nsw-pedia.com/build-info.json**. It shows when the live site was
+built and from which commit. If that timestamp is older than your last save,
+the build after it failed.
+
+### Then look at the log
+
+Cloudflare → **Workers & Pages** → `nswpedia` → **Deployments**. A failed
+deployment is marked in red; open it for the reason.
+
+### Turn on failure alerts — do this once
+
+Cloudflare dashboard → **Notifications** → **Add** → **Pages** →
+**Deployment failed** → send to your email, for the `nswpedia` project.
+
+Without this nothing announces a failure, which is exactly how a site sits
+frozen for days. With it you get an email the moment a build breaks.
+
+GitHub also runs the same build on every push (`.github/workflows/ci.yml`) and
+marks the commit with a red ✗, and emails you when a workflow you triggered
+fails.
+
+### What cannot break the build any more
+
+`npm run prebuild` runs `scripts/heal-content.mjs` before every build. If an
+entry references an image that no longer exists — most often because deleting
+another entry removed a shared image — the reference is stripped and the build
+continues. The entry publishes without that image and the log says which ones
+were dropped, so you can re-upload them. A missing screenshot costs you a
+screenshot; it no longer costs you every page on the site.
+
+The content schema is also permissive by design: every field except the title
+is optional, and blank or cleared values are treated as absent rather than
+rejected.

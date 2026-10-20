@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node scripts/check-content.mjs",
+    "prebuild": "node scripts/heal-content.mjs --write",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "sync": "astro sync"
+    "sync": "astro sync",
+    "content:check": "node scripts/heal-content.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.6",

@@ -40,6 +40,20 @@ src/
 scripts/gen-assets.mjs   Brand asset generation
 ```
 
+## Resilience
+
+A failed build means Cloudflare keeps serving the previous deploy, so content
+silently stops appearing. Three things guard against that:
+
+| | |
+|---|---|
+| `scripts/heal-content.mjs` | Runs as `prebuild`. Strips references to images that no longer exist (deleting a CMS entry removes images other entries may share) and reports them, so one missing file cannot fail the build. |
+| Permissive schema | Only `title` is required. Blank, `null` and cleared values resolve to absent rather than throwing. Group defaults are re-parsed, not replaced with `{}`. |
+| `/build-info.json` | Build timestamp and commit of whatever is currently live, so a frozen deploy is visible rather than silent. |
+
+Turn on Cloudflare's **Pages → Deployment failed** notification as well; see
+SETUP.md.
+
 ## Required fields
 
 Only `title` is required, on every collection. Everything else is optional, so a page can be
