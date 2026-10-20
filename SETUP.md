@@ -271,3 +271,41 @@ screenshot; it no longer costs you every page on the site.
 The content schema is also permissive by design: every field except the title
 is optional, and blank or cleared values are treated as absent rather than
 rejected.
+
+---
+
+## Why a saved change takes a minute or two to appear
+
+The site is static: every page is pre-built into plain HTML, which is why it
+loads instantly and scores 100 on performance. The cost of that is there is
+nothing to update live — saving in the admin panel commits to GitHub, which
+triggers a full rebuild and redeploy.
+
+Measured on this project:
+
+| Step | Time |
+|---|---|
+| Build, no caches | ~24s (10s of it optimising 212 image variants) |
+| Build, caches warm | ~7s |
+| Plus Cloudflare's clone, install, upload and propagation | the rest |
+
+So roughly **one to two minutes end to end**. It will never be instant without
+giving up static rendering, which is not a trade worth making for a content
+site.
+
+### Halve it: turn on Cloudflare's build cache
+
+Cloudflare → **Workers & Pages** → `nswpedia` → **Settings** → **Build** →
+enable **Build cache**.
+
+That persists `node_modules` between builds, which covers both the dependency
+install and Astro's optimised-image cache in `node_modules/.astro`. Unchanged
+images are then reused instead of re-encoded — the 10s image step drops to
+near zero, and the install step mostly disappears.
+
+### If it still looks stale after a few minutes
+
+1. Hard-refresh: **Ctrl+Shift+R**. You are often looking at your own browser
+   cache, not the site.
+2. Check **https://nsw-pedia.com/build-info.json** — if `builtAt` is older
+   than your save, the build failed rather than being slow.

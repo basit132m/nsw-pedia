@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -30,5 +32,29 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Lighthouse measures the templates, not the words in them. Saving an
+      # article cannot change the performance budget, so skip it for
+      # content-only pushes: it is the slowest step by far. Anything we cannot
+      # classify runs it, so the budget is never skipped by accident.
+      - name: Does this change any code?
+        id: scope
+        run: |
+          before='${{ github.event.before }}'
+          if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ] \
+             || ! git cat-file -e "$before^{commit}" 2>/dev/null; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+            echo "No usable base commit; running the full check."
+            exit 0
+          fi
+          changed=$(git diff --name-only "$before" '${{ github.sha }}')
+          echo "$changed"
+          if echo "$changed" | grep -qvE '^src/content/'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+            echo "Content-only change; skipping the performance budget."
+          fi
+
       - name: Lighthouse budget
+        if: steps.scope.outputs.code == 'true'
         run: npx --yes @lhci/cli@0.14.x autorun
