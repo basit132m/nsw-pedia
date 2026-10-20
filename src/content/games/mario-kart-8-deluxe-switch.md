@@ -84,5 +84,5 @@ seo:
 author: ''
 publishedAt: 2026-10-19T18:38:00Z
 updatedAt: 2026-10-19T18:38:00Z
-draft: true
+draft: false
 ---
