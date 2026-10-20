@@ -80,9 +80,10 @@ wikidataId: ''
 igdbId: null
 rating: null
 seo:
-  metaTitle: ''
-  metaDescription: ''
-  keywords: []
+  metaTitle: Super Mario Bros. Wonder Download NSP/XCI - NSWPEDIA
+  metaDescription: Super Mario Bros. Wonder Switch NSP XCI is an absolute triumph, offering an inventive and joyous take on classic Mario gameplay. Its captivating storyline, innovative mechanics, and charming visuals make it an unforgettable experience for players of all ages.
+  keywords:
+    - Super Mario Bros. Wonder
   noindex: false
 author: ''
 publishedAt: 2026-10-19T19:47:00Z
