@@ -78,7 +78,7 @@ seo:
 author: nswpedia-team
 publishedAt: 2026-06-21T22:10:00Z
 updatedAt: 2026-10-19T17:11:00Z
-draft: true
+draft: false
 ---
 
 ## What is this Game?
