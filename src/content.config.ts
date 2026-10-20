@@ -29,8 +29,20 @@ const optBool = (fallback = false) => z.boolean().default(fallback).catch(fallba
 const optEnum = <const T extends readonly [string, ...string[]]>(values: T) =>
   z.enum(values).optional().catch(undefined);
 const optArr = <T extends z.ZodTypeAny>(inner: T) => z.array(inner).default([]).catch([]);
-const optObj = <T extends z.ZodRawShape>(shape: T) =>
-  z.object(shape).default({} as z.input<z.ZodObject<T>>).catch({} as z.output<z.ZodObject<T>>);
+
+/**
+ * A group of optional fields. The editor writes `null` for a group left
+ * untouched, which is not `undefined`, so `.default()` alone does not cover
+ * it — hence `.catch()`. The fallback re-parses an empty object rather than
+ * returning a bare `{}`, so the inner defaults still apply: without that,
+ * `languages: null` yielded an object with no `audio` key at all and the
+ * page crashed trying to read it.
+ */
+const optObj = <T extends z.ZodRawShape>(shape: T) => {
+  const inner = z.object(shape);
+  const empty = () => inner.parse({});
+  return inner.default(empty).catch(empty);
+};
 
 /**
  * Per-page SEO overrides. Every field is optional: leave one blank and the
@@ -50,7 +62,7 @@ const seoBlock = optObj({
  * their source. Every field is optional so a partial row still publishes.
  */
 const compatRow = z.object({
-  emulator: reference('emulators').optional().catch(undefined),
+  emulator: z.literal('').transform(() => undefined).or(reference('emulators')).optional().catch(undefined),
   platform: optEnum(['Windows', 'Linux', 'macOS', 'Android', 'Steam Deck', 'ROG Ally']),
   device: optStr(),
   fps: optStr(),
@@ -59,7 +71,7 @@ const compatRow = z.object({
   source: optEnum(['tested', 'reported']),
   sourceUrl: optUrl(),
   testedOn: optDate(),
-  testedBy: reference('authors').optional().catch(undefined),
+  testedBy: z.literal('').transform(() => undefined).or(reference('authors')).optional().catch(undefined),
 });
 
 const versionRow = z.object({
@@ -91,7 +103,7 @@ const games = defineCollection({
       // --- catalogue ------------------------------------------------
       genres: optArr(z.string()),
       developer: optStr(),
-      publisher: reference('publishers').optional().catch(undefined),
+      publisher: z.literal('').transform(() => undefined).or(reference('publishers')).optional().catch(undefined),
       series: optStr(),
       releaseDate: optDate(),
 
@@ -146,7 +158,7 @@ const games = defineCollection({
       rating: optObj({ metacritic: optNum(), userScore: optNum() }),
 
       seo: seoBlock,
-      author: reference('authors').optional().catch(undefined),
+      author: z.literal('').transform(() => undefined).or(reference('authors')).optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -171,7 +183,7 @@ const emulators = defineCollection({
       cons: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: reference('authors').optional().catch(undefined),
+      author: z.literal('').transform(() => undefined).or(reference('authors')).optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -190,7 +202,7 @@ const guides = defineCollection({
       tags: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: reference('authors').optional().catch(undefined),
+      author: z.literal('').transform(() => undefined).or(reference('authors')).optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
@@ -216,7 +228,7 @@ const homebrew = defineCollection({
       genres: optArr(z.string()),
       faq: optArr(faqItem),
       seo: seoBlock,
-      author: reference('authors').optional().catch(undefined),
+      author: z.literal('').transform(() => undefined).or(reference('authors')).optional().catch(undefined),
       publishedAt: optDate(),
       updatedAt: optDate(),
       draft: optBool(false),
