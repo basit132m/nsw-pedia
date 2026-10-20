@@ -505,17 +505,28 @@ collections:
     picker_utc: true
     hint: Bump this whenever you revise the page. It feeds dateModified.
     required: false
-  - label: Draft
+  - label: Draft — hides this entry from the website
     name: draft
     widget: boolean
     default: false
     required: false
-    hint: Drafts are excluded from the build and skip the quality floor.
+    hint: 'Leave this OFF to publish. Switched ON, the entry stays here in the admin but is removed from
+      the live site completely: no page, no listing, no sitemap entry.'
   - label: Body
     name: body
     widget: markdown
     hint: Minimum 250 words of original writing, or the build will reject the page.
     required: false
+  view_groups:
+  - label: Status
+    field: draft
+  view_filters:
+  - label: Published only
+    field: draft
+    pattern: false
+  - label: Drafts only
+    field: draft
+    pattern: true
 - name: emulators
   label: Emulators
   label_singular: Emulator
@@ -629,16 +640,28 @@ collections:
     widget: datetime
     picker_utc: true
     required: false
-  - label: Draft
+  - label: Draft — hides this entry from the website
     name: draft
     widget: boolean
     default: false
     required: false
+    hint: 'Leave this OFF to publish. Switched ON, the entry stays here in the admin but is removed from
+      the live site completely: no page, no listing, no sitemap entry.'
   - label: Body
     name: body
     widget: markdown
     hint: Minimum 250 words of original writing.
     required: false
+  view_groups:
+  - label: Status
+    field: draft
+  view_filters:
+  - label: Published only
+    field: draft
+    pattern: false
+  - label: Drafts only
+    field: draft
+    pattern: true
 - name: guides
   label: Guides
   label_singular: Guide
@@ -718,16 +741,28 @@ collections:
     widget: datetime
     picker_utc: true
     required: false
-  - label: Draft
+  - label: Draft — hides this entry from the website
     name: draft
     widget: boolean
     default: false
     required: false
+    hint: 'Leave this OFF to publish. Switched ON, the entry stays here in the admin but is removed from
+      the live site completely: no page, no listing, no sitemap entry.'
   - label: Body
     name: body
     widget: markdown
     hint: Minimum 250 words of original writing.
     required: false
+  view_groups:
+  - label: Status
+    field: draft
+  view_filters:
+  - label: Published only
+    field: draft
+    pattern: false
+  - label: Drafts only
+    field: draft
+    pattern: true
 - name: homebrew
   label: Homebrew
   label_singular: Homebrew item
@@ -828,15 +863,27 @@ collections:
     widget: datetime
     picker_utc: true
     required: false
-  - label: Draft
+  - label: Draft — hides this entry from the website
     name: draft
     widget: boolean
     default: false
     required: false
+    hint: 'Leave this OFF to publish. Switched ON, the entry stays here in the admin but is removed from
+      the live site completely: no page, no listing, no sitemap entry.'
   - label: Body
     name: body
     widget: markdown
     required: false
+  view_groups:
+  - label: Status
+    field: draft
+  view_filters:
+  - label: Published only
+    field: draft
+    pattern: false
+  - label: Drafts only
+    field: draft
+    pattern: true
 - name: publishers
   label: Publishers
   label_singular: Publisher

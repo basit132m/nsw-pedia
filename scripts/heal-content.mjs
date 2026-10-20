@@ -38,6 +38,7 @@ const indentOf = (line) => line.match(/^\s*/)[0].length;
 
 const repaired = [];
 const notes = [];
+const drafts = [];
 
 for (const file of await markdownFiles(CONTENT)) {
   const original = await readFile(file, 'utf8');
@@ -89,8 +90,11 @@ for (const file of await markdownFiles(CONTENT)) {
   if (changed && WRITE) await writeFile(file, kept.join('\n'));
 
   // Soft observations — never block, just surface.
+  const isDraft = /^draft:\s*true\s*$/m.test(original);
+  if (isDraft) drafts.push(file);
+
   const body = original.split(/^---$/m).slice(2).join('---').trim();
-  if (body.split(/\s+/).filter(Boolean).length === 0 && !/draft:\s*true/.test(original)) {
+  if (!isDraft && body.split(/\s+/).filter(Boolean).length === 0) {
     notes.push({ file, note: 'no body text' });
   }
 }
@@ -102,6 +106,14 @@ if (repaired.length) {
   console.warn('  admin panel. Deleting an entry also deletes images other entries use.\n');
 } else {
   console.log('✓ Content check: all image references resolve.');
+}
+
+// Drafts are invisible on the live site by design, which is exactly why a
+// draft set by accident is so hard to spot. Name them on every build.
+if (drafts.length) {
+  console.warn(`\n⚠  ${drafts.length} entr${drafts.length === 1 ? 'y is' : 'ies are'} marked draft and will NOT appear on the site:\n`);
+  for (const f of drafts) console.warn(`    ${f}`);
+  console.warn('\n  Open it in the admin panel and switch off "Draft" to publish it.\n');
 }
 
 if (notes.length) {
