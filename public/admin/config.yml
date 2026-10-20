@@ -29,7 +29,7 @@ collections:
   preview_path: roms/{{slug}}
   media_folder: images
   public_folder: ./images
-  summary: '{{title}} — v{{version}} ({{fileType}})'
+  summary: '{{title}}'
   sortable_fields:
   - title
   - releaseDate
