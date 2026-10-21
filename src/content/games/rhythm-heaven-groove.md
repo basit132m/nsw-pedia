@@ -2,7 +2,7 @@
 title: Rhythm Heaven Groove
 alternateTitles:
   - Rhythm Paradise Groove
-summary: Rhythm Heaven Groove Switch NSP combines catchy rhythms with engaging gameplay for an unforgettable experience. It’s an excellent title for both solo players and parties, thanks to its fun mini-games and competitive elements. Its accessible mechanics make it a perfect introduction for newcomers to the rhythm genre. For additional ROMs and information, visit NSPvault.
+summary: Rhythm Heaven Groove Switch NSP combines catchy rhythms with engaging gameplay for an unforgettable experience. It’s an excellent title for both solo players and parties, thanks to its fun mini-games and competitive elements. Its accessible mechanics make it a perfect introduction for newcomers to the rhythm genre.
 cover: ./images/Rhythm Heaven Groove (1).png
 screenshots:
   - src: ./images/Rhythm Heaven Groove (2).webp
