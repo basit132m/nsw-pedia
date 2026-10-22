@@ -41,7 +41,17 @@ playModes: []
 features:
   - 'Ultrahand & Fusion Crafting: Merge objects, Zonai devices, and natural materials to construct custom vehicles, flying machines, bridges, or attach items directly to weapons and shields for elemental effects and boosted durability.'
 ageRatings: null
-emulatorCompat: []
+emulatorCompat:
+  - emulator: sudachi
+    platform: Windows
+    device: Ryzen 7 7800X3D / RTX 4070 / 32 GB DDR5
+    fps: '60'
+    status: ''
+    notes: The Game worked Well
+    source: tested
+    sourceUrl: ''
+    testedOn: 2026-10-22
+    testedBy: nswpedia-team
 deviceTiers: []
 knownIssues:
   - 'Dynamic Resolution Pacing & Ultrahand Drops: Heavy utilization of Ultrahand near high-asset population hubs (like Lookout Landing or Kakariko Village) causes dynamic resolution scaling drops to preserve targeted frame rates.'
