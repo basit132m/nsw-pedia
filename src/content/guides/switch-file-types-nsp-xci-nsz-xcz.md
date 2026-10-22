@@ -1,25 +1,21 @@
 ---
-title: "Nintendo Switch File Types Explained: NSP, XCI, NSZ and XCZ"
-summary: >-
-  What each Nintendo Switch file container actually is, how NSP and XCI differ, what the
-  compressed NSZ and XCZ variants change, and how to read a Title ID.
+title: 'Nintendo Switch File Types Explained: NSP, XCI, NSZ and XCZ'
+summary: What each Nintendo Switch file container actually is, how NSP and XCI differ, what the compressed NSZ and XCZ variants change, and how to read a Title ID.
+cover: ./images/Nintendo Switch File Types Explained NSP, XCI, NSZ and XCZ.webp
 difficulty: Beginner
-timeRequired: "6 min read"
-tags: ["file formats", "title id", "reference"]
+timeRequired: 6 min read
+tags:
+  - file formats
+  - title id
+  - reference
 faq:
   - question: What is the difference between NSP and XCI?
-    answer: >-
-      An NSP is the container format used for digital eShop content, while an XCI is a dump of
-      a physical game cartridge. XCI files include cartridge-specific data that NSP files do
-      not, so the two are not interchangeable even for the same game.
+    answer: An NSP is the container format used for digital eShop content, while an XCI is a dump of a physical game cartridge. XCI files include cartridge-specific data that NSP files do not, so the two are not interchangeable even for the same game.
   - question: What are NSZ and XCZ files?
-    answer: >-
-      They are compressed versions of NSP and XCI respectively, using zstandard compression.
-      They store the same content in less space but must be decompressed before use.
+    answer: They are compressed versions of NSP and XCI respectively, using zstandard compression. They store the same content in less space but must be decompressed before use.
   - question: What is a Title ID?
-    answer: >-
-      A 16-character hexadecimal identifier that the Switch uses to distinguish every
-      application. The base game, its updates and each DLC pack have related but distinct IDs.
+    answer: A 16-character hexadecimal identifier that the Switch uses to distinguish every application. The base game, its updates and each DLC pack have related but distinct IDs.
+seo: null
 author: nswpedia-team
 publishedAt: 2026-10-18
 updatedAt: 2026-10-18
