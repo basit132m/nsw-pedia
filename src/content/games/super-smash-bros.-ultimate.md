@@ -54,7 +54,7 @@ emulatorCompat:
     testedBy: nswpedia-team
 deviceTiers: []
 knownIssues:
-  - Smash Ultimate / SSBU — Primary universal short forms used across competitive circles, search engines, and social media.
+  - 'Replay Version Incompatibility: Major update revisions break compatibility with replays recorded on older versions. Replays must be converted to video files (Vault → Replays → Replay Data) prior to applying major system updates.'
 versionHistory:
   - version: Base Game
     date: 2018-12-07
