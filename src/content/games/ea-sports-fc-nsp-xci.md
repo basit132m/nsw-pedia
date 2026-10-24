@@ -83,6 +83,6 @@ draft: false
 
 ## What is this Game?
 
-Mario Kart 8 Deluxe Switch NSP Free Download Romslab seeks to be more than just another entry in the long-running series of Nintendo kart racing releases. The “Smart Steering and Auto-Accelerate” options are already available for the accessibility and casual ease of family play and newcomers, but with its revamped, arena-based “Battle Mode” and raw 200cc speed tier, it offers a more technical and competitive racing experience.
+Mario Kart 8 Deluxe Switch NSP Free Download seeks to be more than just another entry in the long-running series of Nintendo kart racing releases. The “Smart Steering and Auto-Accelerate” options are already available for the accessibility and casual ease of family play and newcomers, but with its revamped, arena-based “Battle Mode” and raw 200cc speed tier, it offers a more technical and competitive racing experience.
 
 The dual-appeal design is an attempt by Nintendo to accommodate the needs of both thrill-seeking casual players and competitive racers/purists, who appreciate subtle drifting mechanics, mini-turbo management, and item strategy. The experience should now be better balanced, which is important since some fans felt that the original Wii U release was limited by its track-bound battle system and singular item storage mechanics.
