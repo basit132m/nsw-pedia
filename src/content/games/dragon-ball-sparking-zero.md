@@ -104,6 +104,6 @@ draft: false
 
 ## What is this Game?
 
-Dragon Ball Sparking ZERO Switch NSP Free Download Romslab seeks to be more than just another entry in the ever-expanding series of anime arena fighting releases. The “Episode Battle” scenario mode is already available for reliving iconic canonical encounters from Dragon Ball Z through Dragon Ball Super, but with its expanded “Custom Battle & Branching Story” mode, it offers a more personal, tailored experience with player-created what-if storylines.
+Dragon Ball Sparking ZERO Switch NSP Free Download seeks to be more than just another entry in the ever-expanding series of anime arena fighting releases. The “Episode Battle” scenario mode is already available for reliving iconic canonical encounters from Dragon Ball Z through Dragon Ball Super, but with its expanded “Custom Battle & Branching Story” mode, it offers a more personal, tailored experience with player-created what-if storylines.
 
 The dual-mode design is an attempt by Bandai Namco to accommodate the needs of both casual fans craving cinematic Dragon Ball power fantasies and competitive purists who appreciate high-speed Vanishing Assaults, precise deflection counters, and deep arena spacing mechanics. The experience should now be better balanced, which is important since some fans felt that earlier handheld anime port titles were overly simplified or restricted in environmental scale compared to their console counterparts.
