@@ -90,6 +90,6 @@ draft: false
 
 ## What is this Game?
 
-Rhythm Heaven Groove Switch NSP Free Download Romslab seeks to be more than just another entry in the long-running series of Nintendo rhythm-action releases. The "Button and Motion Control" options are already available for the accessibility and casual ease of party play and newcomers, but with its unforgiving "Perfect Rank" trials and high-bpm Remix stages, it offers a more technical and reflex-driven musical experience.
+Rhythm Heaven Groove Switch NSP Free Download NSWPedia seeks to be more than just another entry in the long-running series of Nintendo rhythm-action releases. The "Button and Motion Control" options are already available for the accessibility and casual ease of party play and newcomers, but with its unforgiving "Perfect Rank" trials and high-bpm Remix stages, it offers a more technical and reflex-driven musical experience.
 
 The dual-approach design is an attempt by Nintendo to accommodate the needs of both casual players seeking quirky, humorous audio minigames and timing purists who appreciate frame-accurate button presses, rhythmic synchronization, and high-score grinding. The experience should now be better balanced, which is important since some fans felt that earlier handheld entries relied too heavily on touch controls rather than tactile button response.
