@@ -93,6 +93,6 @@ draft: false
 
 ## What is this Game?
 
-Super Mario Bros. Wonder Switch NSP Free Download Romslab seeks to be more than just another entry in the long-running series of 2D Mario side-scrolling releases. The "Nabbit and Yoshi" character options are already available for the accessibility and casual ease of family play and newcomers, but with its unpredictable "Wonder Effects" and customizable "Badge System," it offers a more technical and dynamic platforming experience.
+Super Mario Bros. Wonder Switch NSP Free Download NSWPedia seeks to be more than just another entry in the long-running series of 2D Mario side-scrolling releases. The "Nabbit and Yoshi" character options are already available for the accessibility and casual ease of family play and newcomers, but with its unpredictable "Wonder Effects" and customizable "Badge System," it offers a more technical and dynamic platforming experience.
 
 The dual-approach design is an attempt by Nintendo to accommodate the needs of both casual players seeking colorful local co-op fun and platforming purists who appreciate precise wall-jumps, momentum control, and hidden secret exits. The experience should now be better balanced, which is important since some fans felt that earlier _New Super Mario Bros._ entries were overly formulaic or restricted in visual identity and level variation.
