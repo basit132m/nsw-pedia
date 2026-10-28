@@ -82,10 +82,16 @@ versionHistory:
     date: 2026-04-16
     notes: ''
     fileSize: 7.99 GB
-faq: []
+faq:
+  - question: Is the Nintendo Switch version a remaster or a remake?
+    answer: It is a comprehensive remake developed by Intelligent Systems, featuring completely overhauled orchestral music, modernized HD graphics, and quality-of-life additions while preserving the original game's script and design.
+  - question: Are there new features not present in the original GameCube version?
+    answer: Yes! The Switch version adds a fast-travel pipe room via the Battle Master (Ms. Mowz’s acquaintance, Professor Frankly’s lab shortcut), a partner configuration menu, a sound gallery, and remixed battle tracks.
+  - question: Can you replay chapters or return to Rogueport after beating the game?
+    answer: Yes, after completing the final boss and watching the credits, loading your save file places you right back in Rogueport to complete remaining trouble center requests, find hidden shine sprites, and conquer the Pit of 100 Trials.
 relatedGames:
   - super-mario-bros.-wonder
-eshopUrl: ''
+eshopUrl: https://datadock-host.site/f/nm5hfH6c
 wikidataId: ''
 igdbId: null
 rating: null
