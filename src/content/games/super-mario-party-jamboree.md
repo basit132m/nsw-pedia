@@ -56,10 +56,24 @@ deviceTiers: []
 knownIssues:
   - 'Online Lobby Desync (Patched): Early release versions experienced occasional connection timeouts when players dropped out during Koopathlon matchmaking queues (resolved in update v1.1.0).'
 versionHistory:
-  - version: ''
-    date: ''
+  - version: Base Game
+    date: 2024-10-17
     notes: ''
-    fileSize: ''
+    fileSize: 5.2GB
+  - version: v1.1.0
+    date: 2024-11-14
+    notes: |-
+      Fixed online matchmaking timeout issues in Koopathlon and Bowser Kaboom Squad lobbies.
+
+      Corrected minor rule calculation errors during bonus star distribution at the end of board game turns.
+    fileSize: 250 MB
+  - version: v1.1.1
+    date: 2024-12-19
+    notes: |-
+      Resolved scoreboard UI rendering stutter during high-player 20-man Koopathlon tallies.
+
+      General performance optimization and system stability enhancements.
+    fileSize: 430 MB
 faq:
   - question: How many players can play locally in Super Mario Party Jamboree?
     answer: Up to 4 players can play locally on a single Nintendo Switch system in board game and minigame modes.
