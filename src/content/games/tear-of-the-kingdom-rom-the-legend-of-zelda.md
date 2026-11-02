@@ -1,5 +1,5 @@
 ---
-title: Tear Of The Kingdom ROM The Legend Of Zelda
+title: 'The Legend Of Zelda: Tear Of The Kingdom'
 alternateTitles:
   - TOTK ROM The Legend Of Zelda
 summary: "The Legend of Zelda: Tears of the Kingdom expands Link's adventure across a vast, tri-layered world spanning floating Sky Islands, the transformed surface of Hyrule, and the pitch-black subterranean Depths. Armed with revolutionary new abilities like Ultrahand and Fuse, players can build complex vehicles, craft custom weapons, and solve puzzles with complete creative freedom."
