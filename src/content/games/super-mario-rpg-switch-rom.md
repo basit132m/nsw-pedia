@@ -1,5 +1,5 @@
 ---
-title: Super Mario RPG Switch ROM
+title: Super Mario RPG
 alternateTitles: []
 summary: Super Mario RPG Switch is a great adventure packed with love, laughter and fun combat. Whether you’re a returning hero or a newcomer, the adventure to restore the Star Road and defeat the Smithy Gang is truly a memorable one. This remake respects the original and makes it beautiful and accessible for modern players.
 cover: ./images/Super Mario RPG Switch ROM (1).png
