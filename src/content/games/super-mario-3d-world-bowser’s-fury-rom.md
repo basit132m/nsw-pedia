@@ -5,8 +5,16 @@ summary: |-
   Super Mario 3D World + Bowser’s Fury delivers two incredible Mario adventures packed with creative cooperative platforming.
   Pounce through dozens of imaginative Sprixie Kingdom levels using cat transformations, double cherries, and power-up suits.
   Venture into an expansive open-water cat world in Bowser’s Fury to team up with Bowser Jr. and stop a giant rampaging monster.
-cover: ''
-screenshots: []
+cover: images/Super Mario 3d World + Bowser’s Fury ROM (1)-1.png
+screenshots:
+  - src: images/Super Mario 3d World + Bowser’s Fury ROM (4)-1.png
+    alt: ''
+  - src: images/Super Mario 3d World + Bowser’s Fury ROM (5)-2.png
+    alt: ''
+  - src: ./images/Super Mario 3d World + Bowser’s Fury ROM (3).png
+    alt: ''
+  - src: ./images/Super Mario 3d World + Bowser’s Fury ROM (2).png
+    alt: ''
 trailerId: ''
 genres:
   - Action, Platformer
