@@ -1,7 +1,11 @@
 ---
 title: 'Teenage Mutant Ninja Turtles: Splintered Fate'
-alternateTitles: []
-summary: ''
+alternateTitles:
+  - TMNT Splintered Fate
+summary: |-
+  Teenage Mutant Ninja Turtles: Splintered Fate delivers a thrilling roguelike action adventure starring Leo, Raph, Donnie, and Mikey.
+  Battle through shifting portals across New York City to rescue Master Splinter from the clutches of the Foot Clan.
+  Master fast-paced isometric combat, elemental power-ups, and unique character skill trees that make every run completely distinct.
 cover: ./images/Teenage Mutant Ninja Turtles Splintered Fate (1).png
 screenshots:
   - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (5).webp
@@ -13,16 +17,17 @@ screenshots:
   - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (2).webp
     alt: ''
 trailerId: ''
-genres: []
-developer: ''
-publisher: ''
-series: ''
+genres:
+  - Action, Adventure, Fighting
+developer: Super Evil Mega Corp
+publisher: nintendo
+series: Ninja Turtles
 releaseDate: ''
-titleId: ''
+titleId: 01005CF01E784000
 buildId: ''
 version: ''
-fileSize: ''
-fileType: ''
+fileSize: 1.53 GB
+fileType: NSP
 trimmed: false
 requiredFirmware: ''
 region: ''
