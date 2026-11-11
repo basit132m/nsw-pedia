@@ -3,21 +3,30 @@ title: 'Teenage Mutant Ninja Turtles: Shredder’s Revenge'
 alternateTitles:
   - TMNT Shredders Revenge
 summary: ''
-cover: ''
-screenshots: []
+cover: ./images/Teenage Mutant Ninja Turtles Shredder’s Revenge (1).png
+screenshots:
+  - src: ./images/Teenage Mutant Ninja Turtles Shredder’s Revenge (5)_1.webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Shredder’s Revenge (4)_1.webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Shredder’s Revenge (3)_1.webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Shredder’s Revenge (2).webp
+    alt: ''
 trailerId: ''
-genres: []
-developer: ''
-publisher: ''
-series: ''
-releaseDate: ''
+genres:
+  - Action, Arcade, Fighting
+developer: Dotemu
+publisher: nintendo
+series: Ninja Turtles
+releaseDate: 2022-06-16
 titleId: ''
 buildId: ''
-version: ''
-fileSize: ''
-fileType: ''
+version: 1.0.2
+fileSize: 955.9 MB
+fileType: NSP
 trimmed: false
-requiredFirmware: ''
+requiredFirmware: Base – v14.1.1 | Update – v15.0.1
 region: ''
 contentType: Base game
 includedUpdate: ''
@@ -29,11 +38,32 @@ playModes: []
 features:
   - "Classic Arcade Beat 'Em Up Action: Groundbreaking 90s-style arcade gameplay powered by Dotemu and Tribute Games, built directly on the legacy of Turtles in Time."
 ageRatings: null
-emulatorCompat: []
+emulatorCompat:
+  - emulator: ryujinx
+    platform: Windows
+    device: Ryzen 7 7800X3D / RTX 4070 / 32 GB DDR5
+    fps: '60'
+    status: ''
+    notes: The Game was Working Perfectly
+    source: tested
+    sourceUrl: ''
+    testedOn: 2026-11-11
+    testedBy: nswpedia-team
 deviceTiers: []
 knownIssues:
   - '6-Player On-Screen Chaos Frame Drops: Heavy particle effects and simultaneous 6-player special attacks can trigger minor dynamic resolution and frame drops on handheld Switch hardware.'
-versionHistory: []
+versionHistory:
+  - version: Base Game
+    date: 2022-06-16
+    notes: ''
+    fileSize: 955.9 MB
+  - version: v1.0.4
+    date: 2022-12-22
+    notes: |-
+      Added Custom Game modifiers for Arcade Mode (dip switches, infinite lives, arcade filters).
+
+      Added gameplay balancing improvements and guest audio filters.
+    fileSize: 450 MB
 faq:
   - question: Does Shredder’s Revenge support 6-player local co-op on a single Switch?
     answer: Yes, up to 6 Joy-Cons/controllers can be connected for local co-op play on a single system.
@@ -57,7 +87,7 @@ seo:
 author: nswpedia-team
 publishedAt: 2026-11-11T08:23:00Z
 updatedAt: 2026-11-11T08:23:00Z
-draft: true
+draft: false
 ---
 
 ## What is this Game?
