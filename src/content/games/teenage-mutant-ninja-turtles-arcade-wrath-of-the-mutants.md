@@ -1,22 +1,27 @@
 ---
 title: 'Teenage Mutant Ninja Turtles Arcade: Wrath of the Mutants'
-alternateTitles: []
-summary: ''
+alternateTitles:
+  - 'TMNT: Wrath of the Mutants'
+summary: |-
+  Teenage Mutant Ninja Turtles Arcade: Wrath of the Mutants brings the popular 2017 coin-op arcade game home to Nintendo Switch.
+  Play as Leo, Raph, Donnie, and Mikey to battle through iconic NYC locations and Dimension X to defeat Shredder and Krang.
+  Master classic beat-'em-up combos and unleash screen-clearing "Turtle Power" special moves across 4-player local co-op.
 cover: ''
 screenshots: []
 trailerId: ''
-genres: []
-developer: ''
+genres:
+  - Action, Arcade
+developer: Game Mill
 publisher: ''
-series: ''
+series: Ninja Turtles
 releaseDate: ''
 titleId: ''
 buildId: ''
-version: ''
-fileSize: ''
-fileType: ''
+version: v 1.1.0
+fileSize: 3.7 GB
+fileType: NSP
 trimmed: false
-requiredFirmware: ''
+requiredFirmware: 17.0.1
 region: ''
 contentType: Base game
 includedUpdate: ''
@@ -42,7 +47,20 @@ emulatorCompat:
 deviceTiers: []
 knownIssues:
   - '4-Player Screen FX Performance Drops: Triggering multiple "Turtle Power" ultimate attacks simultaneously during dense enemy mob encounters can cause brief frame-rate dips on handheld Switch hardware.'
-versionHistory: []
+versionHistory:
+  - version: Base Game
+    date: 2024-04-23
+    notes: ''
+    fileSize: 3.7 GB
+  - version: v1.0.1
+    date: 2024-04-23
+    notes: |-
+      Addressed boss phase invulnerability timing glitches during multi-player special moves.
+
+      Optimized local 4-player performance during particle-heavy Foot Clan battles.
+
+      Corrected sound effect balancing across localized audio tracks.
+    fileSize: 180 MB
 faq:
   - question: Is Wrath of the Mutants an port of an actual arcade machine?
     answer: Yes, it is an expanded home port of the 2017 Raw Thrills coin-op arcade game, featuring extra levels and boss fights created specifically for the console release.
@@ -67,7 +85,7 @@ seo:
 author: nswpedia-team
 publishedAt: 2026-11-11T11:00:00Z
 updatedAt: 2026-11-11T11:00:00Z
-draft: true
+draft: false
 ---
 
 ## What is this Game?
