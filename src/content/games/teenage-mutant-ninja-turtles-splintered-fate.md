@@ -46,7 +46,7 @@ faq:
     answer: Yes, it originally launched as an Apple Arcade timed exclusive before making its expanded console debut on Nintendo Switch.
 relatedGames:
   - teenage-mutant-ninja-turtles-the-cowabunga-collection
-eshopUrl: ''
+eshopUrl: https://datadock-host.site/f/XxMVytHl
 wikidataId: ''
 igdbId: null
 rating: null
