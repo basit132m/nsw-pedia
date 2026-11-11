@@ -6,8 +6,16 @@ summary: |-
   Teenage Mutant Ninja Turtles Arcade: Wrath of the Mutants brings the popular 2017 coin-op arcade game home to Nintendo Switch.
   Play as Leo, Raph, Donnie, and Mikey to battle through iconic NYC locations and Dimension X to defeat Shredder and Krang.
   Master classic beat-'em-up combos and unleash screen-clearing "Turtle Power" special moves across 4-player local co-op.
-cover: ''
-screenshots: []
+cover: ./images/Teenage Mutant Ninja Turtles Arcade Wrath of the Mutants (1).png
+screenshots:
+  - src: ./images/Teenage Mutant Ninja Turtles Arcade Wrath of the Mutants (5).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Arcade Wrath of the Mutants (4).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Arcade Wrath of the Mutants (3).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Arcade Wrath of the Mutants (2).webp
+    alt: ''
 trailerId: ''
 genres:
   - Action, Arcade
