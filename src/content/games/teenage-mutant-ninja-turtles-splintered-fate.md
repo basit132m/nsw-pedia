@@ -33,10 +33,10 @@ deviceTiers: []
 knownIssues:
   - 'Online Lobby Frame Stutter: High-density particle effects and 4player co-op combat sequences can occasionally trigger minor frame-rate dips during intense screen-clearing special moves on original handheld hardware.'
 versionHistory:
-  - version: ''
-    date: ''
+  - version: Base Game
+    date: 2024-07-18
     notes: ''
-    fileSize: ''
+    fileSize: 1.53 GB
 faq:
   - question: 'Is Teenage Mutant Ninja Turtles: Splintered Fate a roguelike game?'
     answer: Yes, it features randomized room layouts, temporary power-up buffs, and progression loops where runs change every time you play.
@@ -50,7 +50,12 @@ eshopUrl: https://datadock-host.site/f/XxMVytHl
 wikidataId: ''
 igdbId: null
 rating: null
-seo: null
+seo:
+  metaTitle: TMNT Splintered Fate Switch ROM Download NSP XCI
+  metaDescription: Download Teenage Mutant Ninja Turtles Splintered Fate Switch ROM in NSP and XCI. Discover roguelike co-op combat, file sizes, build versions, and metadata.
+  keywords:
+    - TMNT Splintered Fate Switch ROM
+  noindex: false
 author: ''
 publishedAt: 2026-11-11T07:44:00Z
 updatedAt: 2026-11-11T07:44:00Z
