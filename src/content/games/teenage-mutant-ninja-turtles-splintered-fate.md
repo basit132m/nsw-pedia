@@ -2,8 +2,16 @@
 title: 'Teenage Mutant Ninja Turtles: Splintered Fate'
 alternateTitles: []
 summary: ''
-cover: ''
-screenshots: []
+cover: ./images/Teenage Mutant Ninja Turtles Splintered Fate (1).png
+screenshots:
+  - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (5).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (4).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (3).webp
+    alt: ''
+  - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (2).webp
+    alt: ''
 trailerId: ''
 genres: []
 developer: ''
