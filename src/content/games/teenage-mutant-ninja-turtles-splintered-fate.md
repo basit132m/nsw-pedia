@@ -6,7 +6,7 @@ summary: |-
   Teenage Mutant Ninja Turtles: Splintered Fate delivers a thrilling roguelike action adventure starring Leo, Raph, Donnie, and Mikey.
   Battle through shifting portals across New York City to rescue Master Splinter from the clutches of the Foot Clan.
   Master fast-paced isometric combat, elemental power-ups, and unique character skill trees that make every run completely distinct.
-cover: ./images/Teenage Mutant Ninja Turtles Splintered Fate (1).png
+cover: ./images/Untitled Design (2).png
 screenshots:
   - src: ./images/Teenage Mutant Ninja Turtles Splintered Fate (5).webp
     alt: ''
