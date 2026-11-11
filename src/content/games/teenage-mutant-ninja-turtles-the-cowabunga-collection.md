@@ -89,7 +89,7 @@ faq:
     answer: Yes! The arcade games and specific console entries support up to 4 players locally on a single Nintendo Switch system.
 relatedGames:
   - tomodachi-life-living-the-dream-nsp-roms
-eshopUrl: ''
+eshopUrl: https://datadock-host.site/f/wBlkWCae
 wikidataId: ''
 igdbId: null
 rating: null
