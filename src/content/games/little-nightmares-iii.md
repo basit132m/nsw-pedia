@@ -54,7 +54,27 @@ emulatorCompat:
 deviceTiers: []
 knownIssues:
   - 'Online Co-Op Latency Desync: High-ping network connections between players can occasionally cause minor timing delays during synchronized two-player lever pulls or narrow chase sequences.'
-versionHistory: []
+versionHistory:
+  - version: Base Game
+    date: 2025-10-10
+    notes: ''
+    fileSize: 7.99 GB
+  - version: v1.0.1
+    date: 2025-10-10
+    notes: |-
+      Enabled online Friend's Pass matchmaking functionality and cross-generation lobby stability.
+
+      Refined solo AI companion pathfinding during fast-paced chase sequences.
+
+      Fixed minor collision clipping bugs when using Low's bow and Alone's wrench simultaneously.
+    fileSize: 420 MB
+  - version: v1.0.2
+    date: 2026-01-01
+    notes: |-
+      Added full compatibility for the Secrets of The Spiral DLC chapters and the Ferryman Costumes Set.
+
+      Improved dynamic lighting performance and checkpoint reload speeds across handheld and docked modes.
+    fileSize: 680 MB
 faq:
   - question: Does Little Nightmares III support local couch co-op?
     answer: No, Little Nightmares III supports 2-player online cooperative multiplayer or single-player mode with an AI companion, rather than local split-screen or shared-screen co-op.
