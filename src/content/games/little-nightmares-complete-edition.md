@@ -1,7 +1,11 @@
 ---
 title: Little Nightmares Complete Edition
-alternateTitles: []
-summary: ''
+alternateTitles:
+  - 'Little Nightmares: Deluxe Edition'
+summary: |-
+  Little Nightmares Complete Edition immerses you in a dark, whimsical tale that confronts your childhood fears on Nintendo Switch.
+  Help Six escape The Maw—a vast, mysterious vessel inhabited by corrupted souls looking for their next meal.
+  Includes the full base campaign alongside all three chapters of The Secrets of The Maw expansion starring The Runaway Kid.
 cover: ./images/Little Nightmares Complete Edition (1).png
 screenshots:
   - src: ./images/Little Nightmares Complete Edition (2).png
@@ -25,7 +29,7 @@ version: v1.0.2
 fileSize: 3.03 GB
 fileType: NSP
 trimmed: false
-requiredFirmware: ''
+requiredFirmware: 17.0.1 or later
 region: ''
 contentType: Base game
 includedUpdate: ''
@@ -37,7 +41,17 @@ playModes: []
 features:
   - 'Dark Whimsical Puzzle-Platforming: Guide Six, a tiny girl in a yellow raincoat, through "The Maw"—a massive, submerged vessel inhabited by corrupted, monstrous beings looking for their next meal.'
 ageRatings: null
-emulatorCompat: []
+emulatorCompat:
+  - emulator: ryujinx
+    platform: Windows
+    device: Ryzen 7 7800X3D / RTX 4070 / 32 GB DDR5
+    fps: '60'
+    status: Playable
+    notes: The Game was working awesome
+    source: reported
+    sourceUrl: ''
+    testedOn: ''
+    testedBy: ''
 deviceTiers: []
 knownIssues:
   - '3D Depth-Perception Platforming Missed Jumps: Due to the fixed 2.5D camera angle, precise jumping across narrow planks or beams can occasionally misalign along the Z-axis depth plane.'
@@ -73,7 +87,7 @@ seo: null
 author: ''
 publishedAt: 2026-11-13T19:05:00Z
 updatedAt: 2026-11-13T19:05:00Z
-draft: true
+draft: false
 ---
 
 ## What is this Game?
