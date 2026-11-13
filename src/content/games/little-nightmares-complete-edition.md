@@ -55,9 +55,17 @@ versionHistory:
 
       Addressed minor localization text alignment issues and amiibo scanning responsiveness.
     fileSize: 210 MB
-faq: []
-relatedGames: []
-eshopUrl: ''
+faq:
+  - question: Are all DLCs included directly in the Complete Edition?
+    answer: Yes, all three chapters of The Secrets of The Maw expansion (The Depths, The Hideaway, and The Residence) plus cosmetic masks are included on the cartridge and digital download.
+  - question: Does Little Nightmares Complete Edition support multiplayer?
+    answer: No, it is strictly a single-player narrative horror-platformer experience.
+  - question: What framerate does the game run at on Nintendo Switch?
+    answer: The game targets 30 FPS in both docked (720p dynamic) and handheld (540p–720p dynamic) modes.
+relatedGames:
+  - dragon-ball-sparking-zero
+  - mario-kart-8-deluxe-switch
+eshopUrl: https://datadock-host.site/f/dY5umVmv
 wikidataId: ''
 igdbId: null
 rating: null
