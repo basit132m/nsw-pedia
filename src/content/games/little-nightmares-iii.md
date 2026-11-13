@@ -1,9 +1,20 @@
 ---
 title: Little Nightmares III
 alternateTitles: []
-summary: ''
-cover: ''
-screenshots: []
+summary: |-
+  Little Nightmares III plunges players back into the eerie, unsettling world of the Nowhere on Nintendo Switch.
+  Follow Low and Alone as they work together to survive the Spiral—a cluster of disturbing lands filled with monstrous threats.
+  Wield Low's bow and Alone's wrench to solve intricate environmental puzzles and escape terrifying Residents like Monster Baby.
+cover: ./images/Little Nightmares III (1).png
+screenshots:
+  - src: ./images/Little Nightmares III (2).png
+    alt: ''
+  - src: ./images/Little Nightmares III (3).png
+    alt: ''
+  - src: ./images/Little Nightmares III (4).png
+    alt: ''
+  - src: ./images/Little Nightmares III (5).png
+    alt: ''
 trailerId: ''
 genres:
   - Action, Adventure
