@@ -2,20 +2,28 @@
 title: Little Nightmares Complete Edition
 alternateTitles: []
 summary: ''
-cover: ''
-screenshots: []
+cover: ./images/Little Nightmares Complete Edition (1).png
+screenshots:
+  - src: ./images/Little Nightmares Complete Edition (2).png
+    alt: ''
+  - src: ./images/Little Nightmares Complete Edition (3).png
+    alt: ''
+  - src: ./images/Little Nightmares Complete Edition (4).png
+    alt: ''
+  - src: ./images/Little Nightmares Complete Edition (5).png
+    alt: ''
 trailerId: ''
 genres:
   - Platformer
 developer: BANDAI NAMCO
-publisher: ''
+publisher: nintendo
 series: Little Nightmares
-releaseDate: ''
+releaseDate: 2018-05-18
 titleId: 01002FC00412C000
 buildId: ''
 version: v1.0.2
 fileSize: 3.03 GB
-fileType: ''
+fileType: NSP
 trimmed: false
 requiredFirmware: ''
 region: ''
@@ -33,7 +41,20 @@ emulatorCompat: []
 deviceTiers: []
 knownIssues:
   - '3D Depth-Perception Platforming Missed Jumps: Due to the fixed 2.5D camera angle, precise jumping across narrow planks or beams can occasionally misalign along the Z-axis depth plane.'
-versionHistory: []
+versionHistory:
+  - version: Base Game
+    date: 2018-05-18
+    notes: ''
+    fileSize: 3.03 GB
+  - version: v1.0.1
+    date: 2018-06-19
+    notes: |-
+      Fixed minor checkpoint trigger bugs in The Residence DLC chapter.
+
+      Optimized memory management to slightly reduce respawn load times.
+
+      Addressed minor localization text alignment issues and amiibo scanning responsiveness.
+    fileSize: 210 MB
 faq: []
 relatedGames: []
 eshopUrl: ''
