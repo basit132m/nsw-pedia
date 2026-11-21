@@ -40,11 +40,41 @@ playModes: []
 features:
   - 'Deserted Island Getaway & Terraforming: Transform a barren island into a personalized paradise by crafting tools, planting flora, inviting animal villagers, and reshaping rivers, cliffs, and pathways using the Island Designer app.'
 ageRatings: null
-emulatorCompat: []
+emulatorCompat:
+  - emulator: citron
+    platform: Windows
+    device: Ryzen 7 7800X3D / RTX 4070 / 32 GB DDR5
+    fps: '60'
+    status: Perfect
+    notes: ''
+    source: tested
+    sourceUrl: ''
+    testedOn: 2026-11-21
+    testedBy: nswpedia-team
 deviceTiers: []
 knownIssues:
   - 'Heavy Custom-Item Frame Rate Drops: Islands densely decorated with hundreds of outdoor furniture items, custom path patterns, and animated particle effects can experience noticeable frame-rate dips below 30 FPS when sprinting.'
-versionHistory: []
+versionHistory:
+  - version: Base Game
+    date: 2020-03-20
+    notes: ''
+    fileSize: 6.69 GB
+  - version: v2.0.0
+    date: 2021-11-04
+    notes: |-
+      Added The Roost café inside the museum, Kapp'n's mystery island boat tours, and Harv's Island shopping plaza.
+
+      Introduced cooking recipes, vegetable farming, Gyroids, permanent ladders, and Island Ordinances.
+
+      Added full compatibility for the Happy Home Paradise paid DLC expansion.
+    fileSize: 3.9 GB
+  - version: v2.0.6
+    date: 2022-11-15
+    notes: |-
+      Fixed specific progression bugs affecting Happy Home Paradise facility unlocks.
+
+      Addressed general gameplay stability issues and network session connection reliability.
+    fileSize: 4.1 GB
 faq:
   - question: Can you have more than one island per Nintendo Switch console?
     answer: 'No, Animal Crossing: New Horizons limits each Nintendo Switch system to one shared island, though up to 8 user profiles on that console can live on the same island as residents.'
