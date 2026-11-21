@@ -2,8 +2,16 @@
 title: 'Animal Crossing: New Horizons'
 alternateTitles: []
 summary: ''
-cover: ''
-screenshots: []
+cover: images/Animal Crossing New Horizons (1).png
+screenshots:
+  - src: ./images/Animal Crossing New Horizons (2).webp
+    alt: ''
+  - src: ./images/Animal Crossing New Horizons (3).webp
+    alt: ''
+  - src: ./images/Animal Crossing New Horizons (4).webp
+    alt: ''
+  - src: ./images/Animal Crossing New Horizons (5).webp
+    alt: ''
 trailerId: ''
 genres:
   - Simulation
