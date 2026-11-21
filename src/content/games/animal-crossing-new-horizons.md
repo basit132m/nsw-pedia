@@ -1,7 +1,10 @@
 ---
 title: 'Animal Crossing: New Horizons'
 alternateTitles: []
-summary: ''
+summary: |-
+  Animal Crossing: New Horizons invites you to escape to a deserted island and build your own paradise on Nintendo Switch.
+  Gather resources, craft tools, catch seasonal bugs and fish, and customize every inch of your island's terrain and decor.
+  Befriend charming animal villagers, trade designs with friends online, and expand your creative reach with Happy Home Paradise.
 cover: images/Animal Crossing New Horizons (1).png
 screenshots:
   - src: ./images/Animal Crossing New Horizons (2).webp
