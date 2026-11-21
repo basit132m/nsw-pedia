@@ -89,10 +89,10 @@ wikidataId: ''
 igdbId: null
 rating: null
 seo: null
-author: ''
-publishedAt: ''
-updatedAt: ''
-draft: true
+author: nswpedia-team
+publishedAt: 2026-11-21T15:57:00Z
+updatedAt: 2026-11-21T15:57:00Z
+draft: false
 ---
 
 ## What is this Game?
